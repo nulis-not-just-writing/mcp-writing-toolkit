@@ -171,3 +171,13 @@ continues to govern their own code, and the MIT notice must travel with every co
 is why a `NOTICE.md` sits inside **each** `.mcpb` as well as in each server folder. The
 build refuses to produce a bundle without one. See [`NOTICE.md`](NOTICE.md) at the root for
 the full picture, including the external services accessed and their respective terms.
+
+---
+
+> **Knowledge kept is knowledge dying.**
+>
+> Shared, it outlives the one who shared it — growing in hands they will never meet, living on in
+> work they will never read. And every life it goes on to have returns to them as a reward that
+> does not end.
+
+**Mubaroq ADB** · Akademi Digital Bandung | RPI Institute · <mubaroq@digitalbdg.ac.id>

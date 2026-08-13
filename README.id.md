@@ -172,3 +172,13 @@ MIT tetap berlaku atas kode pustaka itu, dan pemberitahuannya wajib menyertai se
 salinan — karena itu ada `NOTICE.md` di dalam **setiap** `.mcpb`, bukan hanya di repo.
 Proses build menolak menghasilkan bundle tanpa berkas itu. Gambaran lengkapnya, termasuk
 layanan luar yang diakses beserta syaratnya masing-masing, ada di [`NOTICE.md`](NOTICE.md).
+
+---
+
+> **Knowledge kept is knowledge dying.**
+>
+> Shared, it outlives the one who shared it — growing in hands they will never meet, living on in
+> work they will never read. And every life it goes on to have returns to them as a reward that
+> does not end.
+
+**Mubaroq ADB** · Akademi Digital Bandung | RPI Institute · <mubaroq@digitalbdg.ac.id>
