@@ -1,8 +1,10 @@
 # Pemasangan
 
+*[Read this in English](../Installation.md)*
+
 ## Claude Desktop — cara termudah
 
-1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../dist/):
+1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../../dist/):
    - `scholar-paper-search-0.6.0.mcpb`
    - `zotero-mcp-0.5.0.mcpb`
    - `scr-toolkit-1.5.0.mcpb`

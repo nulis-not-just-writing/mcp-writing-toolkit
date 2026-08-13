@@ -110,14 +110,19 @@ through process environment variables.
 
 ## Documentation
 
-Full guides live in [`docs/`](docs/) — installation, one page per server, and a
-troubleshooting FAQ.
+Full guides live in [`docs/`](docs/) — [installation](docs/Installation.md), one page per
+server ([scholar](docs/scholar.md), [zotero](docs/zotero.md),
+[scr-toolkit](docs/scr-toolkit.md)), and a [troubleshooting FAQ](docs/FAQ.md).
 
-**`docs/` is written in Indonesian.** So are the tool descriptions inside `manifest.json`,
-which is what Claude Desktop shows in the extension window. That text is read by the model,
-not by you — Claude handles it and answers in whatever language you write in. But if you
-want to *read* the guides rather than just use the servers, you will need a translation.
-This is a real limitation, stated plainly rather than hidden.
+Indonesian versions of the same pages are in [`docs/id/`](docs/id/), kept in step with the
+English ones.
+
+**One thing is still Indonesian: the tool descriptions inside `manifest.json`**, which is
+what Claude Desktop shows in the extension window. That text is read by the model, not by
+you — Claude handles it and answers in whatever language you write in — but the extension
+screen itself will read as Indonesian. Same for `scr-toolkit`'s own README, which documents
+its measured limits in Indonesian; the [scr-toolkit page](docs/scr-toolkit.md) covers the
+same ground in English.
 
 ## Rebuilding
 

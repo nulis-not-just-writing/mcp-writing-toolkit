@@ -1,110 +1,108 @@
-# scholar — pencarian literatur & verifikasi sitasi
+# scholar — literature search and citation verification
 
-`scholar-paper-search` **0.6.0** · 16 tool, atau 21 dengan kunci Elsevier · [sumber](../scholar-node/)
+*[Baca dalam bahasa Indonesia](id/scholar.md)*
 
-Mencari di tujuh API ilmiah terbuka, memverifikasi sitasi lewat DOI, menemukan PDF open
-access yang legal, mengunduhnya, dan membaca teksnya. Lima tool Scopus/ScienceDirect
-menyala bila Anda punya kunci Elsevier.
+`scholar-paper-search` **0.6.0** · 16 tools, or 21 with an Elsevier key · [source](../scholar-node/)
 
-## Pencarian — tanpa kunci apa pun
+Searches seven open scholarly APIs, verifies citations by DOI, finds legal open-access
+PDFs, downloads them, and reads their text. Five Scopus/ScienceDirect tools switch on if
+you have Elsevier credentials.
 
-| Tool | Fungsi |
+## Search — no key required
+
+| Tool | Purpose |
 |---|---|
-| `search_arxiv` | Cari paper di arXiv |
-| `search_openalex` | Cari paper di OpenAlex (filter tahun) |
-| `search_crossref` | Cari paper di Crossref |
-| `search_semantic_scholar` | Cari paper di Semantic Scholar |
-| `search_pubmed` | Cari paper di PubMed |
-| `search_europepmc` | Cari paper di Europe PMC |
-| `search_doaj` | Cari artikel jurnal open access di DOAJ |
+| `search_arxiv` | Search arXiv |
+| `search_openalex` | Search OpenAlex (year filter) |
+| `search_crossref` | Search Crossref |
+| `search_semantic_scholar` | Search Semantic Scholar |
+| `search_pubmed` | Search PubMed |
+| `search_europepmc` | Search Europe PMC |
+| `search_doaj` | Search open-access journal articles in DOAJ |
 
-Ketujuhnya berfungsi tanpa registrasi. Mengisi `CONTACT_EMAIL` memasukkan Anda ke
-*polite pool* Crossref dan OpenAlex — kuotanya lebih longgar, dan permintaan Anda tidak
-diperlakukan sebagai lalu lintas anonim.
+All seven work without registration. Setting `CONTACT_EMAIL` puts you in the Crossref and
+OpenAlex *polite pool* — a more generous quota, and your requests are no longer treated as
+anonymous traffic.
 
-## Verifikasi & akses
+## Verification and access
 
-| Tool | Fungsi |
+| Tool | Purpose |
 |---|---|
-| `get_paper_by_doi` | Verifikasi & ambil metadata paper via DOI (Crossref) |
-| `get_open_access_pdf` | Cari link PDF open access legal untuk sebuah DOI |
-| `download_pdf` | Unduh PDF dari URL |
-| `download_arxiv` | Unduh PDF paper arXiv |
-| `read_arxiv_paper` | Baca teks penuh paper arXiv |
-| `read_pdf` | Ekstrak teks dari PDF (URL atau file lokal) |
-| `pdf_to_text` | Ekstrak teks sebuah PDF lalu simpan sebagai berkas `.md` di subfolder `fulltext/` |
-| `batch_acquire_pdfs` | Coba unduh PDF untuk sekumpulan studi sekaligus (daftar INCLUDED hasil screening) |
+| `get_paper_by_doi` | Verify and retrieve paper metadata by DOI (Crossref) |
+| `get_open_access_pdf` | Find a legal open-access PDF link for a DOI |
+| `download_pdf` | Download a PDF from a URL |
+| `download_arxiv` | Download an arXiv paper's PDF |
+| `read_arxiv_paper` | Read the full text of an arXiv paper |
+| `read_pdf` | Extract text from a PDF (URL or local file) |
+| `pdf_to_text` | Extract a PDF's text and save it as `.md` under `fulltext/` |
+| `batch_acquire_pdfs` | Attempt PDF downloads for a whole set of studies at once |
 
-**`get_paper_by_doi` adalah tool terpenting di server ini.** Ia meresolusi DOI ke
-Crossref dan mengembalikan apa yang benar-benar terdaftar di sana — penulis, judul,
-jurnal, tahun. Inilah satu-satunya cara membedakan sitasi asli dari sitasi karangan:
-kombinasi penulis–tahun–jurnal yang *terlihat* masuk akal justru pola khas referensi
-fabrikasi, dan tidak ada jumlah kewaspadaan membaca yang bisa menggantikan pertanyaan ke
-registrarnya.
+**`get_paper_by_doi` is the most important tool here.** It resolves a DOI against Crossref
+and returns what is actually registered — authors, title, journal, year. This is the only
+way to tell a real citation from a fabricated one: a plausible-*looking*
+author–year–journal combination is the signature pattern of invented references, and no
+amount of careful reading substitutes for asking the registrar.
 
-`get_open_access_pdf` hanya menunjuk salinan yang memang **legal** terbuka (jalur
-Unpaywall, yang menuntut `CONTACT_EMAIL` diisi). Ia tidak mencari salinan bajakan.
+`get_open_access_pdf` only points at copies that are genuinely, **legally** open (the
+Unpaywall route, which requires `CONTACT_EMAIL`). It does not look for pirated copies.
 
-## Scopus & ScienceDirect — butuh kunci Elsevier
+## Scopus & ScienceDirect — Elsevier key required
 
-Kelima tool berikut **tidak didaftarkan sama sekali** bila `SCOPUS_API_KEY` dan
-`SCIENCEDIRECT_API_KEY` kosong. Ia tidak muncul lalu gagal saat dipanggil; ia memang tidak
-ada — `tools/list` mengembalikan 16 alih-alih 21.
+The five tools below are **not registered at all** when `SCOPUS_API_KEY` and
+`SCIENCEDIRECT_API_KEY` are empty. They do not appear and then fail when called; they
+simply are not there — `tools/list` returns 16 instead of 21.
 
-| Tool | Fungsi |
+| Tool | Purpose |
 |---|---|
-| `search_scopus` | Cari di Scopus dengan sintaks query aslinya, diteruskan apa adanya |
-| `scopus_abstract` | Abstrak lengkap, kata kunci penulis, jumlah sitasi (via DOI atau Scopus ID) |
-| `sciencedirect_fulltext` | Teks lengkap artikel ScienceDirect via DOI |
-| `scopus_export_csv` | Jalankan query, kumpulkan seluruh halaman, simpan sebagai CSV siap-screening |
-| `elsevier_status` | Periksa kunci terpasang, berfungsi, dan sisa kuotanya |
+| `search_scopus` | Search Scopus using its own query syntax, passed through verbatim |
+| `scopus_abstract` | Full abstract, author keywords, citation count (by DOI or Scopus ID) |
+| `sciencedirect_fulltext` | ScienceDirect full text by DOI |
+| `scopus_export_csv` | Run a query, collect every page, save as screening-ready CSV |
+| `elsevier_status` | Check that keys are present, accepted, and what quota remains |
 
-### Query diteruskan apa adanya
+### Queries are passed through verbatim
 
-`search_scopus` menerima sintaks Scopus asli — `TITLE-ABS-KEY`, `AND/OR/NOT`, `W/n`,
-`PUBYEAR`, `DOCTYPE`, `LANGUAGE`, `SRCTYPE` — dan **tidak menerjemahkannya**:
+`search_scopus` accepts native Scopus syntax — `TITLE-ABS-KEY`, `AND/OR/NOT`, `W/n`,
+`PUBYEAR`, `DOCTYPE`, `LANGUAGE`, `SRCTYPE` — and **does not translate it**:
 
 ```
 TITLE-ABS-KEY("islamic contract" W/3 freedom) AND PUBYEAR > 2014 AND DOCTYPE(ar)
 ```
 
-Ini keputusan desain, bukan keterbatasan. *Search string* yang Anda laporkan di bagian
-Methods harus identik dengan yang benar-benar dieksekusi. Begitu ada lapisan yang diam-diam
-menormalkan atau "memperbaiki" query, klaim keterulangan di manuskrip Anda menjadi tidak
-benar — dan reviewer yang menjalankan ulang query Anda akan mendapat angka berbeda tanpa
-ada yang bisa menjelaskan sebabnya.
+This is a design decision, not a limitation. The search string you report in Methods must
+be identical to the one actually executed. The moment some layer silently normalises or
+"fixes" your query, the reproducibility claim in your manuscript stops being true — and a
+reviewer re-running your query gets a different number with nothing to explain it.
 
-Untuk alasan yang sama, `search_scopus` mengembalikan **total hits** — angka yang masuk
-ke kotak identifikasi diagram alir PRISMA.
+For the same reason, `search_scopus` returns **total hits** — the number that goes in the
+identification box of a PRISMA flow diagram.
 
-### Jalankan `elsevier_status` sebelum memulai
+### Run `elsevier_status` before you start
 
-Kuota Elsevier terikat pada langganan institusi dan bisa habis di tengah jalan.
-`elsevier_status` melaporkan apakah kunci terbaca, apakah ia benar-benar diterima, dan
-berapa sisa kuotanya — jauh lebih murah daripada menemukannya di tengah pencarian
-sistematis.
+Elsevier quota is tied to an institutional subscription and can run out mid-way.
+`elsevier_status` reports whether the key is read, whether it is actually accepted, and how
+much quota is left — far cheaper than discovering it in the middle of a systematic search.
 
-Bila akses dari luar jaringan kampus ditolak dengan 401/403, mintalah **insttoken** ke
-pustakawan atau admin lisensi, lalu isikan ke `ELSEVIER_INSTTOKEN`.
+If off-campus access is refused with 401/403, ask your librarian or licence admin for an
+**insttoken** and set `ELSEVIER_INSTTOKEN`.
 
-### Kunci tidak bocor lewat pesan galat
+### Keys never leak through error messages
 
-Galat Elsevier lazimnya menggemakan URL lengkap beserta `apiKey=` di dalamnya. Setiap
-pesan galat di server ini melewati `scrub()` yang mengganti kunci dan pola `apiKey=…`
-dengan `«redacted»` sebelum sampai ke pemanggil.
+Elsevier errors routinely echo the full URL with `apiKey=` in it. Every error message here
+passes through `scrub()`, which replaces the key and any `apiKey=…` pattern with
+`«redacted»` before it reaches the caller.
 
-## Diagnostik
+## Diagnostics
 
-`server_status` melaporkan versi yang sedang berjalan, folder tempat PDF akan disimpan,
-dan fitur opsional mana yang aktif. Ini langkah pertama yang benar ketika sesuatu
-berperilaku di luar dugaan — termasuk untuk memastikan Claude Desktop benar-benar memuat
-versi yang baru Anda pasang.
+`server_status` reports the running version, the folder PDFs will be saved to, and which
+optional features are active. It is the right first step when something behaves unexpectedly
+— including confirming that Claude Desktop really loaded the version you just installed.
 
-## Folder unduhan
+## Download folder
 
-Urutan yang dipakai: `DOWNLOAD_DIR` bila diisi dengan nilai yang sah → `~/Downloads` →
-folder sementara sistem. Berkas `.md` hasil `pdf_to_text` masuk ke subfolder `fulltext/`.
+The order used: `DOWNLOAD_DIR` if set to a valid value → `~/Downloads` → the system temp
+folder. `.md` files produced by `pdf_to_text` go into a `fulltext/` subfolder.
 
 ---
 
-[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md) · [Tanya jawab](Tanya-jawab.md)
+[← Back](README.md) · [Installation](Installation.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md) · [FAQ](FAQ.md)

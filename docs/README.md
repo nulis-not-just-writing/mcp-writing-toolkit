@@ -1,57 +1,58 @@
-# MCP Writing Toolkit — dokumentasi
+# MCP Writing Toolkit — documentation
 
-Tiga MCP server untuk pekerjaan pustaka di dalam Claude: mencari literatur, memverifikasi
-sitasi, membaca pustaka Zotero Anda sendiri, dan menjalankan pemeriksaan deterministik
-tinjauan cakupan.
+*[Baca dalam bahasa Indonesia](id/README.md)*
 
-## Saya butuh yang mana?
+Three MCP servers for literature work inside Claude: search the scholarly record, verify
+citations, read your own Zotero library, and run the deterministic checks a scoping review
+needs.
 
-Mulai dari keadaan Anda, bukan dari nama server.
+## Which one do I need?
 
-| Keadaan Anda | Server |
+Start from your situation, not from the server names.
+
+| Your situation | Server |
 |---|---|
-| Perlu memastikan sebuah sitasi benar-benar ada | **[scholar](scholar.md)** — `get_paper_by_doi` |
-| Mencari literatur di banyak basis data sekaligus | **[scholar](scholar.md)** |
-| Menjalankan pencarian Scopus untuk tinjauan sistematis | **[scholar](scholar.md)** — butuh kunci Elsevier |
-| Perlu PDF open access yang legal untuk sebuah DOI | **[scholar](scholar.md)** — `get_open_access_pdf` |
-| Ingin Claude membaca apa yang sudah ada di pustaka Anda | **[zotero](zotero.md)** |
-| Perlu BibTeX untuk naskah LaTeX | **[zotero](zotero.md)** — `zotero_export_bibtex` |
-| Perlu memastikan sebuah PDF benar-benar artikel yang diakuinya | **[scr-toolkit](scr-toolkit.md)** — `pdf_match_records` |
-| Merekonsiliasi dua pass screening dan menyiapkan antrean arbitrase | **[scr-toolkit](scr-toolkit.md)** — `reconcile_two_pass` |
-| Mengaudit angka di naskah terhadap daftar fakta | **[scr-toolkit](scr-toolkit.md)** — `manuscript_numeric_audit` |
+| Need to confirm a citation actually exists | **[scholar](scholar.md)** — `get_paper_by_doi` |
+| Searching several databases at once | **[scholar](scholar.md)** |
+| Running a Scopus search for a systematic review | **[scholar](scholar.md)** — needs an Elsevier key |
+| Need a legal open-access PDF for a DOI | **[scholar](scholar.md)** — `get_open_access_pdf` |
+| Want Claude to read what is already in your library | **[zotero](zotero.md)** |
+| Need BibTeX for a LaTeX manuscript | **[zotero](zotero.md)** — `zotero_export_bibtex` |
+| Need to confirm a PDF really is the article it claims | **[scr-toolkit](scr-toolkit.md)** — `pdf_match_records` |
+| Reconciling two screening passes and building an arbitration queue | **[scr-toolkit](scr-toolkit.md)** — `reconcile_two_pass` |
+| Auditing the numbers in a manuscript against a fact list | **[scr-toolkit](scr-toolkit.md)** — `manuscript_numeric_audit` |
 
-Ketiganya berdiri sendiri. Memasang satu tidak menuntut yang lain.
+All three stand alone. Installing one does not require any of the others.
 
-## Halaman
+## Pages
 
-- **[Pemasangan](Pemasangan.md)** — Claude Desktop, Claude Code, dan cara mengisi kunci API
-- **[scholar](scholar.md)** — 16 tool, tujuh API terbuka, plus 5 tool Elsevier bila ada kunci
-- **[zotero](zotero.md)** — 8 tool, mode lokal dan mode Web API
-- **[scr-toolkit](scr-toolkit.md)** — 9 tool deterministik untuk tinjauan cakupan, tanpa kunci dan tanpa dependensi
-- **[Tanya jawab](Tanya-jawab.md)** — galat yang sering muncul dan sebabnya
+- **[Installation](Installation.md)** — Claude Desktop, Claude Code, and where the API keys go
+- **[scholar](scholar.md)** — 16 tools over seven open APIs, plus 5 Elsevier tools with a key
+- **[zotero](zotero.md)** — 8 read-only tools, local and Web API modes
+- **[scr-toolkit](scr-toolkit.md)** — 9 deterministic scoping-review tools, no key, no dependencies
+- **[FAQ](FAQ.md)** — the errors that actually come up, and why
 
-## Yang perlu diketahui sejak awal
+## What to know up front
 
-**Tidak ada Python.** Ketiganya berjalan di atas Node.js bawaan Claude Desktop — tidak ada
-yang perlu dipasang lebih dulu. `scholar` dan `zotero` adalah TypeScript yang di-*bundle*
-jadi satu berkas JavaScript; `scr-toolkit` JavaScript biasa tanpa dependensi sama sekali.
+**No Python.** All three run on the Node.js that ships inside Claude Desktop — there is
+nothing to install first. `scholar` and `zotero` are TypeScript bundled into a single
+JavaScript file; `scr-toolkit` is plain JavaScript with no dependencies at all.
 
-**Semua konfigurasi `scholar` opsional.** Tanpa satu kunci pun, 16 tool tetap berfungsi
-penuh lewat arXiv, OpenAlex, Crossref, Semantic Scholar, PubMed, Europe PMC, dan DOAJ.
-Kunci hanya menambah — jadi 21 — tidak pernah menjadi syarat.
+**Every `scholar` setting is optional.** With no key at all, 16 tools work fully through
+arXiv, OpenAlex, Crossref, Semantic Scholar, PubMed, Europe PMC, and DOAJ. A key only adds
+— taking it to 21 — and is never a prerequisite.
 
-**Zotero bawaannya mode lokal.** Ia berbicara dengan aplikasi Zotero di komputer Anda
-lewat `localhost`. Tidak ada kunci API, tidak ada unggahan, tidak ada yang keluar dari
-mesin Anda.
+**Zotero defaults to local mode.** It talks to the Zotero app on your own computer over
+`localhost`. No API key, no upload, nothing leaves your machine.
 
-**`scr-toolkit` tidak butuh konfigurasi apa pun.** Tidak ada kunci, tidak ada isian. Ia
-juga tidak memutuskan apa pun — sembilan alatnya memeriksa, menghitung, mencocokkan, dan
-mengunduh; keputusan eligibility tetap milik peneliti.
+**`scr-toolkit` needs no configuration whatsoever.** No key, no fields. It also decides
+nothing — its nine tools check, count, match, and retrieve; eligibility decisions stay with
+the researcher.
 
-**Fitur yang tak bisa jalan tidak ditampilkan.** Tanpa kunci Scopus, kelima tool Elsevier
-tidak didaftarkan sama sekali. Daftar tool yang Anda lihat adalah daftar tool yang
-benar-benar bisa dipanggil — bukan menu berisi pilihan yang akan gagal.
+**Features that cannot run are not shown.** Without a Scopus key the five Elsevier tools
+are never registered at all. The tool list you see is the list that actually works — not a
+menu of options that will fail.
 
 ---
 
-[Pemasangan](Pemasangan.md) · [scholar](scholar.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md) · [Tanya jawab](Tanya-jawab.md)
+[Installation](Installation.md) · [scholar](scholar.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md) · [FAQ](FAQ.md)

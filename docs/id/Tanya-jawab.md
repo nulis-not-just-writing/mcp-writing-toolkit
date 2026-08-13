@@ -1,5 +1,7 @@
 # Tanya jawab
 
+*[Read this in English](../FAQ.md)*
+
 ## Pemasangan
 
 **Server sudah dipasang tapi tidak muncul di Claude Desktop.**
@@ -112,10 +114,11 @@ di `localhost`; `scr-toolkit` hanya menyentuh berkas yang Anda tunjuk, plus Unpa
 laman penerbit saat Anda memintanya mengunduh.
 
 **Saya bukan penutur bahasa Indonesia. Bisa dipakai?**
-Bisa — server membalas dalam bahasa yang Anda pakai, dan README utamanya berbahasa
-Inggris. Yang masih berbahasa Indonesia adalah deskripsi tool di `manifest.json` (dibaca
-model, bukan Anda — tetapi itulah yang tampil di jendela ekstensi Claude Desktop) dan
-seluruh halaman `docs/` ini.
+Bisa — server membalas dalam bahasa yang Anda pakai. README utama dan seluruh dokumentasi
+tersedia dalam bahasa Inggris di [`docs/`](../README.md); halaman Indonesia ada di
+`docs/id/`. Yang masih berbahasa Indonesia hanyalah deskripsi tool di `manifest.json`
+(dibaca model, bukan Anda — tetapi itulah yang tampil di jendela ekstensi Claude Desktop)
+dan README `scr-toolkit` sendiri.
 
 **Apa hubungannya dengan repo `skills`?**
 Repo ini alatnya; [`nulis-not-just-writing/skills`](https://github.com/nulis-not-just-writing/skills)

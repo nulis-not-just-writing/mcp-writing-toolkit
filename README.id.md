@@ -56,7 +56,7 @@ claude mcp add scholar -- node "$PWD/dist/index.js"
 ```
 
 Detail lengkap, termasuk cara meneruskan kunci API, ada di
-[docs/Pemasangan.md](docs/Pemasangan.md).
+[docs/id/Pemasangan.md](docs/id/Pemasangan.md).
 
 ## Yang membedakannya
 
@@ -113,6 +113,14 @@ hanya mengalir lewat variabel lingkungan proses.
 | Zotero 7+ | server `zotero` mode lokal | Settings → Advanced → centang *"Allow other applications on this computer to communicate with Zotero"* |
 | Kunci Elsevier | 5 tool Scopus/ScienceDirect | daftar di [dev.elsevier.com](https://dev.elsevier.com) dengan akun institusi |
 | `pdftotext` (poppler) | pemeriksaan teks PDF yang lebih tajam di `scr-toolkit` | opsional — tanpanya pemeriksa hanya boleh *membuktikan* kecocokan, tidak pernah menyangkal |
+
+## Dokumentasi
+
+Panduan lengkap ada di **[`docs/id/`](docs/id/)** — pemasangan, satu halaman per server,
+dan tanya jawab. Mulai dari [`docs/id/README.md`](docs/id/README.md) bila belum tahu server
+mana yang Anda butuhkan.
+
+Versi Inggrisnya ada di [`docs/`](docs/). Keduanya dijaga sejajar isinya.
 
 ## Membangun ulang
 
