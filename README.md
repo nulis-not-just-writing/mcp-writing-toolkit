@@ -34,26 +34,44 @@ npm dependencies**.
 
 ## Install
 
-**Claude Desktop** — download from [`dist/`](dist/), then double-click (or
-**Settings → Extensions**):
+**Not sure which one you have?** If you use Claude in a browser or a desktop application, you want
+**Claude Desktop**. If you type `claude` into a terminal, you want **Claude Code**.
 
-- [`scholar-nulis-0.8.0.mcpb`](dist/scholar-nulis-0.8.0.mcpb)
-- [`zotero-nulis-0.7.0.mcpb`](dist/zotero-nulis-0.7.0.mcpb)
-- [`scr-toolkit-nulis-2.0.0.mcpb`](dist/scr-toolkit-nulis-2.0.0.mcpb)
+### Claude Desktop — no git, no terminal
 
-Versioned builds are also attached to each [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
+1. **Download** the server you want. Each link saves the file straight to your computer:
 
-Configuration appears as a form in the extension window. Everything is **optional** for
-`scholar-nulis`; fields marked sensitive are stored in your OS keychain, not in a text file.
+   | Server | What it does | Download |
+   |---|---|---|
+   | `scholar-nulis` | search literature, verify citations | [scholar-nulis-0.8.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scholar-nulis-0.8.0.mcpb) |
+   | `zotero-nulis` | read your own Zotero library | [zotero-nulis-0.7.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/zotero-nulis-0.7.0.mcpb) |
+   | `scr-toolkit-nulis` | deterministic scoping-review checks | [scr-toolkit-nulis-2.0.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scr-toolkit-nulis-2.0.0.mcpb) |
 
-**Claude Code** — build from source, then register:
+2. **Double-click** the downloaded `.mcpb`. Claude Desktop opens an install window.
+   *If nothing happens*, open Claude Desktop → **Settings** → **Extensions** and drag the file in.
+3. Fill in the configuration form if you want to. **You can leave it all blank** — `scholar-nulis`
+   works without any key, and `scr-toolkit-nulis` has no fields at all.
+4. Click **Install**, then **quit Claude Desktop completely** and open it again. Closing the
+   window is not enough; on macOS press ⌘Q and check the icon is gone from the Dock.
+
+Nothing else needs installing. Claude Desktop ships its own Node.js.
+
+⚠ If you previously installed `scholar-paper-search`, `zotero-mcp`, or `scr-toolkit`, **remove
+those first** — a renamed server counts as a different extension, so you would end up with both.
+
+Step-by-step detail, including every configuration field, is in
+[docs/Installation.md](docs/Installation.md).
+
+### Claude Code — for the terminal
 
 ```bash
 git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
 cd mcp-writing-toolkit/scholar-nulis && npm install && npm run build
-claude mcp add scholar -- node "$PWD/dist/index.js"
+claude mcp add scholar-nulis -- node "$PWD/dist/index.js"
 ```
 
+Versioned builds are also attached to each
+[release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 ## What makes them different
 
 **Citations are verified, not guessed.** `nulis_get_paper_by_doi` resolves a DOI against

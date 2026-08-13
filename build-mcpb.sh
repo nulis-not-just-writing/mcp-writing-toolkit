@@ -123,6 +123,30 @@ if [ "$gagal" -ne 0 ]; then
   exit 1
 fi
 
+# ── Gerbang: dokumentasi harus menautkan bundle versi terkini ──────────
+# Nomor versi di README dan docs adalah salinan manual yang bisa basi diam-diam.
+# Kalau basi, tautan unduhnya menunjuk berkas yang sudah tidak ada dan menjawab
+# 404 — persis yang pernah terjadi pada repo skills.
+echo
+doc_gagal=0
+for s in "${SERVERS[@]}"; do
+  nama=$(node -p "require('./$s/manifest.json').name")
+  versi=$(node -p "require('./$s/manifest.json').version")
+  for doc in README.md README.id.md docs/Installation.md docs/id/Pemasangan.md; do
+    [ -f "$doc" ] || continue
+    if ! grep -q "$nama-$versi.mcpb" "$doc"; then
+      echo "  ✗ $doc tidak menyebut $nama-$versi.mcpb"
+      doc_gagal=1
+    fi
+  done
+done
+if [ "$doc_gagal" -ne 0 ]; then
+  echo
+  echo "Dokumentasi tidak sinkron dengan versi bundle — perbaiki sebelum commit."
+  exit 1
+fi
+echo "  ✓ README dan halaman pemasangan menyebut bundle versi terkini"
+
 echo
 echo "Selesai. Isi dist/:"
 ls -1 dist/*.mcpb

@@ -34,30 +34,47 @@ dependensi npm**.
 
 ## Pasang
 
-**Claude Desktop** — unduh dari [`dist/`](dist/), lalu klik dua kali (atau
-**Settings → Extensions**):
+**Belum yakin punya yang mana?** Kalau Anda memakai Claude lewat peramban atau aplikasi desktop,
+yang Anda butuhkan **Claude Desktop**. Kalau Anda mengetik `claude` di terminal, itu **Claude
+Code**.
 
-- [`scholar-nulis-0.8.0.mcpb`](dist/scholar-nulis-0.8.0.mcpb)
-- [`zotero-nulis-0.7.0.mcpb`](dist/zotero-nulis-0.7.0.mcpb)
-- [`scr-toolkit-nulis-2.0.0.mcpb`](dist/scr-toolkit-nulis-2.0.0.mcpb)
+### Claude Desktop — tanpa git, tanpa terminal
 
-Bundle bernomor versi juga dilampirkan di setiap [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
+1. **Unduh** server yang Anda mau. Tiap tautan langsung menyimpan berkasnya ke komputer Anda:
 
-Isian konfigurasinya muncul sebagai formulir di jendela ekstensi. **Semuanya opsional**
-untuk `scholar-nulis`; kunci yang ditandai rahasia disimpan di keychain sistem operasi Anda,
-bukan di berkas teks.
+   | Server | Untuk apa | Unduh |
+   |---|---|---|
+   | `scholar-nulis` | cari literatur, verifikasi sitasi | [scholar-nulis-0.8.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scholar-nulis-0.8.0.mcpb) |
+   | `zotero-nulis` | membaca pustaka Zotero Anda sendiri | [zotero-nulis-0.7.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/zotero-nulis-0.7.0.mcpb) |
+   | `scr-toolkit-nulis` | pemeriksaan deterministik tinjauan cakupan | [scr-toolkit-nulis-2.0.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scr-toolkit-nulis-2.0.0.mcpb) |
 
-**Claude Code** — bangun dari sumber, lalu daftarkan:
+2. **Klik dua kali** berkas `.mcpb` hasil unduhan. Claude Desktop membuka jendela pemasangan.
+   *Kalau tidak terjadi apa-apa*, buka Claude Desktop → **Settings** → **Extensions**, lalu seret
+   berkasnya ke sana.
+3. Isi formulir konfigurasinya bila perlu. **Boleh dikosongkan semua** — `scholar-nulis` berfungsi
+   tanpa kunci apa pun, dan `scr-toolkit-nulis` memang tidak punya isian sama sekali.
+4. Klik **Install**, lalu **tutup Claude Desktop sepenuhnya** dan buka lagi. Menutup jendela saja
+   tidak cukup; di macOS tekan ⌘Q dan pastikan ikonnya hilang dari Dock.
+
+Tidak ada lagi yang perlu dipasang. Claude Desktop menyertakan Node.js-nya sendiri.
+
+⚠ Bila Anda pernah memasang `scholar-paper-search`, `zotero-mcp`, atau `scr-toolkit`, **hapus dulu
+yang lama** — server yang berganti nama dihitung sebagai ekstensi berbeda, jadi Anda akan berakhir
+dengan keduanya sekaligus.
+
+Rincian langkah demi langkah, termasuk tiap kolom konfigurasi, ada di
+[docs/id/Pemasangan.md](docs/id/Pemasangan.md).
+
+### Claude Code — untuk terminal
 
 ```bash
 git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
 cd mcp-writing-toolkit/scholar-nulis && npm install && npm run build
-claude mcp add scholar -- node "$PWD/dist/index.js"
+claude mcp add scholar-nulis -- node "$PWD/dist/index.js"
 ```
 
-Detail lengkap, termasuk cara meneruskan kunci API, ada di
-[docs/id/Pemasangan.md](docs/id/Pemasangan.md).
-
+Bundle bernomor versi juga dilampirkan di setiap
+[release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 ## Yang membedakannya
 
 **Sitasi diverifikasi, bukan diduga.** `nulis_get_paper_by_doi` meresolusi DOI ke Crossref dan
