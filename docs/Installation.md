@@ -5,9 +5,9 @@
 ## Claude Desktop — the easy path
 
 1. Download the `.mcpb` you want from [`dist/`](../dist/):
-   - `scholar-nulis-0.7.0.mcpb`
-   - `zotero-nulis-0.6.0.mcpb`
-   - `scr-toolkit-nulis-1.6.0.mcpb`
+   - `scholar-nulis-0.8.0.mcpb`
+   - `zotero-nulis-0.7.0.mcpb`
+   - `scr-toolkit-nulis-2.0.0.mcpb`
 2. **Double-click** the file. Claude Desktop opens an install window.
    (Alternative: **Settings → Extensions**, then drag the file in.)
 3. Fill in the configuration fields if you need them — all optional for `scholar-nulis`, and
@@ -20,6 +20,17 @@ restarts. On macOS, make sure the icon is gone from the Dock (⌘Q).
 Nothing needs to be installed first. Claude Desktop ships its own Node.js.
 
 ### Upgrading from the old names
+
+**Every tool name now begins with `nulis_`** — `nulis_search_arxiv`,
+`nulis_zotero_search_items`, `nulis_pdf_integrity`, and so on. This is a breaking change,
+and it exists because Claude Desktop presents tool names **flat**: there is no per-server
+namespace like Claude Code's `mcp__scholar__`. Two extensions that both register
+`search_arxiv` therefore collide, and which one wins is not predictable. Measured on one
+real machine, this repo's servers shared **nine** tool names with unrelated MCP servers
+already installed; after the prefix, zero.
+
+You do not need to change how you talk to Claude — it reads the tool list itself. Only
+scripts or written instructions that name a tool literally need updating.
 
 These servers were previously called `scholar-paper-search`, `zotero-mcp`, and
 `scr-toolkit`. Claude Desktop identifies an extension by the `name` in its manifest, so a
@@ -76,8 +87,8 @@ longer apply.
 | `CONTACT_EMAIL` | no | Joins the Crossref & OpenAlex *polite pool* (higher quota) **and** adds the Unpaywall route for open-access lookup, which additionally reports each PDF's licence. Any working address; no registration. |
 | `S2_API_KEY` | no | Raises the Semantic Scholar rate limit. Free at [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api). |
 | `DOWNLOAD_DIR` | no | Where PDFs are stored. If empty: `~/Downloads`, then the system temp folder if `~/Downloads` is not writable. |
-| `SCOPUS_API_KEY` | no | Switches on `search_scopus`, `scopus_abstract`, `scopus_export_csv`, `elsevier_status`. |
-| `SCIENCEDIRECT_API_KEY` | no | Switches on `sciencedirect_fulltext`. Leave empty if your Scopus key already covers it. |
+| `SCOPUS_API_KEY` | no | Switches on `nulis_search_scopus`, `nulis_scopus_abstract`, `nulis_scopus_export_csv`, `nulis_elsevier_status`. |
+| `SCIENCEDIRECT_API_KEY` | no | Switches on `nulis_sciencedirect_fulltext`. Leave empty if your Scopus key already covers it. |
 | `ELSEVIER_INSTTOKEN` | no | Institutional token from your librarian or licence admin. Needed only when off-campus access is refused with 401/403. |
 
 Elsevier keys are free to register with an institutional account at

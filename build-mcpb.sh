@@ -94,11 +94,12 @@ for s in "${SERVERS[@]}"; do
     rusak=1
   fi
 
-  # ── Gerbang 3: nama & versi yang diumumkan server = manifest ───────────
-  # Keduanya bisa dikeraskan di dalam kode, terpisah dari manifest. Yang dibaca
-  # Claude Desktop adalah yang diucapkan server saat handshake.
-  if ! node ./scripts/cek-versi-server.js "$tmp"; then
-    echo "  ✗ $out mengumumkan nama/versi yang berbeda dari manifest-nya"
+  # ── Gerbang 3: identitas yang diumumkan server = manifest ──────────────
+  # Nama, versi, dan daftar tool bisa berbeda antara manifest dan kode tanpa
+  # satu pun error muncul. Yang dibaca Claude Desktop adalah yang diucapkan
+  # server saat handshake.
+  if ! node ./scripts/cek-identitas-server.js "$tmp"; then
+    echo "  ✗ $out mengumumkan identitas yang berbeda dari manifest-nya"
     rusak=1
   fi
   rm -rf "$tmp"

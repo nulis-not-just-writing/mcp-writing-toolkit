@@ -2,7 +2,7 @@
 
 *[Baca dalam bahasa Indonesia](id/scr-toolkit.md)*
 
-`scr-toolkit-nulis` **1.6.0** · 9 tools · [source](../scr-toolkit-nulis/)
+`scr-toolkit-nulis` **2.0.0** · 9 tools · [source](../scr-toolkit-nulis/)
 
 Nine tools that do the **deterministic** part of a scoping review: checking, counting,
 matching, retrieving. **Not one of them decides eligibility** — judgement stays with the
@@ -73,13 +73,13 @@ because files from `scholar-nulis` or Zotero are not named `SCR[ID]_` in the fir
 > *"Check the integrity of every PDF in this folder, then match them to my records by
 > content."*
 
-The three tools run in order — `pdf_integrity` → `pdf_match_records` → `pdf_verify_record` —
+The three tools run in order — `nulis_pdf_integrity` → `nulis_pdf_match_records` → `nulis_pdf_verify_record` —
 and matching is **position-weighted**, so a title found only in the bibliography is read as
 "this article is cited here", not "this is that article".
 
 ### 4. The numbers in your manuscript have to match your data
 
-`manuscript_numeric_audit` compares every figure in the draft against a fact list you
+`nulis_manuscript_numeric_audit` compares every figure in the draft against a fact list you
 supply. This is the last gate before submission, where "we screened 412 records" in the
 abstract and "411" in the flow diagram is exactly the kind of discrepancy a reviewer finds
 and you do not.
@@ -88,14 +88,14 @@ and you do not.
 
 | Tool | Purpose | Module step |
 |---|---|---|
-| `pdf_integrity` | Detect truncated downloads that pass the magic-byte check | M6 L2 |
-| `pdf_verify_record` | Search for a record title across the **whole** PDF, not just page one | M6 L2 |
-| `pdf_match_records` | Match PDFs to records by **content**, not filename | M6 L2 |
-| `reconcile_two_pass` | Reconcile two independent passes + arbitration queue | M5 L3 · M6 L5 · M7 L5 |
-| `calibration_sample` | Seeded, stratified random calibration sample | M5 L3 |
-| `retrieve_fulltext` | Full-text acquisition via Unpaywall + `citation_pdf_url` | M6 L1 |
-| `xlsx_read` / `xlsx_write` | Read and write `.xlsx` | every module touching `screening.xlsx` |
-| `manuscript_numeric_audit` | Audit manuscript numbers against a fact list | M9 L8 |
+| `nulis_pdf_integrity` | Detect truncated downloads that pass the magic-byte check | M6 L2 |
+| `nulis_pdf_verify_record` | Search for a record title across the **whole** PDF, not just page one | M6 L2 |
+| `nulis_pdf_match_records` | Match PDFs to records by **content**, not filename | M6 L2 |
+| `nulis_reconcile_two_pass` | Reconcile two independent passes + arbitration queue | M5 L3 · M6 L5 · M7 L5 |
+| `nulis_calibration_sample` | Seeded, stratified random calibration sample | M5 L3 |
+| `nulis_retrieve_fulltext` | Full-text acquisition via Unpaywall + `citation_pdf_url` | M6 L1 |
+| `nulis_xlsx_read` / `nulis_xlsx_write` | Read and write `.xlsx` | every module touching `screening.xlsx` |
+| `nulis_manuscript_numeric_audit` | Audit manuscript numbers against a fact list | M9 L8 |
 
 ## No dependencies, on purpose
 
@@ -111,7 +111,7 @@ machines it is meant to serve — participants who are not IT people and have no
 ## The required order before any PDF is used
 
 ```
-pdf_integrity  →  pdf_match_records  →  pdf_verify_record
+nulis_pdf_integrity  →  nulis_pdf_match_records  →  nulis_pdf_verify_record
 ```
 
 This is not theoretical caution. PDFs downloaded by other tools are named
@@ -147,21 +147,21 @@ threshold is 800 characters per page; the real-corpus median is 2,713. One scann
 399 characters per page was once declared not to contain its article, when in fact the
 content was valid and simply an image.
 
-**`xlsx_write` rewrites the entire file.** It is not a cell editor — include every sheet you
+**`nulis_xlsx_write` rewrites the entire file.** It is not a cell editor — include every sheet you
 want to keep, or write to a new file.
 
-**`calibration_sample` requires a `seed`.** `Math.random` cannot be seeded, so the sample
+**`nulis_calibration_sample` requires a `seed`.** `Math.random` cannot be seeded, so the sample
 would not be reproducible — and reproducibility is the entire reason that step exists.
 
 ## Alongside scholar and zotero
 
 There is no tool-name collision. The danger is not the names but the **files** — which is
-what `pdf_match_records` addresses.
+what `nulis_pdf_match_records` addresses.
 
 Zotero is an advantage when used together: it holds PDFs already obtained through
-institutional access, precisely the group of records `retrieve_fulltext` cannot reach.
+institutional access, precisely the group of records `nulis_retrieve_fulltext` cannot reach.
 
-`retrieve_fulltext` separates `NEED_MANUAL` from `NEED_INSTITUTIONAL`. The first is open
+`nulis_retrieve_fulltext` separates `NEED_MANUAL` from `NEED_INSTITUTIONAL`. The first is open
 access but the server refuses scripts — it just needs opening in a browser. Merging the two
 sends participants to the library for articles that are in fact freely available.
 

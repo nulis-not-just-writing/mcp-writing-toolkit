@@ -31,28 +31,28 @@ mengembalikan 16 alih-alih 21. Isi kuncinya, pasang ulang ekstensinya, lalu jala
 Claude Desktop.
 
 **Kunci sudah diisi tapi Scopus menolak dengan 401 atau 403.**
-Jalankan `elsevier_status` — ia melaporkan apakah kunci terbaca dan apakah benar-benar
+Jalankan `nulis_elsevier_status` — ia melaporkan apakah kunci terbaca dan apakah benar-benar
 diterima. Penyebab paling umum: Anda mengakses dari luar jaringan kampus. Mintalah
 **insttoken** ke pustakawan atau admin lisensi, lalu isikan ke `ELSEVIER_INSTTOKEN`.
 
 **Berapa sisa kuota saya?**
-`elsevier_status` melaporkannya. Jalankan **sebelum** memulai pencarian sistematis, bukan
+`nulis_elsevier_status` melaporkannya. Jalankan **sebelum** memulai pencarian sistematis, bukan
 setelah kuotanya habis di tengah jalan.
 
-**`get_open_access_pdf` tidak menemukan apa pun padahal artikelnya jelas ada.**
+**`nulis_get_open_access_pdf` tidak menemukan apa pun padahal artikelnya jelas ada.**
 Artikel itu memang tidak punya salinan open access yang legal. Tool ini hanya menunjuk
 salinan yang sah terbuka; ia tidak mencari salinan bajakan. Perlu dicatat, `CONTACT_EMAIL`
 yang kosong *bukan* penyebabnya — tanpa itu pun pencarian tetap berjalan lewat OpenAlex.
 Mengisi email menambah jalur Unpaywall yang sekalian melaporkan lisensi salinannya.
 
 **Bisakah saya mempercayai metadata dari `search_*`?**
-Untuk keperluan sitasi, verifikasi dengan `get_paper_by_doi`. Hasil pencarian berguna
+Untuk keperluan sitasi, verifikasi dengan `nulis_get_paper_by_doi`. Hasil pencarian berguna
 untuk menemukan, tetapi yang mengikat adalah apa yang terdaftar di Crossref. Sitasi yang
 *terlihat* masuk akal justru pola khas referensi karangan.
 
 **PDF-nya tersimpan di mana?**
 `DOWNLOAD_DIR` bila diisi, lalu `~/Downloads`, lalu folder sementara sistem. Jalankan
-`server_status` untuk melihat folder mana yang benar-benar dipakai sekarang.
+`nulis_server_status` untuk melihat folder mana yang benar-benar dipakai sekarang.
 
 ## zotero
 
@@ -69,7 +69,7 @@ lalu coba lagi.
 Tidak. Seluruh panggilannya `GET`; tidak ada satu pun jalur tulis di kodenya.
 
 **Kunci sitasi BibTeX-nya berbeda dari yang saya pakai.**
-`zotero_export_bibtex` memakai data Zotero sendiri. Bila Anda memakai **Better BibTeX**,
+`nulis_zotero_export_bibtex` memakai data Zotero sendiri. Bila Anda memakai **Better BibTeX**,
 kunci yang Anda kelola di sana dikelola plugin itu dan tidak selalu sama. Periksa dulu
 sebelum menempelkannya ke naskah LaTeX yang sudah berjalan.
 
@@ -100,9 +100,9 @@ seperti di atas. Di macOS: `brew install poppler`.
 Jangan. Berkas dari luar tidak bernama `SCR[ID]_` sehingga tidak terlihat oleh pemeriksaan
 berbasis nama, padahal justru itu yang paling perlu diverifikasi — pernah terjadi sebuah
 unduhan mengembalikan PDF valid berisi artikel yang sepenuhnya berbeda. Jalankan
-`pdf_integrity` → `pdf_match_records` → `pdf_verify_record` lebih dulu.
+`nulis_pdf_integrity` → `nulis_pdf_match_records` → `nulis_pdf_verify_record` lebih dulu.
 
-**`xlsx_write` menghapus sheet lain saya.**
+**`nulis_xlsx_write` menghapus sheet lain saya.**
 Ia menulis ulang seluruh berkas dan bukan penyunting sel. Sertakan semua sheet yang ingin
 dipertahankan, atau tulis ke berkas baru.
 

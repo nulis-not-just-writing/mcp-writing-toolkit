@@ -20,7 +20,13 @@ const analytics = require('./lib/analytics');
 const retrieve = require('./lib/retrieve');
 
 // Harus sama dengan "version" di manifest.json — build-mcpb.sh menolak bila berbeda.
-const SERVER = { name: 'scr-toolkit-nulis', version: '1.6.0' };
+const SERVER = { name: 'scr-toolkit-nulis', version: '2.0.0' };
+
+// Claude Desktop menampilkan nama tool secara RATA — tidak ada ruang nama per
+// server. Awalan ditambahkan di batas protokol (tools/list dan tools/call),
+// sehingga TOOLS di bawah tetap memakai nama pendek dan mustahil ada yang
+// terlewat diberi awalan.
+const PREFIX = 'nulis_';
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -391,10 +397,10 @@ async function handle(req) {
   if (method === 'notifications/initialized' || method === 'initialized') return;
   if (method === 'ping') return ok(id, {});
   if (method === 'tools/list') {
-    return ok(id, { tools: TOOLS.map(({ name, description, inputSchema }) => ({ name, description, inputSchema })) });
+    return ok(id, { tools: TOOLS.map(({ name, description, inputSchema }) => ({ name: PREFIX + name, description, inputSchema })) });
   }
   if (method === 'tools/call') {
-    const tool = TOOLS.find((t) => t.name === (params || {}).name);
+    const tool = TOOLS.find((t) => PREFIX + t.name === (params || {}).name);
     if (!tool) return err(id, -32601, `Alat tidak dikenal: ${(params || {}).name}`);
     try {
       const result = await tool.run((params && params.arguments) || {});

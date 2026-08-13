@@ -1,4 +1,4 @@
-# ScR Toolkit Nulis v1.6.0 — ekstensi MCP untuk pekerjaan deterministik scoping review
+# ScR Toolkit Nulis v2.0.0 — ekstensi MCP untuk pekerjaan deterministik scoping review
 
 Sembilan alat yang mengerjakan bagian **deterministik** alur ScR: memeriksa, menghitung, mencocokkan, mengunduh. Tidak satu pun memutuskan eligibility — penilaian tetap milik peserta dan Claude.
 
@@ -26,7 +26,7 @@ Karena itu seluruh alat di sini ditulis **tanpa satu pun dependensi npm** — No
 
 ## Pemasangan
 
-1. Unduh [`scr-toolkit-nulis-1.6.0.mcpb`](../dist/scr-toolkit-nulis-1.6.0.mcpb) dari folder
+1. Unduh [`scr-toolkit-nulis-2.0.0.mcpb`](../dist/scr-toolkit-nulis-2.0.0.mcpb) dari folder
    [`dist/`](../dist/), atau dari halaman
    [Releases](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases)
 2. Buka Claude Desktop → **Settings → Extensions**
@@ -39,14 +39,14 @@ Berkas `.mcpb` adalah arsip ZIP biasa. Bila perlu diperiksa isinya, ganti eksten
 
 | Alat | Titik modul |
 |---|---|
-| `pdf_integrity` | M6 Langkah 2 |
-| `pdf_verify_record` | M6 Langkah 2 |
-| `pdf_match_records` | M6 Langkah 2 — wajib bila PDF berasal dari MCP lain |
-| `reconcile_two_pass` | M5 L3 · M6 L5 · M7 L5 |
-| `calibration_sample` | M5 L3 |
-| `retrieve_fulltext` | M6 Langkah 1 |
-| `xlsx_read` / `xlsx_write` | seluruh modul yang menyentuh `screening.xlsx` |
-| `manuscript_numeric_audit` | M9 L8 |
+| `nulis_pdf_integrity` | M6 Langkah 2 |
+| `nulis_pdf_verify_record` | M6 Langkah 2 |
+| `nulis_pdf_match_records` | M6 Langkah 2 — wajib bila PDF berasal dari MCP lain |
+| `nulis_reconcile_two_pass` | M5 L3 · M6 L5 · M7 L5 |
+| `nulis_calibration_sample` | M5 L3 |
+| `nulis_retrieve_fulltext` | M6 Langkah 1 |
+| `nulis_xlsx_read` / `nulis_xlsx_write` | seluruh modul yang menyentuh `screening.xlsx` |
+| `nulis_manuscript_numeric_audit` | M9 L8 |
 
 ## Batas yang harus diketahui sebelum dipercaya
 
@@ -60,7 +60,7 @@ Memasang poppler menaikkan mutu pemeriksaan, tetapi bukan syarat pemakaian.
 
 **PDF hasil scan** tanpa lapisan teks tidak dapat dibaca siapa pun tanpa OCR. Alat mengenalinya lewat **kepadatan teks**, bukan lewat berhasil-tidaknya ekstraksi: berkas hasil scan tetap mengembalikan nomor halaman dan header sehingga ekstraksi tampak berhasil. Ambangnya 800 karakter per halaman (median korpus nyata: 2.713). Di bawah itu, hasil pencarian teks dilaporkan `TIDAK_DAPAT_DIPERIKSA` dan tidak pernah dipakai untuk menuduh — pernah terjadi satu berkas hasil scan (399 karakter/halaman) dinyatakan tidak memuat artikelnya padahal isinya sah, hanya berupa gambar.
 
-**`xlsx_write` menulis ulang seluruh berkas.** Ia bukan penyunting sel. Sertakan semua sheet yang ingin dipertahankan, atau tulis ke berkas baru.
+**`nulis_xlsx_write` menulis ulang seluruh berkas.** Ia bukan penyunting sel. Sertakan semua sheet yang ingin dipertahankan, atau tulis ke berkas baru.
 
 ## Tiga artefak PDF yang sudah dikodekan
 
@@ -75,8 +75,8 @@ Membandingkan mentah-mentah akan melaporkan kutipan sah sebagai palsu. Ini perna
 ## Catatan lain yang dikodekan sebagai perilaku, bukan sekadar dokumentasi
 
 - **Kode alasan `-`, `NA`, `n/a`, dan sel kosong diperlakukan SAMA.** Perbedaan penulisan pernah melahirkan 182 sengketa palsu pada satu tinjauan nyata.
-- **`calibration_sample` mewajibkan `seed`.** `Math.random` tidak dapat diberi benih, sehingga sampel tidak akan reproducible — padahal reproducibility justru alasan langkah itu ada. Ganti seed bila sampel digambar ulang.
-- **`retrieve_fulltext` memisahkan `NEED_MANUAL` dari `NEED_INSTITUTIONAL`.** Yang pertama Open Access tetapi servernya menolak skrip — cukup dibuka di browser. Menyatukan keduanya membuat peserta menelusuri perpustakaan untuk artikel yang sebenarnya terbuka.
+- **`nulis_calibration_sample` mewajibkan `seed`.** `Math.random` tidak dapat diberi benih, sehingga sampel tidak akan reproducible — padahal reproducibility justru alasan langkah itu ada. Ganti seed bila sampel digambar ulang.
+- **`nulis_retrieve_fulltext` memisahkan `NEED_MANUAL` dari `NEED_INSTITUTIONAL`.** Yang pertama Open Access tetapi servernya menolak skrip — cukup dibuka di browser. Menyatukan keduanya membuat peserta menelusuri perpustakaan untuk artikel yang sebenarnya terbuka.
 - **Unduhan dianggap berhasil hanya bila berkasnya PDF utuh.** HTTP 200 bukan bukti: halaman error, halaman login, dan balasan berbadan kosong juga mengembalikan 200. Berkas terpotong bahkan lolos pemeriksaan magic byte `%PDF`.
 - **`citation_pdf_url` wajib dicoba.** Unpaywall kerap menandai artikel Open Access tetapi hanya menyimpan halaman landing-nya. Pada satu tinjauan nyata, melewatkan langkah ini akan membuat 19 dari 162 artikel yang sepenuhnya terbuka tercatat gagal unduh.
 
@@ -89,14 +89,14 @@ PDF yang diunduh alat lain bernama `core_11443100.pdf`, `336-352-1-PB.pdf`, atau
 Karena itu, apa pun alat yang dipakai mengunduh, urutan ini wajib dilalui sebelum satu PDF pun dipakai untuk screening:
 
 ```
-pdf_integrity  →  pdf_match_records  →  pdf_verify_record
+nulis_pdf_integrity  →  nulis_pdf_match_records  →  nulis_pdf_verify_record
 ```
 
 **Pencocokan memakai bobot posisi, bukan sekadar keberadaan judul.** Judul yang muncul hanya di bagian belakang berkas berasal dari daftar pustaka — artinya artikel itu *disitir*, bukan artikel yang ada di berkas ini. Ini bukan kehati-hatian teoretis: sebuah berkas berisi *"Legal Adaptation for Muslim Minorities"* tercocokkan ke record lain semata karena record itu ada di catatan kaki ke-56. Tanpa penjagaan posisi, artikel salah akan di-rename menjadi ID yang sah lalu masuk ke screening.
 
 **Berkas yang sudah bernama `SCR[ID]_` tidak pernah di-rename atas dasar isi.** Diukur pada 92 PDF nyata, pencocokan isi menetapkan ID berbeda pada 2 berkas karena judul record lain terkutip cukup awal. Ketidaksesuaian semacam itu **dilaporkan sebagai konflik untuk diputus peneliti**, tidak dieksekusi.
 
-Zotero justru menguntungkan bila peserta memakainya: ia menyimpan PDF yang sudah diperoleh lewat akses institusi — persis kelompok record yang `retrieve_fulltext` tidak dapat jangkau.
+Zotero justru menguntungkan bila peserta memakainya: ia menyimpan PDF yang sudah diperoleh lewat akses institusi — persis kelompok record yang `nulis_retrieve_fulltext` tidak dapat jangkau.
 
 ## Disiplin batch dan biaya
 

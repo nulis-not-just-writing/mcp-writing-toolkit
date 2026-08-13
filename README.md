@@ -15,9 +15,9 @@ all.
 
 | Server | Tools | Answers |
 |---|---|---|
-| [`scholar-nulis`](scholar-nulis/) **0.7.0** | 21 | does this paper actually exist, and where is a legal PDF? |
-| [`zotero-nulis`](zotero-nulis/) **0.6.0** | 8 | what is already in my own library? |
-| [`scr-toolkit-nulis`](scr-toolkit-nulis/) **1.6.0** | 9 | is this PDF really the article it claims to be, and do the two screening passes agree? |
+| [`scholar-nulis`](scholar-nulis/) **0.8.0** | 21 | does this paper actually exist, and where is a legal PDF? |
+| [`zotero-nulis`](zotero-nulis/) **0.7.0** | 8 | what is already in my own library? |
+| [`scr-toolkit-nulis`](scr-toolkit-nulis/) **2.0.0** | 9 | is this PDF really the article it claims to be, and do the two screening passes agree? |
 
 `scholar-nulis` searches **seven open scholarly APIs** — arXiv, OpenAlex, Crossref, Semantic
 Scholar, PubMed, Europe PMC, DOAJ — with no key required. If you have Elsevier
@@ -37,9 +37,9 @@ npm dependencies**.
 **Claude Desktop** — download from [`dist/`](dist/), then double-click (or
 **Settings → Extensions**):
 
-- [`scholar-nulis-0.7.0.mcpb`](dist/scholar-nulis-0.7.0.mcpb)
-- [`zotero-nulis-0.6.0.mcpb`](dist/zotero-nulis-0.6.0.mcpb)
-- [`scr-toolkit-nulis-1.6.0.mcpb`](dist/scr-toolkit-nulis-1.6.0.mcpb)
+- [`scholar-nulis-0.8.0.mcpb`](dist/scholar-nulis-0.8.0.mcpb)
+- [`zotero-nulis-0.7.0.mcpb`](dist/zotero-nulis-0.7.0.mcpb)
+- [`scr-toolkit-nulis-2.0.0.mcpb`](dist/scr-toolkit-nulis-2.0.0.mcpb)
 
 Versioned builds are also attached to each [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 
@@ -56,12 +56,12 @@ claude mcp add scholar -- node "$PWD/dist/index.js"
 
 ## What makes them different
 
-**Citations are verified, not guessed.** `get_paper_by_doi` resolves a DOI against
+**Citations are verified, not guessed.** `nulis_get_paper_by_doi` resolves a DOI against
 Crossref and returns what is actually registered. This is a direct countermeasure to
 fabricated references — a plausible-*looking* author–year–journal combination is the
 signature pattern, and the only way to tell is to ask the registrar.
 
-**Scopus queries are passed through verbatim.** `search_scopus` does not translate,
+**Scopus queries are passed through verbatim.** `nulis_search_scopus` does not translate,
 normalise, or "fix" your query. The consequence is that the search string you report in
 the manuscript is identical to the one actually executed — a reproducibility requirement
 that collapses the moment some layer silently rewrites the query.

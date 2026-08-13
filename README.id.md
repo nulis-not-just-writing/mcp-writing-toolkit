@@ -15,9 +15,9 @@ JavaScript biasa tanpa dependensi sama sekali.
 
 | Server | Tool | Menjawab |
 |---|---|---|
-| [`scholar-nulis`](scholar-nulis/) **0.7.0** | 21 | apakah paper ini benar ada, dan di mana PDF legalnya? |
-| [`zotero-nulis`](zotero-nulis/) **0.6.0** | 8 | apa yang sudah ada di pustaka saya sendiri? |
-| [`scr-toolkit-nulis`](scr-toolkit-nulis/) **1.6.0** | 9 | benarkah PDF ini artikel yang diakuinya, dan apakah dua pass screening sepakat? |
+| [`scholar-nulis`](scholar-nulis/) **0.8.0** | 21 | apakah paper ini benar ada, dan di mana PDF legalnya? |
+| [`zotero-nulis`](zotero-nulis/) **0.7.0** | 8 | apa yang sudah ada di pustaka saya sendiri? |
+| [`scr-toolkit-nulis`](scr-toolkit-nulis/) **2.0.0** | 9 | benarkah PDF ini artikel yang diakuinya, dan apakah dua pass screening sepakat? |
 
 `scholar-nulis` mencari di **tujuh API ilmiah terbuka** — arXiv, OpenAlex, Crossref, Semantic
 Scholar, PubMed, Europe PMC, DOAJ — tanpa perlu kunci apa pun. Bila Anda punya kunci
@@ -37,9 +37,9 @@ dependensi npm**.
 **Claude Desktop** — unduh dari [`dist/`](dist/), lalu klik dua kali (atau
 **Settings → Extensions**):
 
-- [`scholar-nulis-0.7.0.mcpb`](dist/scholar-nulis-0.7.0.mcpb)
-- [`zotero-nulis-0.6.0.mcpb`](dist/zotero-nulis-0.6.0.mcpb)
-- [`scr-toolkit-nulis-1.6.0.mcpb`](dist/scr-toolkit-nulis-1.6.0.mcpb)
+- [`scholar-nulis-0.8.0.mcpb`](dist/scholar-nulis-0.8.0.mcpb)
+- [`zotero-nulis-0.7.0.mcpb`](dist/zotero-nulis-0.7.0.mcpb)
+- [`scr-toolkit-nulis-2.0.0.mcpb`](dist/scr-toolkit-nulis-2.0.0.mcpb)
 
 Bundle bernomor versi juga dilampirkan di setiap [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 
@@ -60,12 +60,12 @@ Detail lengkap, termasuk cara meneruskan kunci API, ada di
 
 ## Yang membedakannya
 
-**Sitasi diverifikasi, bukan diduga.** `get_paper_by_doi` meresolusi DOI ke Crossref dan
+**Sitasi diverifikasi, bukan diduga.** `nulis_get_paper_by_doi` meresolusi DOI ke Crossref dan
 mengembalikan metadata yang sebenarnya terdaftar. Ini penanggulangan langsung untuk
 sitasi karangan — kombinasi penulis–tahun–jurnal yang *terlihat* masuk akal justru pola
 khasnya, dan satu-satunya cara membedakannya adalah menanyakan ke registrar.
 
-**Query Scopus diteruskan apa adanya.** `search_scopus` tidak menerjemahkan, menormalkan,
+**Query Scopus diteruskan apa adanya.** `nulis_search_scopus` tidak menerjemahkan, menormalkan,
 atau "memperbaiki" query Anda. Akibatnya *search string* yang Anda laporkan di manuskrip
 identik dengan yang benar-benar dieksekusi — syarat keterulangan yang gugur begitu ada
 lapisan yang diam-diam menulis ulang query.

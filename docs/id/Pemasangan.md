@@ -5,9 +5,9 @@
 ## Claude Desktop — cara termudah
 
 1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../../dist/):
-   - `scholar-nulis-0.7.0.mcpb`
-   - `zotero-nulis-0.6.0.mcpb`
-   - `scr-toolkit-nulis-1.6.0.mcpb`
+   - `scholar-nulis-0.8.0.mcpb`
+   - `zotero-nulis-0.7.0.mcpb`
+   - `scr-toolkit-nulis-2.0.0.mcpb`
 2. **Klik dua kali** berkasnya. Claude Desktop membuka jendela pemasangan.
    (Alternatif: **Settings → Extensions**, lalu seret berkasnya ke sana.)
 3. Isi kolom konfigurasi bila perlu — semuanya opsional untuk `scholar-nulis`.
@@ -19,6 +19,18 @@ dijalankan ulang.
 Tidak ada yang perlu dipasang lebih dulu. Claude Desktop menyertakan Node.js-nya sendiri.
 
 ### Naik dari nama lama
+
+**Setiap nama tool kini berawalan `nulis_`** — `nulis_search_arxiv`,
+`nulis_zotero_search_items`, `nulis_pdf_integrity`, dan seterusnya. Ini perubahan yang
+memutus kompatibilitas, dan alasannya: Claude Desktop menampilkan nama tool secara
+**rata** — tidak ada ruang nama per server seperti `mcp__scholar__` di Claude Code. Dua
+ekstensi yang sama-sama mendaftarkan `search_arxiv` karena itu bertabrakan, dan yang
+menang tidak dapat diprediksi. Diukur pada satu mesin nyata, server di repo ini berbagi
+**sembilan** nama tool dengan MCP lain yang sudah terpasang; setelah diberi awalan, nol.
+
+Cara Anda berbicara dengan Claude tidak perlu berubah — ia membaca sendiri daftar
+tool-nya. Yang perlu disesuaikan hanya skrip atau instruksi tertulis yang menyebut nama
+tool secara harfiah.
 
 Server ini sebelumnya bernama `scholar-paper-search`, `zotero-mcp`, dan `scr-toolkit`.
 Claude Desktop mengenali ekstensi dari `name` di manifest-nya, jadi server yang berganti
@@ -75,8 +87,8 @@ sebelumnya yang berbasis Python dan sudah tidak berlaku.
 | `CONTACT_EMAIL` | tidak | Masuk *polite pool* Crossref & OpenAlex (kuota lebih longgar) **dan** menambah jalur Unpaywall untuk pencarian akses terbuka, yang sekalian melaporkan lisensi tiap PDF. Cukup email aktif, tanpa registrasi. |
 | `S2_API_KEY` | tidak | Melonggarkan kuota Semantic Scholar. Gratis di [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api). |
 | `DOWNLOAD_DIR` | tidak | Folder penyimpanan PDF. Bila kosong: `~/Downloads`, lalu folder sementara sistem bila `~/Downloads` tidak bisa ditulis. |
-| `SCOPUS_API_KEY` | tidak | Menyalakan `search_scopus`, `scopus_abstract`, `scopus_export_csv`, `elsevier_status`. |
-| `SCIENCEDIRECT_API_KEY` | tidak | Menyalakan `sciencedirect_fulltext`. Kosongkan bila kunci Scopus Anda sudah mencakupnya. |
+| `SCOPUS_API_KEY` | tidak | Menyalakan `nulis_search_scopus`, `nulis_scopus_abstract`, `nulis_scopus_export_csv`, `nulis_elsevier_status`. |
+| `SCIENCEDIRECT_API_KEY` | tidak | Menyalakan `nulis_sciencedirect_fulltext`. Kosongkan bila kunci Scopus Anda sudah mencakupnya. |
 | `ELSEVIER_INSTTOKEN` | tidak | Token institusi dari pustakawan/admin lisensi. Diperlukan hanya bila akses dari luar jaringan kampus ditolak dengan 401/403. |
 
 Kunci Elsevier didaftarkan gratis dengan akun institusi di

@@ -2,7 +2,7 @@
 
 *[Baca dalam bahasa Indonesia](id/scholar.md)*
 
-`scholar-nulis` **0.7.0** · 16 tools, or 21 with an Elsevier key · [source](../scholar-nulis/)
+`scholar-nulis` **0.8.0** · 16 tools, or 21 with an Elsevier key · [source](../scholar-nulis/)
 
 Searches seven open scholarly APIs, verifies citations by DOI, finds legal open-access
 PDFs, downloads them, and reads their text. Five Scopus/ScienceDirect tools switch on if
@@ -43,7 +43,7 @@ That is the whole point of the tool. It converts "this looks fine" into a yes or
 ### 2. You are about to cite a study that has been retracted
 
 Citing retracted work is a serious error, and nothing in the PDF you downloaded will
-necessarily tell you. `get_paper_by_doi` checks retraction status on every lookup — you do
+necessarily tell you. `nulis_get_paper_by_doi` checks retraction status on every lookup — you do
 not have to ask for it:
 
 ```json
@@ -75,8 +75,8 @@ still succeeds through OpenAlex, but returns no licence.
 
 ### 4. You are running a systematic search that a reviewer will re-run
 
-`search_scopus` returns the total hit count for the identification box of your PRISMA
-diagram, and `scopus_export_csv` pages through the whole result set into a screening-ready
+`nulis_search_scopus` returns the total hit count for the identification box of your PRISMA
+diagram, and `nulis_scopus_export_csv` pages through the whole result set into a screening-ready
 file. Because the query is passed through untouched, the number you report and the string
 you report agree with each other — see [below](#queries-are-passed-through-verbatim).
 
@@ -84,13 +84,13 @@ you report agree with each other — see [below](#queries-are-passed-through-ver
 
 | Tool | Purpose |
 |---|---|
-| `search_arxiv` | Search arXiv |
-| `search_openalex` | Search OpenAlex (year filter) |
-| `search_crossref` | Search Crossref |
-| `search_semantic_scholar` | Search Semantic Scholar |
-| `search_pubmed` | Search PubMed |
-| `search_europepmc` | Search Europe PMC |
-| `search_doaj` | Search open-access journal articles in DOAJ |
+| `nulis_search_arxiv` | Search arXiv |
+| `nulis_search_openalex` | Search OpenAlex (year filter) |
+| `nulis_search_crossref` | Search Crossref |
+| `nulis_search_semantic_scholar` | Search Semantic Scholar |
+| `nulis_search_pubmed` | Search PubMed |
+| `nulis_search_europepmc` | Search Europe PMC |
+| `nulis_search_doaj` | Search open-access journal articles in DOAJ |
 
 All seven work without registration. Setting `CONTACT_EMAIL` puts you in the Crossref and
 OpenAlex *polite pool* — a more generous quota, and your requests are no longer treated as
@@ -100,22 +100,22 @@ anonymous traffic.
 
 | Tool | Purpose |
 |---|---|
-| `get_paper_by_doi` | Verify and retrieve paper metadata by DOI (Crossref) |
-| `get_open_access_pdf` | Find a legal open-access PDF link for a DOI |
-| `download_pdf` | Download a PDF from a URL |
-| `download_arxiv` | Download an arXiv paper's PDF |
-| `read_arxiv_paper` | Read the full text of an arXiv paper |
-| `read_pdf` | Extract text from a PDF (URL or local file) |
-| `pdf_to_text` | Extract a PDF's text and save it as `.md` under `fulltext/` |
-| `batch_acquire_pdfs` | Attempt PDF downloads for a whole set of studies at once |
+| `nulis_get_paper_by_doi` | Verify and retrieve paper metadata by DOI (Crossref) |
+| `nulis_get_open_access_pdf` | Find a legal open-access PDF link for a DOI |
+| `nulis_download_pdf` | Download a PDF from a URL |
+| `nulis_download_arxiv` | Download an arXiv paper's PDF |
+| `nulis_read_arxiv_paper` | Read the full text of an arXiv paper |
+| `nulis_read_pdf` | Extract text from a PDF (URL or local file) |
+| `nulis_pdf_to_text` | Extract a PDF's text and save it as `.md` under `fulltext/` |
+| `nulis_batch_acquire_pdfs` | Attempt PDF downloads for a whole set of studies at once |
 
-**`get_paper_by_doi` is the most important tool here.** It resolves a DOI against Crossref
+**`nulis_get_paper_by_doi` is the most important tool here.** It resolves a DOI against Crossref
 and returns what is actually registered — authors, title, journal, year. This is the only
 way to tell a real citation from a fabricated one: a plausible-*looking*
 author–year–journal combination is the signature pattern of invented references, and no
 amount of careful reading substitutes for asking the registrar.
 
-`get_open_access_pdf` only points at copies that are genuinely, **legally** open. It does
+`nulis_get_open_access_pdf` only points at copies that are genuinely, **legally** open. It does
 not look for pirated copies. It works without `CONTACT_EMAIL` by going through OpenAlex;
 setting the email adds the Unpaywall route, which also reports the **licence** of the copy
 it found — worth having when you need to know whether you may redistribute it.
@@ -128,15 +128,15 @@ simply are not there — `tools/list` returns 16 instead of 21.
 
 | Tool | Purpose |
 |---|---|
-| `search_scopus` | Search Scopus using its own query syntax, passed through verbatim |
-| `scopus_abstract` | Full abstract, author keywords, citation count (by DOI or Scopus ID) |
-| `sciencedirect_fulltext` | ScienceDirect full text by DOI |
-| `scopus_export_csv` | Run a query, collect every page, save as screening-ready CSV |
-| `elsevier_status` | Check that keys are present, accepted, and what quota remains |
+| `nulis_search_scopus` | Search Scopus using its own query syntax, passed through verbatim |
+| `nulis_scopus_abstract` | Full abstract, author keywords, citation count (by DOI or Scopus ID) |
+| `nulis_sciencedirect_fulltext` | ScienceDirect full text by DOI |
+| `nulis_scopus_export_csv` | Run a query, collect every page, save as screening-ready CSV |
+| `nulis_elsevier_status` | Check that keys are present, accepted, and what quota remains |
 
 ### Queries are passed through verbatim
 
-`search_scopus` accepts native Scopus syntax — `TITLE-ABS-KEY`, `AND/OR/NOT`, `W/n`,
+`nulis_search_scopus` accepts native Scopus syntax — `TITLE-ABS-KEY`, `AND/OR/NOT`, `W/n`,
 `PUBYEAR`, `DOCTYPE`, `LANGUAGE`, `SRCTYPE` — and **does not translate it**:
 
 ```
@@ -148,13 +148,13 @@ be identical to the one actually executed. The moment some layer silently normal
 "fixes" your query, the reproducibility claim in your manuscript stops being true — and a
 reviewer re-running your query gets a different number with nothing to explain it.
 
-For the same reason, `search_scopus` returns **total hits** — the number that goes in the
+For the same reason, `nulis_search_scopus` returns **total hits** — the number that goes in the
 identification box of a PRISMA flow diagram.
 
-### Run `elsevier_status` before you start
+### Run `nulis_elsevier_status` before you start
 
 Elsevier quota is tied to an institutional subscription and can run out mid-way.
-`elsevier_status` reports whether the key is read, whether it is actually accepted, and how
+`nulis_elsevier_status` reports whether the key is read, whether it is actually accepted, and how
 much quota is left — far cheaper than discovering it in the middle of a systematic search.
 
 If off-campus access is refused with 401/403, ask your librarian or licence admin for an
@@ -168,14 +168,14 @@ passes through `scrub()`, which replaces the key and any `apiKey=…` pattern wi
 
 ## Diagnostics
 
-`server_status` reports the running version, the folder PDFs will be saved to, and which
+`nulis_server_status` reports the running version, the folder PDFs will be saved to, and which
 optional features are active. It is the right first step when something behaves unexpectedly
 — including confirming that Claude Desktop really loaded the version you just installed.
 
 ## Download folder
 
 The order used: `DOWNLOAD_DIR` if set to a valid value → `~/Downloads` → the system temp
-folder. `.md` files produced by `pdf_to_text` go into a `fulltext/` subfolder.
+folder. `.md` files produced by `nulis_pdf_to_text` go into a `fulltext/` subfolder.
 
 ---
 

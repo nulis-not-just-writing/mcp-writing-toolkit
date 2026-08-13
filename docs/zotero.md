@@ -2,7 +2,7 @@
 
 *[Baca dalam bahasa Indonesia](id/zotero.md)*
 
-`zotero-nulis` **0.6.0** · 8 tools · [source](../zotero-nulis/)
+`zotero-nulis` **0.7.0** · 8 tools · [source](../zotero-nulis/)
 
 Gives Claude read access to your Zotero library: search items, read metadata and full text,
 browse collections, and export BibTeX.
@@ -27,7 +27,7 @@ some of it answers the question you are asking today.
 > *"Search my Zotero library for anything on teacher self-efficacy in vocational schools,
 > and tell me what I already have."*
 
-`zotero_search_items` runs against your own library. It costs nothing, hits no quota, and
+`nulis_zotero_search_items` runs against your own library. It costs nothing, hits no quota, and
 frequently makes an external search unnecessary.
 
 ### 2. Writing a section grounded in what you actually read
@@ -35,7 +35,7 @@ frequently makes an external search unnecessary.
 > *"Pull the full text of these six items and draft the theoretical framework from what they
 > actually say."*
 
-`zotero_get_item_fulltext` gives Claude the text you have already read and annotated, rather
+`nulis_zotero_get_item_fulltext` gives Claude the text you have already read and annotated, rather
 than an abstract or a guess. This is the difference between a paragraph built from what the
 sources say and one built from what their titles suggest.
 
@@ -46,7 +46,7 @@ for what happens when an item has not been indexed yet.
 
 > *"Export BibTeX for the items I cited in this draft."*
 
-`zotero_export_bibtex` takes a set of item keys and returns BibTeX for that subset — not
+`nulis_zotero_export_bibtex` takes a set of item keys and returns BibTeX for that subset — not
 your whole library. If you write in LaTeX, this is the step that stops a 900-entry `.bib`
 file from following a 6,000-word article around.
 
@@ -55,7 +55,7 @@ file from following a 6,000-word article around.
 > *"What have I added to Zotero in the last month?"* · *"List everything in my 'Revisi R2'
 > collection."*
 
-`zotero_get_recent` and `zotero_get_collection_items` are for the reading you did, filed
+`nulis_zotero_get_recent` and `nulis_zotero_get_collection_items` are for the reading you did, filed
 correctly, and then forgot about — which is most reading.
 
 ### What it deliberately will not do
@@ -68,14 +68,14 @@ years of work, and read access is enough to be useful without being able to dama
 
 | Tool | Purpose |
 |---|---|
-| `zotero_search_items` | Search the library by keyword |
-| `zotero_get_item_metadata` | Full metadata / BibTeX for one item |
-| `zotero_get_item_fulltext` | An item's full text (from Zotero's index) |
-| `zotero_get_item_children` | An item's attachments and notes |
-| `zotero_list_collections` | List library collections |
-| `zotero_get_collection_items` | Items inside a collection |
-| `zotero_get_recent` | Most recently added items |
-| `zotero_export_bibtex` | Export selected items as BibTeX |
+| `nulis_zotero_search_items` | Search the library by keyword |
+| `nulis_zotero_get_item_metadata` | Full metadata / BibTeX for one item |
+| `nulis_zotero_get_item_fulltext` | An item's full text (from Zotero's index) |
+| `nulis_zotero_get_item_children` | An item's attachments and notes |
+| `nulis_zotero_list_collections` | List library collections |
+| `nulis_zotero_get_collection_items` | Items inside a collection |
+| `nulis_zotero_get_recent` | Most recently added items |
+| `nulis_zotero_export_bibtex` | Export selected items as BibTeX |
 
 ## Two modes
 
@@ -108,7 +108,7 @@ will not be visible.
 
 ## Full text comes from Zotero's index
 
-`zotero_get_item_fulltext` reads **Zotero's own full-text index** rather than re-parsing the
+`nulis_zotero_get_item_fulltext` reads **Zotero's own full-text index** rather than re-parsing the
 PDF. The consequence: an item whose PDF Zotero has not finished indexing returns empty text
 even though the file is plainly there.
 
@@ -116,7 +116,7 @@ When that happens, right-click the item in Zotero → **Reindex Item**, then try
 
 ## BibTeX
 
-`zotero_export_bibtex` generates BibTeX from Zotero's own data. If you use **Better
+`nulis_zotero_export_bibtex` generates BibTeX from Zotero's own data. If you use **Better
 BibTeX**, the citation keys you manage there (e.g. `sugeng2024analisis`) belong to that
 plugin and will not always match the keys produced here — check before pasting into a LaTeX
 manuscript that is already underway.

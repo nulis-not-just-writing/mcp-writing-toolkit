@@ -284,14 +284,25 @@ async function searchDoaj(query: string, max: number): Promise<Paper[]> {
 // ---------- server ----------
 
 // Harus sama dengan "version" di manifest.json — build-mcpb.sh menolak bila berbeda.
-const SERVER_VERSION = "0.7.0";
+const SERVER_VERSION = "0.8.0";
 const server = new McpServer({ name: "scholar-nulis", version: SERVER_VERSION });
 
 // Bypass tipe untuk server.tool: kombinasi SDK 1.29 + zod 3.25 memicu TS2589
 // (instansiasi tipe terlalu dalam) di setiap call site. Validasi runtime zod tetap utuh.
 type ToolResult = ReturnType<typeof ok> | ReturnType<typeof fail>;
+
+// ── Awalan nama tool ──────────────────────────────────────────────────────
+// Claude Desktop menampilkan nama tool secara RATA: tidak ada ruang nama per
+// server seperti "mcp__scholar__" di Claude Code. Dua ekstensi yang sama-sama
+// mendaftarkan "search_arxiv" karena itu saling bertabrakan, dan yang menang
+// tidak dapat diprediksi.
+//
+// Awalan ditambahkan DI SATU TEMPAT, bukan ditulis ulang di tiap pemanggilan
+// tool() — supaya mustahil ada yang terlewat. Nama di dalam kode tetap pendek;
+// yang tampil ke luar selalu berawalan.
+const PREFIX = "nulis_";
 const tool = (name: string, desc: string, shape: z.ZodRawShape, cb: (args: any) => Promise<ToolResult>) =>
-  (server.tool as Function)(name, desc, shape, cb);
+  (server.tool as Function)(PREFIX + name, desc, shape, cb);
 
 const qShape = {
   query: z.string().describe("Kata kunci pencarian"),

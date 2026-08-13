@@ -12,15 +12,15 @@ Start from your situation, not from the server names.
 
 | Your situation | Server |
 |---|---|
-| Need to confirm a citation actually exists | **[scholar](scholar.md)** — `get_paper_by_doi` |
+| Need to confirm a citation actually exists | **[scholar](scholar.md)** — `nulis_get_paper_by_doi` |
 | Searching several databases at once | **[scholar](scholar.md)** |
 | Running a Scopus search for a systematic review | **[scholar](scholar.md)** — needs an Elsevier key |
-| Need a legal open-access PDF for a DOI | **[scholar](scholar.md)** — `get_open_access_pdf` |
+| Need a legal open-access PDF for a DOI | **[scholar](scholar.md)** — `nulis_get_open_access_pdf` |
 | Want Claude to read what is already in your library | **[zotero](zotero.md)** |
-| Need BibTeX for a LaTeX manuscript | **[zotero](zotero.md)** — `zotero_export_bibtex` |
-| Need to confirm a PDF really is the article it claims | **[scr-toolkit](scr-toolkit.md)** — `pdf_match_records` |
-| Reconciling two screening passes and building an arbitration queue | **[scr-toolkit](scr-toolkit.md)** — `reconcile_two_pass` |
-| Auditing the numbers in a manuscript against a fact list | **[scr-toolkit](scr-toolkit.md)** — `manuscript_numeric_audit` |
+| Need BibTeX for a LaTeX manuscript | **[zotero](zotero.md)** — `nulis_zotero_export_bibtex` |
+| Need to confirm a PDF really is the article it claims | **[scr-toolkit](scr-toolkit.md)** — `nulis_pdf_match_records` |
+| Reconciling two screening passes and building an arbitration queue | **[scr-toolkit](scr-toolkit.md)** — `nulis_reconcile_two_pass` |
+| Auditing the numbers in a manuscript against a fact list | **[scr-toolkit](scr-toolkit.md)** — `nulis_manuscript_numeric_audit` |
 
 All three stand alone. Installing one does not require any of the others.
 

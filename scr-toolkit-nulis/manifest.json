@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "scr-toolkit-nulis",
   "display_name": "ScR Toolkit Nulis — Pekerjaan Deterministik Scoping Review",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Sembilan alat untuk pekerjaan deterministik scoping review: integritas PDF, verifikasi isi PDF vs record, pencocokan PDF ke record lewat isi, rekonsiliasi dua pass, sampel kalibrasi berbenih, akuisisi full-text, baca/tulis .xlsx, dan audit angka naskah.",
   "long_description": "Modul alur SLR/ScR menetapkan pekerjaan deterministik dikerjakan skrip, bukan LLM — karena skrip hemat token, hasilnya identik setiap dijalankan, dan dapat diaudit ulang. Masalahnya, peserta umumnya bukan orang IT dan banyak yang tidak punya Python. Claude Desktop menyediakan Node bawaan untuk ekstensi bertipe node ketika Node sistem tidak tersedia; Python tidak punya padanan itu. Karena itu seluruh alat di sini ditulis tanpa satu pun dependensi npm dan hanya memakai modul bawaan Node.\n\nAlat yang bergantung pada lapisan teks PDF akan memakai pdftotext (poppler) bila terpasang, dan jatuh ke pengekstrak bawaan bila tidak. Pengekstrak bawaan memetakan font CID lewat /ToUnicode namun tidak sempurna; karena itu ia hanya boleh MEMBUKTIKAN kecocokan dan tidak pernah menyangkalnya. Judul yang tidak ditemukan pada teks bermutu rendah dilaporkan TIDAK_DAPAT_DIPERIKSA, bukan MISMATCH.\n\nBerdampingan dengan MCP lain: berkas dari MCP scholar, Zotero, atau unduhan manual tidak bernama SCR[ID]_ sehingga tidak terlihat oleh alat berbasis nama. pdf_match_records mencocokkannya lewat isi. Pencocokan memakai bobot posisi: judul yang hanya muncul di bagian belakang berkas berasal dari daftar pustaka, artinya artikel itu disitir dan bukan artikel di berkas ini. Berkas yang sudah bernama SCR[ID]_ tidak pernah di-rename atas dasar isi — ketidaksesuaian dilaporkan untuk diputus peneliti.\n\nKepadatan teks menentukan otoritas pemeriksaan. PDF hasil scan tetap mengembalikan sedikit teks (nomor halaman, DOI, header) sehingga ekstraksi \"berhasil\" secara teknis padahal isi artikelnya berupa gambar. Diukur pada korpus 92 artikel jurnal: median 2.713 karakter per halaman; satu berkas hasil scan hanya 399, sehingga isinya tidak dapat diperiksa secara tekstual sama sekali padahal artikelnya sah. Karena itu teks di bawah 800 karakter per halaman tidak pernah dipakai untuk menuduh.",
   "author": {
@@ -30,39 +30,39 @@
   },
   "tools": [
     {
-      "name": "pdf_integrity",
+      "name": "nulis_pdf_integrity",
       "description": "Periksa integritas semua PDF di folder; mendeteksi unduhan terpotong yang lolos cek magic byte (M6 Langkah 2)"
     },
     {
-      "name": "pdf_verify_record",
+      "name": "nulis_pdf_verify_record",
       "description": "Cari judul record di SELURUH teks PDF, bukan hanya halaman pertama (M6 Langkah 2)"
     },
     {
-      "name": "pdf_match_records",
+      "name": "nulis_pdf_match_records",
       "description": "Cocokkan PDF ke record lewat ISI, bukan nama berkas — wajib bila PDF berasal dari MCP lain (scholar, Zotero) atau unduhan manual"
     },
     {
-      "name": "reconcile_two_pass",
+      "name": "nulis_reconcile_two_pass",
       "description": "Rekonsiliasi dua pass mandiri + antrean arbitrase (M5 L3, M6 L5, M7 L5)"
     },
     {
-      "name": "calibration_sample",
+      "name": "nulis_calibration_sample",
       "description": "Sampel kalibrasi acak berbenih dan terstratifikasi (M5 L3)"
     },
     {
-      "name": "retrieve_fulltext",
+      "name": "nulis_retrieve_fulltext",
       "description": "Akuisisi full-text via Unpaywall + citation_pdf_url (M6 Langkah 1)"
     },
     {
-      "name": "xlsx_read",
+      "name": "nulis_xlsx_read",
       "description": "Baca sheet .xlsx menjadi array objek"
     },
     {
-      "name": "xlsx_write",
+      "name": "nulis_xlsx_write",
       "description": "Tulis workbook .xlsx dari objek per sheet"
     },
     {
-      "name": "manuscript_numeric_audit",
+      "name": "nulis_manuscript_numeric_audit",
       "description": "Audit angka naskah terhadap daftar fakta (M9 L8)"
     }
   ],

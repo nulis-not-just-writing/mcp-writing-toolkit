@@ -29,27 +29,27 @@ registered without a key, rather than appearing and failing when called — `too
 returns 16 instead of 21. Set the key, reinstall the extension, then restart Claude Desktop.
 
 **The key is set but Scopus refuses with 401 or 403.**
-Run `elsevier_status` — it reports whether the key is read and whether it is actually
+Run `nulis_elsevier_status` — it reports whether the key is read and whether it is actually
 accepted. The most common cause is accessing from outside the campus network. Ask your
 librarian or licence admin for an **insttoken** and set `ELSEVIER_INSTTOKEN`.
 
 **How much quota do I have left?**
-`elsevier_status` reports it. Run it **before** starting a systematic search, not after the
+`nulis_elsevier_status` reports it. Run it **before** starting a systematic search, not after the
 quota runs out mid-way.
 
-**`get_open_access_pdf` finds nothing even though the article clearly exists.**
+**`nulis_get_open_access_pdf` finds nothing even though the article clearly exists.**
 The article genuinely has no legal open-access copy. This tool only points at legitimately
 open copies; it does not look for pirated ones. Note that a missing `CONTACT_EMAIL` is *not*
 the cause — without it the lookup still runs through OpenAlex. Setting the email adds the
 Unpaywall route, which also reports the copy's licence.
 
 **Can I trust the metadata from `search_*`?**
-For citation purposes, verify with `get_paper_by_doi`. Search results are useful for
+For citation purposes, verify with `nulis_get_paper_by_doi`. Search results are useful for
 finding, but what binds is what Crossref has registered. A citation that merely *looks*
 plausible is the signature pattern of invented references.
 
 **Where are the PDFs saved?**
-`DOWNLOAD_DIR` if set, then `~/Downloads`, then the system temp folder. Run `server_status`
+`DOWNLOAD_DIR` if set, then `~/Downloads`, then the system temp folder. Run `nulis_server_status`
 to see which folder is actually in use right now.
 
 ## zotero
@@ -67,7 +67,7 @@ Item**, then try again.
 No. Every call it makes is a `GET`; there is no write path in the code at all.
 
 **The BibTeX citation keys differ from the ones I use.**
-`zotero_export_bibtex` uses Zotero's own data. If you use **Better BibTeX**, the keys you
+`nulis_zotero_export_bibtex` uses Zotero's own data. If you use **Better BibTeX**, the keys you
 manage there are handled by that plugin and will not always match. Check before pasting into
 a LaTeX manuscript already underway.
 
@@ -97,10 +97,10 @@ On macOS: `brew install poppler`.
 **My PDFs were downloaded by another MCP (scholar/Zotero) — safe to use directly?**
 No. Files from elsewhere are not named `SCR[ID]_`, so filename-based checks cannot see them
 — even though those are precisely the ones needing verification. One download once returned
-a valid PDF containing an entirely different article. Run `pdf_integrity` →
-`pdf_match_records` → `pdf_verify_record` first.
+a valid PDF containing an entirely different article. Run `nulis_pdf_integrity` →
+`nulis_pdf_match_records` → `nulis_pdf_verify_record` first.
 
-**`xlsx_write` deleted my other sheets.**
+**`nulis_xlsx_write` deleted my other sheets.**
 It rewrites the whole file and is not a cell editor. Include every sheet you want to keep,
 or write to a new file.
 

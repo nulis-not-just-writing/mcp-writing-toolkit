@@ -72,6 +72,6 @@ dan menjadi tanggung jawab pemakai:
 | Zotero | tidak perlu di mode lokal | aplikasi Zotero di komputer Anda sendiri |
 | Unpaywall + `citation_pdf_url` penerbit | tidak perlu | dipakai `scr-toolkit-nulis` untuk akuisisi full-text |
 
-**Teks penuh berhak cipta yang diambil lewat `sciencedirect_fulltext` tunduk pada
+**Teks penuh berhak cipta yang diambil lewat `nulis_sciencedirect_fulltext` tunduk pada
 langganan institusi Anda.** Server ini hanya menyalurkan; ia tidak memberi Anda hak
 akses yang tidak Anda punya, dan tidak menyimpan apa pun di luar komputer Anda.

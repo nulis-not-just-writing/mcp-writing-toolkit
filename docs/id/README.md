@@ -12,15 +12,15 @@ Mulai dari keadaan Anda, bukan dari nama server.
 
 | Keadaan Anda | Server |
 |---|---|
-| Perlu memastikan sebuah sitasi benar-benar ada | **[scholar](scholar.md)** — `get_paper_by_doi` |
+| Perlu memastikan sebuah sitasi benar-benar ada | **[scholar](scholar.md)** — `nulis_get_paper_by_doi` |
 | Mencari literatur di banyak basis data sekaligus | **[scholar](scholar.md)** |
 | Menjalankan pencarian Scopus untuk tinjauan sistematis | **[scholar](scholar.md)** — butuh kunci Elsevier |
-| Perlu PDF open access yang legal untuk sebuah DOI | **[scholar](scholar.md)** — `get_open_access_pdf` |
+| Perlu PDF open access yang legal untuk sebuah DOI | **[scholar](scholar.md)** — `nulis_get_open_access_pdf` |
 | Ingin Claude membaca apa yang sudah ada di pustaka Anda | **[zotero](zotero.md)** |
-| Perlu BibTeX untuk naskah LaTeX | **[zotero](zotero.md)** — `zotero_export_bibtex` |
-| Perlu memastikan sebuah PDF benar-benar artikel yang diakuinya | **[scr-toolkit](scr-toolkit.md)** — `pdf_match_records` |
-| Merekonsiliasi dua pass screening dan menyiapkan antrean arbitrase | **[scr-toolkit](scr-toolkit.md)** — `reconcile_two_pass` |
-| Mengaudit angka di naskah terhadap daftar fakta | **[scr-toolkit](scr-toolkit.md)** — `manuscript_numeric_audit` |
+| Perlu BibTeX untuk naskah LaTeX | **[zotero](zotero.md)** — `nulis_zotero_export_bibtex` |
+| Perlu memastikan sebuah PDF benar-benar artikel yang diakuinya | **[scr-toolkit](scr-toolkit.md)** — `nulis_pdf_match_records` |
+| Merekonsiliasi dua pass screening dan menyiapkan antrean arbitrase | **[scr-toolkit](scr-toolkit.md)** — `nulis_reconcile_two_pass` |
+| Mengaudit angka di naskah terhadap daftar fakta | **[scr-toolkit](scr-toolkit.md)** — `nulis_manuscript_numeric_audit` |
 
 Ketiganya berdiri sendiri. Memasang satu tidak menuntut yang lain.
 

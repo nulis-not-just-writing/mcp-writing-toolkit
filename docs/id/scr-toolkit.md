@@ -2,7 +2,7 @@
 
 *[Read this in English](../scr-toolkit.md)*
 
-`scr-toolkit-nulis` **1.6.0** · 9 tool · [sumber](../../scr-toolkit-nulis/)
+`scr-toolkit-nulis` **2.0.0** · 9 tool · [sumber](../../scr-toolkit-nulis/)
 
 Sembilan alat yang mengerjakan bagian **deterministik** alur *scoping review*: memeriksa,
 menghitung, mencocokkan, mengunduh. **Tidak satu pun memutuskan eligibility** — penilaian
@@ -75,14 +75,14 @@ nama tidak bisa melihatnya, karena berkas dari `scholar-nulis` atau Zotero meman
 
 > *"Periksa integritas semua PDF di folder ini, lalu cocokkan ke record saya lewat isinya."*
 
-Ketiga alatnya berjalan berurutan — `pdf_integrity` → `pdf_match_records` →
-`pdf_verify_record` — dan pencocokannya **berbobot posisi**, sehingga judul yang hanya
+Ketiga alatnya berjalan berurutan — `nulis_pdf_integrity` → `nulis_pdf_match_records` →
+`nulis_pdf_verify_record` — dan pencocokannya **berbobot posisi**, sehingga judul yang hanya
 ditemukan di daftar pustaka dibaca sebagai "artikel ini disitir di sini", bukan "ini artikel
 itu".
 
 ### 4. Angka di naskah Anda harus cocok dengan datanya
 
-`manuscript_numeric_audit` membandingkan setiap angka di draf terhadap daftar fakta yang
+`nulis_manuscript_numeric_audit` membandingkan setiap angka di draf terhadap daftar fakta yang
 Anda pasok. Ini gerbang terakhir sebelum submisi, tempat "kami menyaring 412 rekaman" di
 abstrak dan "411" di diagram alir adalah persis jenis ketidaksesuaian yang ditemukan
 reviewer dan luput dari Anda.
@@ -91,14 +91,14 @@ reviewer dan luput dari Anda.
 
 | Tool | Fungsi | Titik modul |
 |---|---|---|
-| `pdf_integrity` | Deteksi unduhan terpotong yang lolos cek *magic byte* | M6 L2 |
-| `pdf_verify_record` | Cari judul record di **seluruh** teks PDF, bukan halaman pertama saja | M6 L2 |
-| `pdf_match_records` | Cocokkan PDF ke record lewat **isi**, bukan nama berkas | M6 L2 |
-| `reconcile_two_pass` | Rekonsiliasi dua pass mandiri + antrean arbitrase | M5 L3 · M6 L5 · M7 L5 |
-| `calibration_sample` | Sampel kalibrasi acak berbenih dan terstratifikasi | M5 L3 |
-| `retrieve_fulltext` | Akuisisi full-text via Unpaywall + `citation_pdf_url` | M6 L1 |
-| `xlsx_read` / `xlsx_write` | Baca/tulis `.xlsx` | seluruh modul yang menyentuh `screening.xlsx` |
-| `manuscript_numeric_audit` | Audit angka naskah terhadap daftar fakta | M9 L8 |
+| `nulis_pdf_integrity` | Deteksi unduhan terpotong yang lolos cek *magic byte* | M6 L2 |
+| `nulis_pdf_verify_record` | Cari judul record di **seluruh** teks PDF, bukan halaman pertama saja | M6 L2 |
+| `nulis_pdf_match_records` | Cocokkan PDF ke record lewat **isi**, bukan nama berkas | M6 L2 |
+| `nulis_reconcile_two_pass` | Rekonsiliasi dua pass mandiri + antrean arbitrase | M5 L3 · M6 L5 · M7 L5 |
+| `nulis_calibration_sample` | Sampel kalibrasi acak berbenih dan terstratifikasi | M5 L3 |
+| `nulis_retrieve_fulltext` | Akuisisi full-text via Unpaywall + `citation_pdf_url` | M6 L1 |
+| `nulis_xlsx_read` / `nulis_xlsx_write` | Baca/tulis `.xlsx` | seluruh modul yang menyentuh `screening.xlsx` |
+| `nulis_manuscript_numeric_audit` | Audit angka naskah terhadap daftar fakta | M9 L8 |
 
 ## Tanpa dependensi, dan itu disengaja
 
@@ -114,7 +114,7 @@ mesin yang paling ia layani — peserta yang bukan orang IT dan tidak punya *too
 ## Urutan wajib sebelum satu PDF pun dipakai
 
 ```
-pdf_integrity  →  pdf_match_records  →  pdf_verify_record
+nulis_pdf_integrity  →  nulis_pdf_match_records  →  nulis_pdf_verify_record
 ```
 
 Ini bukan kehati-hatian teoretis. PDF yang diunduh alat lain bernama `core_11443100.pdf`
@@ -151,21 +151,21 @@ ekstraksi tampak berhasil. Ambangnya 800 karakter per halaman; median korpus nya
 Pernah terjadi satu berkas hasil scan (399 karakter/halaman) dinyatakan tidak memuat
 artikelnya padahal isinya sah, hanya berupa gambar.
 
-**`xlsx_write` menulis ulang seluruh berkas.** Ia bukan penyunting sel — sertakan semua
+**`nulis_xlsx_write` menulis ulang seluruh berkas.** Ia bukan penyunting sel — sertakan semua
 sheet yang ingin dipertahankan, atau tulis ke berkas baru.
 
-**`calibration_sample` mewajibkan `seed`.** `Math.random` tidak dapat diberi benih, jadi
+**`nulis_calibration_sample` mewajibkan `seed`.** `Math.random` tidak dapat diberi benih, jadi
 sampelnya tidak akan reproducible — padahal reproducibility justru alasan langkah itu ada.
 
 ## Berdampingan dengan scholar dan zotero
 
 Tidak ada tabrakan nama alat. Yang berbahaya bukan namanya, melainkan **berkasnya** — dan
-itulah yang ditangani `pdf_match_records`.
+itulah yang ditangani `nulis_pdf_match_records`.
 
 Zotero justru menguntungkan bila dipakai bersama: ia menyimpan PDF yang sudah diperoleh
-lewat akses institusi, persis kelompok record yang `retrieve_fulltext` tidak dapat jangkau.
+lewat akses institusi, persis kelompok record yang `nulis_retrieve_fulltext` tidak dapat jangkau.
 
-`retrieve_fulltext` memisahkan `NEED_MANUAL` dari `NEED_INSTITUTIONAL`. Yang pertama Open
+`nulis_retrieve_fulltext` memisahkan `NEED_MANUAL` dari `NEED_INSTITUTIONAL`. Yang pertama Open
 Access tetapi servernya menolak skrip — cukup dibuka di browser. Menyatukan keduanya
 membuat peserta menelusuri perpustakaan untuk artikel yang sebenarnya terbuka.
 
