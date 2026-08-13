@@ -1,0 +1,21 @@
+.DS_Store
+
+# Kunci API pribadi — jangan pernah di-commit
+.env
+
+# Dependensi & hasil build tiap server (dibangun ulang dari src)
+node_modules/
+scholar-node/dist/
+zotero-node/dist/
+
+# Bundle .mcpb DI-commit, tetapi hanya yang ada di dist/ dan bernomor versi.
+# Bundle hasil percobaan di tempat lain tetap diabaikan.
+*.mcpb
+!dist/*.mcpb
+
+# ⚠ Aturan terakhir menang di Git — jadi baris ini mengalahkan pengecualian
+#   di atas. Bundle "-api" membawa kunci Elsevier TERTANAM di manifest-nya;
+#   ia dibangun on-demand untuk tim lewat scholar-node/build-team-bundle.sh
+#   dan TIDAK BOLEH masuk repo publik, termasuk bila diletakkan di dist/.
+*-api.mcpb
+.build-api/

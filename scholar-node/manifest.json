@@ -1,0 +1,186 @@
+{
+  "manifest_version": "0.3",
+  "name": "scholar-paper-search",
+  "display_name": "Scholar Paper Search",
+  "version": "0.5.0",
+  "description": "Search, download, and read academic papers from arXiv, OpenAlex, Crossref, Semantic Scholar, PubMed, Europe PMC, and DOAJ — no key required. Scopus/ScienceDirect tools appear only when an Elsevier API key is filled in below.",
+  "long_description": "Node.js MCP server for academic literature work: search across 7 open scholarly APIs, verify references by DOI (anti-fabrication), find legal open-access PDFs, download PDFs, and read their full text. Runs entirely on Claude Desktop's built-in Node.js — no Python, no system dependencies, works on a clean machine. The 'unverified extension' dialog during installation is normal for self-distributed extensions; just approve it.",
+  "author": {
+    "name": "mubaroq - Akademi Digital Bandung | RPI Institute",
+    "email": "mubaroq@digitalbdg.ac.id"
+  },
+  "license": "MIT",
+  "keywords": [
+    "academic",
+    "papers",
+    "arxiv",
+    "openalex",
+    "crossref",
+    "pubmed",
+    "scholar",
+    "research",
+    "doi",
+    "scoping review"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {
+        "CONTACT_EMAIL": "${user_config.contact_email}",
+        "S2_API_KEY": "${user_config.s2_api_key}",
+        "DOWNLOAD_DIR": "${user_config.download_dir}",
+        "SCOPUS_API_KEY": "${user_config.scopus_api_key}",
+        "SCIENCEDIRECT_API_KEY": "${user_config.sciencedirect_api_key}",
+        "ELSEVIER_INSTTOKEN": "${user_config.elsevier_insttoken}"
+      }
+    }
+  },
+  "user_config": {
+    "contact_email": {
+      "type": "string",
+      "title": "Email kontak (disarankan)",
+      "description": "Dipakai untuk 'polite pool' Crossref/OpenAlex/Unpaywall — kuota lebih longgar dan mengaktifkan pencarian PDF open access via Unpaywall. Cukup email aktif Anda.",
+      "required": false,
+      "default": ""
+    },
+    "s2_api_key": {
+      "type": "string",
+      "title": "Semantic Scholar API key (opsional)",
+      "description": "Opsional — tanpa key pun berfungsi, dengan key rate limit lebih longgar. Daftar gratis di semanticscholar.org/product/api",
+      "sensitive": true,
+      "required": false,
+      "default": ""
+    },
+    "download_dir": {
+      "type": "directory",
+      "title": "Folder unduhan PDF",
+      "description": "Opsional. Folder tempat menyimpan PDF hasil unduhan. Bila dikosongkan, PDF disimpan di folder Downloads Anda. Isi dengan path absolut bila ingin folder khusus proyek.",
+      "required": false
+    },
+    "scopus_api_key": {
+      "type": "string",
+      "title": "Scopus API key (opsional — kosongkan bila tidak punya)",
+      "description": "Opsional. Bila dikosongkan, seluruh tool lain tetap berfungsi penuh dan tool Scopus tidak akan muncul. Bila diisi, tersedia search_scopus, scopus_abstract, scopus_export_csv, dan elsevier_status. Kunci diperoleh dari dev.elsevier.com; kuota mingguan berlaku per kunci.",
+      "sensitive": true,
+      "required": false,
+      "default": ""
+    },
+    "sciencedirect_api_key": {
+      "type": "string",
+      "title": "ScienceDirect API key (opsional)",
+      "description": "Opsional. Untuk teks lengkap artikel Elsevier yang dilanggan institusi. Kosongkan bila memakai kunci yang sama dengan Scopus, atau bila tidak punya langganan.",
+      "sensitive": true,
+      "required": false,
+      "default": ""
+    },
+    "elsevier_insttoken": {
+      "type": "string",
+      "title": "Elsevier insttoken (opsional)",
+      "description": "Opsional. Token institusi dari admin lisensi/pustakawan, diperlukan bila akses dari luar jaringan kampus ditolak dengan galat 401/403.",
+      "sensitive": true,
+      "required": false,
+      "default": ""
+    }
+  },
+  "tools": [
+    {
+      "name": "search_arxiv",
+      "description": "Cari paper di arXiv"
+    },
+    {
+      "name": "search_openalex",
+      "description": "Cari paper di OpenAlex (filter tahun)"
+    },
+    {
+      "name": "search_crossref",
+      "description": "Cari paper di Crossref"
+    },
+    {
+      "name": "search_semantic_scholar",
+      "description": "Cari paper di Semantic Scholar"
+    },
+    {
+      "name": "search_pubmed",
+      "description": "Cari paper di PubMed"
+    },
+    {
+      "name": "search_europepmc",
+      "description": "Cari paper di Europe PMC"
+    },
+    {
+      "name": "search_doaj",
+      "description": "Cari artikel jurnal open access di DOAJ"
+    },
+    {
+      "name": "get_paper_by_doi",
+      "description": "Verifikasi & ambil metadata paper via DOI (Crossref)"
+    },
+    {
+      "name": "get_open_access_pdf",
+      "description": "Cari link PDF open access legal untuk sebuah DOI"
+    },
+    {
+      "name": "download_pdf",
+      "description": "Unduh PDF dari URL"
+    },
+    {
+      "name": "download_arxiv",
+      "description": "Unduh PDF paper arXiv"
+    },
+    {
+      "name": "read_arxiv_paper",
+      "description": "Baca teks penuh paper arXiv"
+    },
+    {
+      "name": "read_pdf",
+      "description": "Ekstrak teks dari PDF (URL atau file lokal)"
+    },
+    {
+      "name": "search_scopus",
+      "description": "Cari di Scopus dengan sintaks query aslinya, diteruskan apa adanya (butuh Scopus API key)"
+    },
+    {
+      "name": "scopus_abstract",
+      "description": "Abstrak lengkap, kata kunci penulis, dan jumlah sitasi dari Scopus (via DOI atau Scopus ID)"
+    },
+    {
+      "name": "sciencedirect_fulltext",
+      "description": "Teks lengkap artikel ScienceDirect via DOI — sebatas yang dilanggan institusi Anda"
+    },
+    {
+      "name": "scopus_export_csv",
+      "description": "Jalankan query Scopus, kumpulkan seluruh halaman, simpan sebagai CSV siap-screening"
+    },
+    {
+      "name": "elsevier_status",
+      "description": "Periksa kunci Scopus/ScienceDirect terpasang, berfungsi, dan sisa kuotanya"
+    },
+    {
+      "name": "server_status",
+      "description": "Diagnostik server: versi yang berjalan, folder unduhan, dan fitur opsional yang aktif"
+    },
+    {
+      "name": "pdf_to_text",
+      "description": "Ekstrak teks sebuah PDF lalu simpan sebagai berkas .md di subfolder fulltext/"
+    },
+    {
+      "name": "batch_acquire_pdfs",
+      "description": "Coba unduh PDF untuk sekumpulan studi sekaligus (daftar INCLUDED hasil screening)"
+    }
+  ],
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=20.0.0"
+    }
+  }
+}
