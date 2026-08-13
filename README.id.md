@@ -175,10 +175,9 @@ layanan luar yang diakses beserta syaratnya masing-masing, ada di [`NOTICE.md`](
 
 ---
 
-> **Knowledge kept is knowledge dying.**
+> **Knowledge kept is knowledge dying. Knowledge shared keeps living.**
 >
-> Shared, it outlives the one who shared it — growing in hands they will never meet, living on in
-> work they will never read. And every life it goes on to have returns to them as a reward that
-> does not end.
+> It grows in hands you will never meet and is carried on in work you will never read — and what
+> never stops living never stops returning to you.
 
 **Mubaroq ADB** · Akademi Digital Bandung | RPI Institute · <mubaroq@digitalbdg.ac.id>
