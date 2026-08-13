@@ -10,6 +10,60 @@ browse collections, and export BibTeX.
 **Read-only.** Not one tool here adds, changes, or deletes anything in your library — every
 call it makes is a `GET`.
 
+## What it is actually for
+
+Most people's Zotero library is larger than their memory of it. This server closes that gap:
+Claude can look at what you have actually collected instead of asking you to remember it, or
+searching the whole world when the answer is already on your disk.
+
+Unlike the other two servers, there is no verified sample output below — these are the
+situations, not a transcript.
+
+### 1. "What do I already have on this?"
+
+The right first move before searching any database. You have collected material for years;
+some of it answers the question you are asking today.
+
+> *"Search my Zotero library for anything on teacher self-efficacy in vocational schools,
+> and tell me what I already have."*
+
+`zotero_search_items` runs against your own library. It costs nothing, hits no quota, and
+frequently makes an external search unnecessary.
+
+### 2. Writing a section grounded in what you actually read
+
+> *"Pull the full text of these six items and draft the theoretical framework from what they
+> actually say."*
+
+`zotero_get_item_fulltext` gives Claude the text you have already read and annotated, rather
+than an abstract or a guess. This is the difference between a paragraph built from what the
+sources say and one built from what their titles suggest.
+
+The text comes from Zotero's own index — see [below](#full-text-comes-from-zoteros-index)
+for what happens when an item has not been indexed yet.
+
+### 3. Bibliography for exactly what you cited
+
+> *"Export BibTeX for the items I cited in this draft."*
+
+`zotero_export_bibtex` takes a set of item keys and returns BibTeX for that subset — not
+your whole library. If you write in LaTeX, this is the step that stops a 900-entry `.bib`
+file from following a 6,000-word article around.
+
+### 4. Recovering work you forgot you did
+
+> *"What have I added to Zotero in the last month?"* · *"List everything in my 'Revisi R2'
+> collection."*
+
+`zotero_get_recent` and `zotero_get_collection_items` are for the reading you did, filed
+correctly, and then forgot about — which is most reading.
+
+### What it deliberately will not do
+
+It will not add, edit, tag, or delete anything. Every call is a `GET`. If you want Claude to
+reorganise your library, this is not the tool, and that is on purpose: a reference library is
+years of work, and read access is enough to be useful without being able to damage it.
+
 ## Tools
 
 | Tool | Purpose |

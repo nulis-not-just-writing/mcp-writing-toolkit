@@ -8,6 +8,78 @@ Searches seven open scholarly APIs, verifies citations by DOI, finds legal open-
 PDFs, downloads them, and reads their text. Five Scopus/ScienceDirect tools switch on if
 you have Elsevier credentials.
 
+## What it is actually for
+
+Four situations that come up constantly in real writing, and what you do about them. Every
+output below is real — copied from an actual run, not illustrative.
+
+### 1. You have a reference list and you are not certain all of it is real
+
+The failure mode is specific. Invented references do not look invented; they look
+*ordinary*. A plausible author, a plausible year, a plausible journal. Reading them more
+carefully will not help, because there is nothing on the page to notice.
+
+> *"Check every DOI in my reference list against Crossref and tell me which ones do not
+> resolve."*
+
+A real one comes back with its registered record:
+
+```json
+{ "verified": true, "retracted": false,
+  "paper": { "title": "The PRISMA 2020 statement: an updated guideline for reporting
+             systematic reviews", "authors": ["Matthew J Page", "Joanne E McKenzie", …] } }
+```
+
+An invented one comes back unambiguously:
+
+```json
+{ "verified": false,
+  "doi": "10.1016/j.jclinepi.2023.99999",
+  "note": "DOI tidak ditemukan di Crossref — tandai [VERIFY]." }
+```
+
+That is the whole point of the tool. It converts "this looks fine" into a yes or a no.
+
+### 2. You are about to cite a study that has been retracted
+
+Citing retracted work is a serious error, and nothing in the PDF you downloaded will
+necessarily tell you. `get_paper_by_doi` checks retraction status on every lookup — you do
+not have to ask for it:
+
+```json
+{ "verified": true,
+  "retracted": true,
+  "retraction_evidence": {
+    "dari_judul": "RETRACTED: Ileal-lymphoid-nodular hyperplasia, non-specific colitis,
+                   and pervasive developmental disorder in children" },
+  "peringatan": "STUDI INI DICABUT (retracted) … Jangan disintesis. Bila tetap dibahas
+                 karena alasan tertentu, nyatakan statusnya secara eksplisit di teks." }
+```
+
+Note what it does **not** do: it does not delete the reference for you. A retracted study is
+sometimes cited deliberately — in a paper about research integrity, for instance. It tells
+you, and leaves the decision where it belongs.
+
+### 3. You need the actual PDF, legally
+
+> *"Find me an open-access PDF for this DOI."*
+
+```json
+{ "found": true, "via": "unpaywall", "oa_status": "hybrid", "license": "cc-by",
+  "pdf_url": "https://www.bmj.com/content/bmj/372/bmj.n71.full.pdf" }
+```
+
+The `license` field matters more than it looks: it is the difference between "I may read
+this" and "I may redistribute this to my students". Without `CONTACT_EMAIL` the same lookup
+still succeeds through OpenAlex, but returns no licence.
+
+### 4. You are running a systematic search that a reviewer will re-run
+
+`search_scopus` returns the total hit count for the identification box of your PRISMA
+diagram, and `scopus_export_csv` pages through the whole result set into a screening-ready
+file. Because the query is passed through untouched, the number you report and the string
+you report agree with each other — see [below](#queries-are-passed-through-verbatim).
+
 ## Search — no key required
 
 | Tool | Purpose |
@@ -43,8 +115,10 @@ way to tell a real citation from a fabricated one: a plausible-*looking*
 author–year–journal combination is the signature pattern of invented references, and no
 amount of careful reading substitutes for asking the registrar.
 
-`get_open_access_pdf` only points at copies that are genuinely, **legally** open (the
-Unpaywall route, which requires `CONTACT_EMAIL`). It does not look for pirated copies.
+`get_open_access_pdf` only points at copies that are genuinely, **legally** open. It does
+not look for pirated copies. It works without `CONTACT_EMAIL` by going through OpenAlex;
+setting the email adds the Unpaywall route, which also reports the **licence** of the copy
+it found — worth having when you need to know whether you may redistribute it.
 
 ## Scopus & ScienceDirect — Elsevier key required
 

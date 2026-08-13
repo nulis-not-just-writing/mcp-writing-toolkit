@@ -61,7 +61,7 @@ sebelumnya yang berbasis Python dan sudah tidak berlaku.
 
 | Kolom / variabel | Wajib | Efek bila diisi |
 |---|---|---|
-| `CONTACT_EMAIL` | tidak | Masuk *polite pool* Crossref & OpenAlex (kuota lebih longgar) **dan** mengaktifkan pencarian PDF open access lewat Unpaywall. Cukup email aktif, tanpa registrasi. |
+| `CONTACT_EMAIL` | tidak | Masuk *polite pool* Crossref & OpenAlex (kuota lebih longgar) **dan** menambah jalur Unpaywall untuk pencarian akses terbuka, yang sekalian melaporkan lisensi tiap PDF. Cukup email aktif, tanpa registrasi. |
 | `S2_API_KEY` | tidak | Melonggarkan kuota Semantic Scholar. Gratis di [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api). |
 | `DOWNLOAD_DIR` | tidak | Folder penyimpanan PDF. Bila kosong: `~/Downloads`, lalu folder sementara sistem bila `~/Downloads` tidak bisa ditulis. |
 | `SCOPUS_API_KEY` | tidak | Menyalakan `search_scopus`, `scopus_abstract`, `scopus_export_csv`, `elsevier_status`. |

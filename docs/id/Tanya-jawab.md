@@ -40,9 +40,10 @@ diterima. Penyebab paling umum: Anda mengakses dari luar jaringan kampus. Mintal
 setelah kuotanya habis di tengah jalan.
 
 **`get_open_access_pdf` tidak menemukan apa pun padahal artikelnya jelas ada.**
-Dua kemungkinan. Pertama, `CONTACT_EMAIL` belum diisi — jalur Unpaywall menuntutnya.
-Kedua, artikel itu memang tidak punya salinan open access yang legal. Tool ini hanya
-menunjuk salinan yang sah terbuka; ia tidak mencari salinan bajakan.
+Artikel itu memang tidak punya salinan open access yang legal. Tool ini hanya menunjuk
+salinan yang sah terbuka; ia tidak mencari salinan bajakan. Perlu dicatat, `CONTACT_EMAIL`
+yang kosong *bukan* penyebabnya — tanpa itu pun pencarian tetap berjalan lewat OpenAlex.
+Mengisi email menambah jalur Unpaywall yang sekalian melaporkan lisensi salinannya.
 
 **Bisakah saya mempercayai metadata dari `search_*`?**
 Untuk keperluan sitasi, verifikasi dengan `get_paper_by_doi`. Hasil pencarian berguna

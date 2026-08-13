@@ -14,6 +14,79 @@ tetap milik peneliti.
 > alat dipakai. Tabel di bawah cukup untuk memakainya tanpa mengikuti modulnya — alatnya
 > sendiri tidak menuntut kursus apa pun untuk berjalan.
 
+## Untuk apa sebenarnya alat ini
+
+Menyaring beberapa ratus rekaman dengan tangan adalah tempat tinjauan cakupan diam-diam
+melenceng — bukan karena penilaiannya buruk, melainkan karena aritmetika, nama berkas, dan
+kelelahan. Empat alat berikut menangani bagian yang seharusnya tidak pernah bergantung pada
+ketelitian. Keluaran di bawah **nyata**.
+
+### 1. Dua pass screening tidak sepakat dan Anda perlu tahu persis di mana
+
+Menjalankan dua pass mandiri itu bagian gampangnya. Membandingkannya, menghitung
+kesepakatan, dan menyusun daftar yang perlu diputus adalah pekerjaan melelahkan yang rawan
+salah bila dikerjakan manual.
+
+> *"Rekonsiliasi dua pass screening saya, lalu berikan antrean arbitrasenya."*
+
+```json
+{ "summary": {
+    "records_compared": 5, "identical_decisions": 3, "identical_pct": 60,
+    "arbitration_queue": 2,
+    "forwarded_union": 3, "forwarded_intersection": 1, "forwarded_final_range": [1, 3],
+    "disagreement_patterns": { "EXCLUDE vs INCLUDE": 1, "UNCERTAIN vs EXCLUDE": 1 } } }
+```
+
+`forwarded_final_range` adalah jawaban jujur atas "berapa studi yang lolos?" sebelum
+arbitrase: antara 1 dan 3. Bukan satu angka karangan.
+
+Antreannya sendiri kembali berupa baris dengan kedua pass berdampingan dan **kolom
+`Author_Decision` / `Author_Reason` yang sengaja dikosongkan menunggu Anda** — alat ini
+menyiapkan keputusan, bukan mengambilnya.
+
+Satu detail yang layak dilihat: pada eksekusi itu, satu rekaman ber-`Reason_Code` `"-"` di
+pass 1 dan `"NA"` di pass 2. Ia **tidak** masuk antrean. Memperlakukan `-`, `NA`, `n/a`, dan
+sel kosong sebagai nilai yang sama itu disengaja — perbedaan penulisannya pernah melahirkan
+182 sengketa palsu pada satu tinjauan nyata.
+
+### 2. Sampel kalibrasi Anda harus dapat dipertahankan
+
+> *"Ambil sampel kalibrasi terstratifikasi sebanyak 4, seed 42."*
+
+Jalankan dua kali, dapat empat rekaman yang sama:
+
+```
+jalan 1: S03, S04, S06, S07
+jalan 2: S03, S04, S06, S07
+seed 7 : S04, S06, S07, S09
+```
+
+Itulah sebabnya `seed` **wajib**, bukan opsional. `Math.random` tidak dapat diberi benih,
+sehingga sampel yang ditariknya tidak akan pernah bisa ditarik ulang — padahal kemampuan
+menarik ulang itulah seluruh alasan langkah kalibrasi ada. Laporkan seed-nya di Metode, dan
+siapa pun dapat mereproduksi sampel Anda persis.
+
+### 3. Anda tidak yakin PDF-nya benar artikel yang diakuinya
+
+Ini terdengar paranoid sampai benar-benar terjadi. Pengunduh mengembalikan HTTP 200 dan
+berkas yang diawali `%PDF` — dan isinya artikel yang sepenuhnya berbeda. Pemeriksaan berbasis
+nama tidak bisa melihatnya, karena berkas dari `scholar` atau Zotero memang tidak bernama
+`SCR[ID]_` sejak awal.
+
+> *"Periksa integritas semua PDF di folder ini, lalu cocokkan ke record saya lewat isinya."*
+
+Ketiga alatnya berjalan berurutan — `pdf_integrity` → `pdf_match_records` →
+`pdf_verify_record` — dan pencocokannya **berbobot posisi**, sehingga judul yang hanya
+ditemukan di daftar pustaka dibaca sebagai "artikel ini disitir di sini", bukan "ini artikel
+itu".
+
+### 4. Angka di naskah Anda harus cocok dengan datanya
+
+`manuscript_numeric_audit` membandingkan setiap angka di draf terhadap daftar fakta yang
+Anda pasok. Ini gerbang terakhir sebelum submisi, tempat "kami menyaring 412 rekaman" di
+abstrak dan "411" di diagram alir adalah persis jenis ketidaksesuaian yang ditemukan
+reviewer dan luput dari Anda.
+
 ## Tool
 
 | Tool | Fungsi | Titik modul |

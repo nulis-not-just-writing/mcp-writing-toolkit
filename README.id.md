@@ -92,7 +92,7 @@ langsung):
 
 | Variabel | Server | Wajib | Untuk apa |
 |---|---|---|---|
-| `CONTACT_EMAIL` | scholar | tidak | *polite pool* Crossref/OpenAlex + mengaktifkan pencarian PDF via Unpaywall |
+| `CONTACT_EMAIL` | scholar | tidak | *polite pool* Crossref/OpenAlex + menambah jalur Unpaywall yang juga melaporkan lisensi tiap PDF |
 | `S2_API_KEY` | scholar | tidak | melonggarkan kuota Semantic Scholar |
 | `DOWNLOAD_DIR` | scholar | tidak | folder unduhan; bila kosong → `~/Downloads`, lalu folder sementara sistem |
 | `SCOPUS_API_KEY` | scholar | tidak | menyalakan 5 tool Elsevier |

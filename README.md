@@ -86,7 +86,7 @@ or running a server directly):
 
 | Variable | Server | Required | Purpose |
 |---|---|---|---|
-| `CONTACT_EMAIL` | scholar | no | Crossref/OpenAlex polite pool + enables Unpaywall PDF lookup |
+| `CONTACT_EMAIL` | scholar | no | Crossref/OpenAlex polite pool + adds the Unpaywall route, which also reports each PDF's licence |
 | `S2_API_KEY` | scholar | no | higher Semantic Scholar rate limit |
 | `DOWNLOAD_DIR` | scholar | no | download folder; falls back to `~/Downloads`, then the system temp dir |
 | `SCOPUS_API_KEY` | scholar | no | switches on the 5 Elsevier tools |

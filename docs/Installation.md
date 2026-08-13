@@ -62,7 +62,7 @@ longer apply.
 
 | Field / variable | Required | Effect when set |
 |---|---|---|
-| `CONTACT_EMAIL` | no | Joins the Crossref & OpenAlex *polite pool* (higher quota) **and** enables open-access PDF lookup via Unpaywall. Any working address; no registration. |
+| `CONTACT_EMAIL` | no | Joins the Crossref & OpenAlex *polite pool* (higher quota) **and** adds the Unpaywall route for open-access lookup, which additionally reports each PDF's licence. Any working address; no registration. |
 | `S2_API_KEY` | no | Raises the Semantic Scholar rate limit. Free at [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api). |
 | `DOWNLOAD_DIR` | no | Where PDFs are stored. If empty: `~/Downloads`, then the system temp folder if `~/Downloads` is not writable. |
 | `SCOPUS_API_KEY` | no | Switches on `search_scopus`, `scopus_abstract`, `scopus_export_csv`, `elsevier_status`. |

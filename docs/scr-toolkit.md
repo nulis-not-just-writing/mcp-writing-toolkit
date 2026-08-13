@@ -14,6 +14,76 @@ researcher.
 > when a tool is used. The table below is enough to use the tools without following the
 > course — the tools themselves require no course to run.
 
+## What it is actually for
+
+Screening a few hundred records by hand is where scoping reviews quietly go wrong — not
+through bad judgement, but through arithmetic, filenames, and fatigue. These four tools
+handle the parts that should never depend on attention. Outputs below are real.
+
+### 1. Two screening passes disagree and you need to know exactly where
+
+Doing two independent passes is the easy part. Comparing them, counting agreement, and
+building a list of what needs settling is tedious and error-prone by hand.
+
+> *"Reconcile my two screening passes and give me the arbitration queue."*
+
+```json
+{ "summary": {
+    "records_compared": 5, "identical_decisions": 3, "identical_pct": 60,
+    "arbitration_queue": 2,
+    "forwarded_union": 3, "forwarded_intersection": 1, "forwarded_final_range": [1, 3],
+    "disagreement_patterns": { "EXCLUDE vs INCLUDE": 1, "UNCERTAIN vs EXCLUDE": 1 } } }
+```
+
+`forwarded_final_range` is the honest answer to "how many studies go forward?" before
+arbitration: somewhere between 1 and 3. Not a single invented number.
+
+The queue itself comes back as rows with both passes side by side and **empty
+`Author_Decision` / `Author_Reason` columns waiting for you** — the tool prepares the
+decision, it does not make it.
+
+One detail worth seeing: in that run, one record was `Reason_Code: "-"` in pass 1 and
+`"NA"` in pass 2. It did **not** enter the queue. Treating `-`, `NA`, `n/a`, and blank as
+the same value is deliberate — the distinction once produced 182 false disputes in a single
+real review.
+
+### 2. Your calibration sample has to be defensible
+
+> *"Draw a stratified calibration sample of 4, seed 42."*
+
+Run it twice, get the same four records:
+
+```
+run 1: S03, S04, S06, S07
+run 2: S03, S04, S06, S07
+seed 7: S04, S06, S07, S09
+```
+
+That is why `seed` is **required** and not optional. `Math.random` cannot be seeded, so a
+sample drawn with it can never be re-drawn — and being able to re-draw it is the entire
+reason the calibration step exists. Report the seed in your Methods and anyone can reproduce
+your sample exactly.
+
+### 3. You are not sure the PDFs are the articles they claim to be
+
+This sounds paranoid until it happens. A downloader returns HTTP 200 and a file that starts
+with `%PDF` — and contains a completely different article. Filename checks cannot see it,
+because files from `scholar` or Zotero are not named `SCR[ID]_` in the first place.
+
+> *"Check the integrity of every PDF in this folder, then match them to my records by
+> content."*
+
+The three tools run in order — `pdf_integrity` → `pdf_match_records` → `pdf_verify_record` —
+and matching is **position-weighted**, so a title found only in the bibliography is read as
+"this article is cited here", not "this is that article".
+
+### 4. The numbers in your manuscript have to match your data
+
+`manuscript_numeric_audit` compares every figure in the draft against a fact list you
+supply. This is the last gate before submission, where "we screened 412 records" in the
+abstract and "411" in the flow diagram is exactly the kind of discrepancy a reviewer finds
+and you do not.
+
 ## Tools
 
 | Tool | Purpose | Module step |

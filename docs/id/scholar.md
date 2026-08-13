@@ -8,6 +8,79 @@ Mencari di tujuh API ilmiah terbuka, memverifikasi sitasi lewat DOI, menemukan P
 access yang legal, mengunduhnya, dan membaca teksnya. Lima tool Scopus/ScienceDirect
 menyala bila Anda punya kunci Elsevier.
 
+## Untuk apa sebenarnya alat ini
+
+Empat keadaan yang terus berulang dalam penulisan nyata, dan apa yang Anda lakukan
+menghadapinya. Semua keluaran di bawah **nyata** — disalin dari eksekusi sungguhan, bukan
+contoh rekaan.
+
+### 1. Anda punya daftar pustaka dan tidak yakin semuanya nyata
+
+Modus kegagalannya khas. Referensi karangan tidak terlihat seperti karangan; ia terlihat
+**biasa saja**. Penulis yang masuk akal, tahun yang masuk akal, jurnal yang masuk akal.
+Membacanya lebih teliti tidak menolong, karena memang tidak ada yang janggal di halaman itu.
+
+> *"Periksa setiap DOI di daftar pustaka saya ke Crossref, lalu sebutkan mana yang tidak
+> teresolusi."*
+
+Yang asli kembali beserta rekaman terdaftarnya:
+
+```json
+{ "verified": true, "retracted": false,
+  "paper": { "title": "The PRISMA 2020 statement: an updated guideline for reporting
+             systematic reviews", "authors": ["Matthew J Page", "Joanne E McKenzie", …] } }
+```
+
+Yang karangan kembali tanpa keraguan:
+
+```json
+{ "verified": false,
+  "doi": "10.1016/j.jclinepi.2023.99999",
+  "note": "DOI tidak ditemukan di Crossref — tandai [VERIFY]." }
+```
+
+Itulah seluruh gunanya alat ini: mengubah "sepertinya beres" menjadi ya atau tidak.
+
+### 2. Anda hampir menyitir studi yang sudah dicabut
+
+Menyitir karya yang dicabut adalah kesalahan serius, dan PDF yang Anda unduh belum tentu
+memberi tahu apa pun. `get_paper_by_doi` memeriksa status retraksi di **setiap** pencarian —
+Anda tidak perlu memintanya:
+
+```json
+{ "verified": true,
+  "retracted": true,
+  "retraction_evidence": {
+    "dari_judul": "RETRACTED: Ileal-lymphoid-nodular hyperplasia, non-specific colitis,
+                   and pervasive developmental disorder in children" },
+  "peringatan": "STUDI INI DICABUT (retracted) … Jangan disintesis. Bila tetap dibahas
+                 karena alasan tertentu, nyatakan statusnya secara eksplisit di teks." }
+```
+
+Perhatikan yang **tidak** ia lakukan: ia tidak menghapus referensi itu untuk Anda. Studi
+yang dicabut kadang disitir dengan sengaja — misalnya dalam tulisan tentang integritas riset.
+Ia memberi tahu, lalu meninggalkan keputusannya pada tempatnya.
+
+### 3. Anda butuh PDF-nya, secara legal
+
+> *"Carikan PDF akses terbuka untuk DOI ini."*
+
+```json
+{ "found": true, "via": "unpaywall", "oa_status": "hybrid", "license": "cc-by",
+  "pdf_url": "https://www.bmj.com/content/bmj/372/bmj.n71.full.pdf" }
+```
+
+Field `license` lebih penting dari kelihatannya: itulah pembeda antara "saya boleh membaca
+ini" dan "saya boleh membagikannya ke mahasiswa saya". Tanpa `CONTACT_EMAIL`, pencarian yang
+sama tetap berhasil lewat OpenAlex, hanya tanpa keterangan lisensi.
+
+### 4. Anda menjalankan pencarian sistematis yang akan diulang reviewer
+
+`search_scopus` mengembalikan total hits untuk kotak identifikasi diagram PRISMA Anda, dan
+`scopus_export_csv` menyusuri seluruh halaman hasil menjadi berkas siap-screening. Karena
+query diteruskan tanpa disentuh, angka yang Anda laporkan dan string yang Anda laporkan
+saling bersesuaian — lihat [bagian di bawah](#query-diteruskan-apa-adanya).
+
 ## Pencarian — tanpa kunci apa pun
 
 | Tool | Fungsi |
@@ -44,8 +117,10 @@ kombinasi penulis–tahun–jurnal yang *terlihat* masuk akal justru pola khas r
 fabrikasi, dan tidak ada jumlah kewaspadaan membaca yang bisa menggantikan pertanyaan ke
 registrarnya.
 
-`get_open_access_pdf` hanya menunjuk salinan yang memang **legal** terbuka (jalur
-Unpaywall, yang menuntut `CONTACT_EMAIL` diisi). Ia tidak mencari salinan bajakan.
+`get_open_access_pdf` hanya menunjuk salinan yang memang **legal** terbuka; ia tidak
+mencari salinan bajakan. Tanpa `CONTACT_EMAIL` pun ia berfungsi lewat OpenAlex; mengisi
+email menambah jalur Unpaywall yang sekalian melaporkan **lisensi** salinan yang ditemukan
+— berguna ketika Anda perlu tahu boleh-tidaknya menyebarkannya ulang.
 
 ## Scopus & ScienceDirect — butuh kunci Elsevier
 

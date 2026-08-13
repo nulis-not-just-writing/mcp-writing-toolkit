@@ -38,9 +38,10 @@ librarian or licence admin for an **insttoken** and set `ELSEVIER_INSTTOKEN`.
 quota runs out mid-way.
 
 **`get_open_access_pdf` finds nothing even though the article clearly exists.**
-Two possibilities. First, `CONTACT_EMAIL` is not set — the Unpaywall route requires it.
-Second, the article genuinely has no legal open-access copy. This tool only points at
-legitimately open copies; it does not look for pirated ones.
+The article genuinely has no legal open-access copy. This tool only points at legitimately
+open copies; it does not look for pirated ones. Note that a missing `CONTACT_EMAIL` is *not*
+the cause — without it the lookup still runs through OpenAlex. Setting the email adds the
+Unpaywall route, which also reports the copy's licence.
 
 **Can I trust the metadata from `search_*`?**
 For citation purposes, verify with `get_paper_by_doi`. Search results are useful for
