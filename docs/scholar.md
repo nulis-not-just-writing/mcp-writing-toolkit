@@ -1,9 +1,9 @@
 # scholar — pencarian literatur & verifikasi sitasi
 
-`scholar-paper-search` **0.6.0** · 21 tool · [sumber](../scholar-node/)
+`scholar-paper-search` **0.6.0** · 16 tool, atau 21 dengan kunci Elsevier · [sumber](../scholar-node/)
 
 Mencari di tujuh API ilmiah terbuka, memverifikasi sitasi lewat DOI, menemukan PDF open
-access yang legal, mengunduhnya, dan membaca teksnya. Delapan tool Scopus/ScienceDirect
+access yang legal, mengunduhnya, dan membaca teksnya. Lima tool Scopus/ScienceDirect
 menyala bila Anda punya kunci Elsevier.
 
 ## Pencarian — tanpa kunci apa pun
@@ -47,9 +47,9 @@ Unpaywall, yang menuntut `CONTACT_EMAIL` diisi). Ia tidak mencari salinan bajaka
 
 ## Scopus & ScienceDirect — butuh kunci Elsevier
 
-Kedelapan tool berikut **tidak didaftarkan sama sekali** bila `SCOPUS_API_KEY` dan
-`SCIENCEDIRECT_API_KEY` kosong. Ia tidak muncul lalu gagal saat dipanggil; ia memang
-tidak ada.
+Kelima tool berikut **tidak didaftarkan sama sekali** bila `SCOPUS_API_KEY` dan
+`SCIENCEDIRECT_API_KEY` kosong. Ia tidak muncul lalu gagal saat dipanggil; ia memang tidak
+ada — `tools/list` mengembalikan 16 alih-alih 21.
 
 | Tool | Fungsi |
 |---|---|
@@ -107,4 +107,4 @@ folder sementara sistem. Berkas `.md` hasil `pdf_to_text` masuk ke subfolder `fu
 
 ---
 
-[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [zotero](zotero.md) · [Tanya jawab](Tanya-jawab.md)
+[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md) · [Tanya jawab](Tanya-jawab.md)

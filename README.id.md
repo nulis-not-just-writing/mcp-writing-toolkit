@@ -2,12 +2,14 @@
 
 *[Read this in English](README.md)*
 
-Dua MCP server untuk pekerjaan pustaka: **mencari literatur, memverifikasi sitasi, dan
-membaca pustaka Zotero Anda** — langsung dari dalam Claude.
+Tiga MCP server untuk pekerjaan pustaka: **mencari literatur, memverifikasi sitasi,
+membaca pustaka Zotero Anda, dan menjalankan pemeriksaan deterministik yang dituntut
+tinjauan cakupan** — langsung dari dalam Claude.
 
-Keduanya ditulis dalam TypeScript dan dijalankan oleh Node.js. **Tidak ada Python,
-tidak ada `pip install`, tidak ada virtualenv.** Untuk Claude Desktop, unduh satu berkas
-`.mcpb` lalu klik dua kali.
+Ketiganya dijalankan Node.js. **Tidak ada Python, tidak ada `pip install`, tidak ada
+virtualenv.** Untuk Claude Desktop, unduh satu berkas `.mcpb` lalu klik dua kali.
+`scholar` dan `zotero` ditulis TypeScript lalu di-*bundle* esbuild; `scr-toolkit`
+JavaScript biasa tanpa dependensi sama sekali.
 
 ## Server
 
@@ -15,13 +17,20 @@ tidak ada `pip install`, tidak ada virtualenv.** Untuk Claude Desktop, unduh sat
 |---|---|---|
 | [`scholar-node`](scholar-node/) → `scholar-paper-search` **0.6.0** | 21 | apakah paper ini benar ada, dan di mana PDF legalnya? |
 | [`zotero-node`](zotero-node/) → `zotero-mcp` **0.5.0** | 8 | apa yang sudah ada di pustaka saya sendiri? |
+| [`scr-toolkit`](scr-toolkit/) **1.5.0** | 9 | benarkah PDF ini artikel yang diakuinya, dan apakah dua pass screening sepakat? |
 
 `scholar` mencari di **tujuh API ilmiah terbuka** — arXiv, OpenAlex, Crossref, Semantic
 Scholar, PubMed, Europe PMC, DOAJ — tanpa perlu kunci apa pun. Bila Anda punya kunci
-Elsevier, delapan tool Scopus/ScienceDirect ikut menyala.
+Elsevier, lima tool Scopus/ScienceDirect ikut menyala — 16 tanpa kunci, 21 dengan kunci.
 
 `zotero` berbicara dengan aplikasi **Zotero 7+ di komputer Anda sendiri**. Mode lokal
 adalah bawaannya: tanpa kunci API, tanpa unggah, tanpa apa pun keluar dari mesin Anda.
+
+`scr-toolkit` mengerjakan separuh **deterministik** tinjauan cakupan — memeriksa,
+menghitung, mencocokkan, mengunduh. Tidak satu pun alatnya memutuskan eligibility;
+penilaian tetap milik peneliti. Ia **pelengkap modul kursus Alur SLR AI** dan tetap begitu:
+tiap alat menyebut titik modul yang dilayaninya. Tidak butuh kunci apa pun, dan **nol
+dependensi npm**.
 
 ## Pasang
 
@@ -30,6 +39,7 @@ adalah bawaannya: tanpa kunci API, tanpa unggah, tanpa apa pun keluar dari mesin
 
 - [`scholar-paper-search-0.6.0.mcpb`](dist/scholar-paper-search-0.6.0.mcpb)
 - [`zotero-mcp-0.5.0.mcpb`](dist/zotero-mcp-0.5.0.mcpb)
+- [`scr-toolkit-1.5.0.mcpb`](dist/scr-toolkit-1.5.0.mcpb)
 
 Bundle bernomor versi juga dilampirkan di setiap [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 
@@ -64,9 +74,9 @@ lapisan yang diam-diam menulis ulang query.
 melewati `scrub()` yang mengganti kunci dan `apiKey=` di URL dengan `«redacted»` sebelum
 sampai ke pemanggil. Galat 401 dari Elsevier biasanya memuat URL lengkap beserta kuncinya.
 
-**Fitur yang tak bisa dijalankan tidak muncul.** Tanpa kunci Scopus, kedelapan tool
-Elsevier tidak didaftarkan sama sekali — bukan muncul lalu gagal saat dipanggil. Yang
-tampil di daftar tool adalah yang benar-benar bisa dipakai.
+**Fitur yang tak bisa dijalankan tidak muncul.** Tanpa kunci Scopus, kelima tool Elsevier
+tidak didaftarkan sama sekali — bukan muncul lalu gagal saat dipanggil. `tools/list`
+mengembalikan 16; dengan kunci, 21. Yang tampil adalah yang benar-benar bisa dipakai.
 
 **Tidak ada yang meninggalkan komputer Anda.** Tidak ada telemetri, tidak ada server
 perantara. `scholar` memanggil API publik langsung; `zotero` mode lokal hanya berbicara
@@ -74,24 +84,25 @@ dengan aplikasi Zotero di `localhost`.
 
 ## Konfigurasi
 
-Kedua server membaca konfigurasinya dari **variabel lingkungan**. Di Claude Desktop,
-`manifest.json` yang mengisikannya dari formulir ekstensi — Anda tidak perlu menyentuh
-variabel ini. Daftar berikut untuk pemakaian manual (Claude Code, atau menjalankan
-server langsung):
+`scr-toolkit` **tidak butuh konfigurasi apa pun** — tanpa kunci, tanpa isian. Dua
+sisanya membaca konfigurasinya dari **variabel lingkungan**. Di Claude Desktop,
+`manifest.json` yang mengisikannya dari formulir ekstensi sehingga Anda tidak perlu
+menyentuhnya; daftar berikut untuk pemakaian manual (Claude Code, atau menjalankan server
+langsung):
 
 | Variabel | Server | Wajib | Untuk apa |
 |---|---|---|---|
 | `CONTACT_EMAIL` | scholar | tidak | *polite pool* Crossref/OpenAlex + mengaktifkan pencarian PDF via Unpaywall |
 | `S2_API_KEY` | scholar | tidak | melonggarkan kuota Semantic Scholar |
 | `DOWNLOAD_DIR` | scholar | tidak | folder unduhan; bila kosong → `~/Downloads`, lalu folder sementara sistem |
-| `SCOPUS_API_KEY` | scholar | tidak | menyalakan 8 tool Scopus |
+| `SCOPUS_API_KEY` | scholar | tidak | menyalakan 5 tool Elsevier |
 | `SCIENCEDIRECT_API_KEY` | scholar | tidak | teks lengkap ScienceDirect |
 | `ELSEVIER_INSTTOKEN` | scholar | tidak | token institusi, bila akses dari luar jaringan kampus ditolak 401/403 |
 | `ZOTERO_LOCAL` | zotero | tidak | `true` (bawaan) — bicara dengan aplikasi Zotero di komputer ini |
 | `ZOTERO_API_KEY` · `ZOTERO_LIBRARY_ID` · `ZOTERO_LIBRARY_TYPE` | zotero | hanya mode Web API | alternatif tanpa aplikasi Zotero lokal |
 
-**Tidak ada berkas `.env`.** Kedua server tidak pernah membacanya — konfigurasi hanya
-mengalir lewat variabel lingkungan proses.
+**Tidak ada berkas `.env`.** Tidak satu pun server di sini membacanya — konfigurasi
+hanya mengalir lewat variabel lingkungan proses.
 
 ## Prasyarat
 
@@ -100,17 +111,21 @@ mengalir lewat variabel lingkungan proses.
 | Claude Desktop | memasang `.mcpb` | Node.js-nya sudah disertakan — tidak perlu memasang apa pun |
 | Node.js 20+ | membangun dari sumber / memakai di Claude Code | `.nvmrc` menunjuk 24 |
 | Zotero 7+ | server `zotero` mode lokal | Settings → Advanced → centang *"Allow other applications on this computer to communicate with Zotero"* |
-| Kunci Elsevier | 8 tool Scopus/ScienceDirect | daftar di [dev.elsevier.com](https://dev.elsevier.com) dengan akun institusi |
+| Kunci Elsevier | 5 tool Scopus/ScienceDirect | daftar di [dev.elsevier.com](https://dev.elsevier.com) dengan akun institusi |
+| `pdftotext` (poppler) | pemeriksaan teks PDF yang lebih tajam di `scr-toolkit` | opsional — tanpanya pemeriksa hanya boleh *membuktikan* kecocokan, tidak pernah menyangkal |
 
 ## Membangun ulang
 
 ```bash
-./build-mcpb.sh          # membangun kedua server, menghasilkan dist/<nama>-<versi>.mcpb
+./build-mcpb.sh          # membangun ketiganya, menghasilkan dist/<nama>-<versi>.mcpb
 ```
 
 Skripnya menolak menghasilkan bundle yang kehilangan `NOTICE.md`, membawa
-`node_modules/`, `src/`, atau `.env`, atau memuat kunci API tertanam di `mcp_config.env`
-— dan bundle yang gagal gerbang **dihapus**, bukan sekadar tidak diumumkan.
+`node_modules/`, `src/`, atau `.env`, memuat kunci API tertanam di `mcp_config.env`, atau
+**mengumumkan versi yang berbeda dari manifest-nya** — dan bundle yang gagal gerbang
+**dihapus**, bukan sekadar tidak diumumkan. Gerbang terakhir itu menjalankan server hasil
+pack lewat handshake MCP sungguhan lalu membandingkan versi yang diucapkannya; versi yang
+dikeraskan di dalam kode justru jenis penyimpangan yang luput dari pemeriksaan berkas.
 
 > Nama berkas memuat versi supaya sebuah bundle tidak pernah "basi": versi baru
 > menghasilkan berkas baru, bukan menimpa yang lama.

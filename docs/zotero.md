@@ -68,4 +68,4 @@ periksa dulu sebelum menempelkannya ke naskah LaTeX yang sudah berjalan.
 
 ---
 
-[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [scholar](scholar.md) · [Tanya jawab](Tanya-jawab.md)
+[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [scholar](scholar.md) · [scr-toolkit](scr-toolkit.md) · [Tanya jawab](Tanya-jawab.md)

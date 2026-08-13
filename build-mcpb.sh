@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 # Bangun bundle .mcpb bernomor versi untuk setiap server, lalu periksa hasilnya.
 #
-#   ./build-mcpb.sh                 # kedua server
+#   ./build-mcpb.sh                 # ketiga server
 #   ./build-mcpb.sh zotero-node     # satu server saja
 #
 # Keluaran: dist/<nama-manifest>-<versi>.mcpb
 #
-# Gerbangnya gagal KERAS. Bundle yang membawa node_modules/, src/, atau kunci API
-# tertanam tidak diterbitkan — bukan diberi peringatan lalu diteruskan.
+# Gerbangnya gagal KERAS. Bundle yang kehilangan NOTICE.md, membawa node_modules/,
+# src/, atau kunci API tertanam tidak diterbitkan — bukan diberi peringatan lalu
+# diteruskan; berkasnya dihapus.
 set -euo pipefail
 cd "$(dirname "$0")"
 
 SERVERS=("${@:-}")
-if [ -z "${SERVERS[0]:-}" ]; then SERVERS=(scholar-node zotero-node); fi
+if [ -z "${SERVERS[0]:-}" ]; then SERVERS=(scholar-node zotero-node scr-toolkit); fi
 
 mkdir -p dist
 gagal=0
@@ -26,17 +27,35 @@ for s in "${SERVERS[@]}"; do
 
   nama=$(node -p "require('./$s/manifest.json').name")
   versi=$(node -p "require('./$s/manifest.json').version")
-  versi_pkg=$(node -p "require('./$s/package.json').version")
 
-  # Versi di manifest dan package.json harus sama — kalau berbeda, nomor versi
-  # pada nama berkas kehilangan artinya.
-  if [ "$versi" != "$versi_pkg" ]; then
-    echo "  ✗ versi tidak sinkron: manifest=$versi package.json=$versi_pkg"
-    gagal=1; continue
+  # Dua bentuk server didukung:
+  #   - ada package.json  -> TypeScript, di-bundle esbuild ke dist/index.js
+  #   - tanpa package.json -> Node murni tanpa dependensi, dipak apa adanya
+  # scr-toolkit sengaja tidak punya dependensi npm: Node bawaan Claude Desktop
+  # tidak punya npm dan tidak bisa memasang paket.
+  if [ -f "$s/package.json" ]; then
+    versi_pkg=$(node -p "require('./$s/package.json').version")
+
+    # Versi di manifest dan package.json harus sama — kalau berbeda, nomor versi
+    # pada nama berkas kehilangan artinya.
+    if [ "$versi" != "$versi_pkg" ]; then
+      echo "  ✗ versi tidak sinkron: manifest=$versi package.json=$versi_pkg"
+      gagal=1; continue
+    fi
+
+    [ -d "$s/node_modules" ] || (cd "$s" && npm install --silent)
+    (cd "$s" && npm run --silent build)
+  else
+    echo "  · tanpa dependensi npm — dipak langsung, tanpa langkah build"
+
+    # Tanpa langkah build, entry_point harus sudah ada di repo. Kalau tidak,
+    # bundle-nya akan terpasang lalu mati saat dijalankan.
+    masuk=$(node -p "require('./$s/manifest.json').server.entry_point || ''")
+    if [ -z "$masuk" ] || [ ! -f "$s/$masuk" ]; then
+      echo "  ✗ entry_point '$masuk' tidak ada di $s/"
+      gagal=1; continue
+    fi
   fi
-
-  [ -d "$s/node_modules" ] || (cd "$s" && npm install --silent)
-  (cd "$s" && npm run --silent build)
 
   out="dist/$nama-$versi.mcpb"
   rm -f "$out"
@@ -72,6 +91,14 @@ for s in "${SERVERS[@]}"; do
   tmp=$(mktemp -d); unzip -qo "$out" -d "$tmp"
   if ! node ./scripts/cek-kunci-tertanam.js "$tmp/manifest.json"; then
     echo "  ✗ $out memuat kunci tertanam di manifest.json"
+    rusak=1
+  fi
+
+  # ── Gerbang 3: versi yang diumumkan server = versi manifest ────────────
+  # Versi bisa dikeraskan di dalam kode, terpisah dari manifest. Yang dibaca
+  # Claude Desktop adalah yang diucapkan server saat handshake.
+  if ! node ./scripts/cek-versi-server.js "$tmp"; then
+    echo "  ✗ $out mengumumkan versi yang berbeda dari manifest-nya"
     rusak=1
   fi
   rm -rf "$tmp"

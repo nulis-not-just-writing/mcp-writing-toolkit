@@ -5,6 +5,7 @@
 1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../dist/):
    - `scholar-paper-search-0.6.0.mcpb`
    - `zotero-mcp-0.5.0.mcpb`
+   - `scr-toolkit-1.5.0.mcpb`
 2. **Klik dua kali** berkasnya. Claude Desktop membuka jendela pemasangan.
    (Alternatif: **Settings → Extensions**, lalu seret berkasnya ke sana.)
 3. Isi kolom konfigurasi bila perlu — semuanya opsional untuk `scholar`.
@@ -28,6 +29,9 @@ claude mcp add scholar -- node "$PWD/scholar-node/dist/index.js"
 # zotero
 cd zotero-node && npm install && npm run build && cd ..
 claude mcp add zotero -- node "$PWD/zotero-node/dist/index.js"
+
+# scr-toolkit — tanpa dependensi, jadi tanpa npm install dan tanpa build
+claude mcp add scr-toolkit -- node "$PWD/scr-toolkit/server/index.js"
 ```
 
 Untuk meneruskan konfigurasi, pakai `-e` sebelum `--`:
@@ -43,10 +47,11 @@ Periksa hasilnya dengan `/mcp` di dalam sesi Claude Code.
 
 ## Konfigurasi
 
-Kedua server hanya membaca **variabel lingkungan**. Di Claude Desktop, `manifest.json`
-yang mengisikannya dari formulir ekstensi; Anda tidak perlu menyentuhnya sama sekali.
+`scr-toolkit` **tidak punya isian konfigurasi sama sekali** — pasang lalu pakai. Dua
+server lainnya hanya membaca **variabel lingkungan**; di Claude Desktop, `manifest.json`
+yang mengisikannya dari formulir ekstensi sehingga Anda tidak perlu menyentuhnya.
 
-**Tidak ada berkas `.env`.** Kedua server tidak pernah membacanya. Bila Anda menemukan
+**Tidak ada berkas `.env`.** Tidak satu pun server di sini membacanya. Bila Anda menemukan
 petunjuk lama yang menyuruh menyalin `.env.example`, petunjuk itu untuk pack versi
 sebelumnya yang berbasis Python dan sudah tidak berlaku.
 
@@ -93,7 +98,7 @@ menerbitkan bundle apa pun yang manifest-nya membawa kunci harfiah.
 ## Membangun ulang bundle
 
 ```bash
-./build-mcpb.sh                 # kedua server
+./build-mcpb.sh                 # ketiganya
 ./build-mcpb.sh zotero-node     # satu saja
 ```
 
@@ -101,12 +106,22 @@ Hasilnya `dist/<nama>-<versi>.mcpb`. Skripnya berhenti dan **menghapus** bundle 
 gagal gerbang — bundle bermasalah yang tetap tergeletak di `dist/` cepat atau lambat akan
 tersebar tanpa sengaja.
 
-Gerbangnya: versi `manifest.json` harus sama dengan `package.json`; **`NOTICE.md` wajib
-ada di dalam bundle** (atribusi MIT pustaka yang ter-*bundle* harus menyertai setiap
-salinan, dan berkas `.mcpb` yang diunduh satuan tidak membawa serta isi repo); bundle
-tidak boleh memuat `node_modules/`, `src/`, `.env`, atau berkas sampah; dan tidak boleh
-ada nilai kredensial harfiah di `mcp_config.env`.
+Gerbangnya:
+
+- Versi `manifest.json` harus sama dengan `package.json` (untuk server yang punya).
+- **Versi yang diumumkan server** lewat handshake MCP harus sama dengan manifest-nya.
+  Gerbang ini menjalankan server hasil pack dan menanyakannya langsung — versi yang
+  dikeraskan di dalam kode justru jenis penyimpangan yang luput dari pemeriksaan berkas,
+  dan itu benar-benar pernah terjadi pada ketiga server di repo ini.
+- **`NOTICE.md` wajib ada di dalam bundle** — atribusi pustaka yang ter-*bundle* harus
+  menyertai setiap salinan, dan berkas `.mcpb` yang diunduh satuan tidak membawa serta
+  isi repo.
+- Bundle tidak boleh memuat `node_modules/`, `src/`, `.env`, atau berkas sampah.
+- Tidak boleh ada nilai kredensial harfiah di `mcp_config.env`.
+
+Server tanpa `package.json` (seperti `scr-toolkit`) dipak apa adanya tanpa langkah build;
+gerbangnya memastikan `entry_point` yang ditunjuk manifest benar-benar ada.
 
 ---
 
-[← Kembali](README.md) · [scholar](scholar.md) · [zotero](zotero.md) · [Tanya jawab](Tanya-jawab.md)
+[← Kembali](README.md) · [scholar](scholar.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md) · [Tanya jawab](Tanya-jawab.md)

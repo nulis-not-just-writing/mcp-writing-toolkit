@@ -283,7 +283,8 @@ async function searchDoaj(query: string, max: number): Promise<Paper[]> {
 
 // ---------- server ----------
 
-const SERVER_VERSION = "0.5.0";
+// Harus sama dengan "version" di manifest.json — build-mcpb.sh menolak bila berbeda.
+const SERVER_VERSION = "0.6.0";
 const server = new McpServer({ name: "scholar-paper-search", version: SERVER_VERSION });
 
 // Bypass tipe untuk server.tool: kombinasi SDK 1.29 + zod 3.25 memicu TS2589

@@ -11,20 +11,22 @@ Untuk Claude Desktop, tidak — ia menyertakan Node.js sendiri. Node.js hanya di
 bila Anda membangun dari sumber atau memakainya di Claude Code.
 
 **Perlu Python, `pip`, atau `uv`?**
-Tidak. Kedua server sepenuhnya Node.js. Bila Anda menemukan petunjuk yang menyuruh
+Tidak. Ketiganya sepenuhnya Node.js. Bila Anda menemukan petunjuk yang menyuruh
 menjalankan `install.sh` atau memasang paket PyPI, petunjuk itu untuk pack versi lama dan
 sudah tidak berlaku.
 
 **Di mana saya isi berkas `.env`?**
-Tidak ada. Kedua server tidak pernah membaca `.env`. Di Claude Desktop, isian ada di
+Tidak ada. Tidak satu pun server di sini membaca `.env`. Di Claude Desktop, isian ada di
 formulir jendela ekstensi; di Claude Code, pakai `-e NAMA=nilai` pada `claude mcp add`.
+`scr-toolkit` bahkan tidak punya isian sama sekali.
 
 ## scholar
 
 **Tool Scopus tidak muncul sama sekali.**
-Itu perilaku yang benar bila `SCOPUS_API_KEY` kosong. Kedelapan tool Elsevier memang
-tidak didaftarkan tanpa kunci, alih-alih muncul lalu gagal saat dipanggil. Isi kuncinya,
-pasang ulang ekstensinya, lalu jalankan ulang Claude Desktop.
+Itu perilaku yang benar bila `SCOPUS_API_KEY` kosong. Kelima tool Elsevier memang tidak
+didaftarkan tanpa kunci, alih-alih muncul lalu gagal saat dipanggil — `tools/list`
+mengembalikan 16 alih-alih 21. Isi kuncinya, pasang ulang ekstensinya, lalu jalankan ulang
+Claude Desktop.
 
 **Kunci sudah diisi tapi Scopus menolak dengan 401 atau 403.**
 Jalankan `elsevier_status` — ia melaporkan apakah kunci terbaca dan apakah benar-benar
@@ -68,12 +70,46 @@ Tidak. Seluruh panggilannya `GET`; tidak ada satu pun jalur tulis di kodenya.
 kunci yang Anda kelola di sana dikelola plugin itu dan tidak selalu sama. Periksa dulu
 sebelum menempelkannya ke naskah LaTeX yang sudah berjalan.
 
+## scr-toolkit
+
+**Apa itu `M6 Langkah 2`, `M5 L3`, `M9 L8` di deskripsi alatnya?**
+Titik modul di kursus **Alur SLR AI** — alat ini pelengkap modul itu dan sengaja tetap
+begitu. Di dalam kursus, rujukan itu memberi tahu peserta persis kapan sebuah alat dipakai.
+Di luar kursus, tabel di [halaman scr-toolkit](scr-toolkit.md) cukup untuk memakainya;
+alatnya tidak menuntut kursus apa pun untuk berjalan.
+
+**Alat ini memutuskan mana studi yang masuk?**
+Tidak. Tidak satu pun dari sembilan alatnya memutuskan eligibility. Ia memeriksa,
+menghitung, mencocokkan, dan mengunduh — keputusan tetap milik peneliti.
+
+**Hasilnya `TIDAK_DAPAT_DIPERIKSA`, bukan cocok atau tidak cocok.**
+Itu memang jawaban yang benar, bukan kegagalan. Tanpa `pdftotext`, pengekstrak bawaan
+hanya boleh **membuktikan** kecocokan dan tidak pernah menyangkalnya — diukur pada 432
+kutipan, dari yang tidak ditemukannya, 18 dari 23 sesungguhnya ada. Pasang poppler bila
+Anda perlu verdict yang menuduh. Jawaban yang sama juga keluar untuk PDF hasil scan, yang
+dikenali dari kepadatan teks di bawah 800 karakter per halaman.
+
+**Perlu pasang poppler?**
+Tidak wajib. Tanpanya seluruh alat tetap jalan, hanya wewenang pemeriksaannya berkurang
+seperti di atas. Di macOS: `brew install poppler`.
+
+**PDF saya diunduh MCP lain (scholar/Zotero) — aman langsung dipakai?**
+Jangan. Berkas dari luar tidak bernama `SCR[ID]_` sehingga tidak terlihat oleh pemeriksaan
+berbasis nama, padahal justru itu yang paling perlu diverifikasi — pernah terjadi sebuah
+unduhan mengembalikan PDF valid berisi artikel yang sepenuhnya berbeda. Jalankan
+`pdf_integrity` → `pdf_match_records` → `pdf_verify_record` lebih dulu.
+
+**`xlsx_write` menghapus sheet lain saya.**
+Ia menulis ulang seluruh berkas dan bukan penyunting sel. Sertakan semua sheet yang ingin
+dipertahankan, atau tulis ke berkas baru.
+
 ## Umum
 
 **Apakah ada data saya yang dikirim ke suatu tempat?**
 Tidak ada telemetri dan tidak ada server perantara. `scholar` memanggil API publik
 langsung dari komputer Anda; `zotero` mode lokal hanya berbicara dengan aplikasi Zotero
-di `localhost`.
+di `localhost`; `scr-toolkit` hanya menyentuh berkas yang Anda tunjuk, plus Unpaywall dan
+laman penerbit saat Anda memintanya mengunduh.
 
 **Saya bukan penutur bahasa Indonesia. Bisa dipakai?**
 Bisa — server membalas dalam bahasa yang Anda pakai, dan README utamanya berbahasa
@@ -100,6 +136,9 @@ berkas `.mcpb`, bukan hanya di repo. Berkas yang diunduh orang satuan tidak memb
 isi repo, jadi atribusinya harus ikut di dalam bundle. `build-mcpb.sh` menolak
 menghasilkan bundle tanpa berkas itu.
 
+Khusus `scr-toolkit` tidak ada pustaka pihak ketiga sama sekali — nol dependensi npm —
+sehingga tidak ada hak cipta lain yang perlu direproduksi di sana.
+
 ---
 
-[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [scholar](scholar.md) · [zotero](zotero.md)
+[← Kembali](README.md) · [Pemasangan](Pemasangan.md) · [scholar](scholar.md) · [zotero](zotero.md) · [scr-toolkit](scr-toolkit.md)
