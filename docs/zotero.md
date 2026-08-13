@@ -1,6 +1,6 @@
 # zotero — pustaka Anda sendiri
 
-`zotero-mcp` **0.4.0** · 8 tool · [sumber](../zotero-node/)
+`zotero-mcp` **0.5.0** · 8 tool · [sumber](../zotero-node/)
 
 Memberi Claude akses baca ke pustaka Zotero Anda: mencari item, membaca metadata dan teks
 penuhnya, menelusuri koleksi, dan mengekspor BibTeX.

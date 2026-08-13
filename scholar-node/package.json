@@ -1,9 +1,9 @@
 {
   "name": "scholar-paper-search-node",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "description": "Node.js MCP server: search, download, and read academic papers from open scholarly APIs. Runs on Claude Desktop's built-in Node.js (no Python, no system dependencies).",
-  "license": "MIT",
+  "license": "CC-BY-NC-4.0",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --log-level=warning",
     "pack": "npm run build && npx --yes @anthropic-ai/mcpb pack . ../scholar-paper-search-node.mcpb"

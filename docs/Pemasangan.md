@@ -3,8 +3,8 @@
 ## Claude Desktop — cara termudah
 
 1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../dist/):
-   - `scholar-paper-search-0.5.0.mcpb`
-   - `zotero-mcp-0.4.0.mcpb`
+   - `scholar-paper-search-0.6.0.mcpb`
+   - `zotero-mcp-0.5.0.mcpb`
 2. **Klik dua kali** berkasnya. Claude Desktop membuka jendela pemasangan.
    (Alternatif: **Settings → Extensions**, lalu seret berkasnya ke sana.)
 3. Isi kolom konfigurasi bila perlu — semuanya opsional untuk `scholar`.
@@ -101,9 +101,11 @@ Hasilnya `dist/<nama>-<versi>.mcpb`. Skripnya berhenti dan **menghapus** bundle 
 gagal gerbang — bundle bermasalah yang tetap tergeletak di `dist/` cepat atau lambat akan
 tersebar tanpa sengaja.
 
-Gerbangnya: versi `manifest.json` harus sama dengan `package.json`; bundle tidak boleh
-memuat `node_modules/`, `src/`, `.env`, atau berkas sampah; dan tidak boleh ada nilai
-kredensial harfiah di `mcp_config.env`.
+Gerbangnya: versi `manifest.json` harus sama dengan `package.json`; **`NOTICE.md` wajib
+ada di dalam bundle** (atribusi MIT pustaka yang ter-*bundle* harus menyertai setiap
+salinan, dan berkas `.mcpb` yang diunduh satuan tidak membawa serta isi repo); bundle
+tidak boleh memuat `node_modules/`, `src/`, `.env`, atau berkas sampah; dan tidak boleh
+ada nilai kredensial harfiah di `mcp_config.env`.
 
 ---
 

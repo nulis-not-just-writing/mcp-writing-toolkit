@@ -2,14 +2,14 @@
   "manifest_version": "0.3",
   "name": "zotero-mcp",
   "display_name": "Zotero MCP",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Chat with your Zotero library: search items, read metadata & full text, browse collections, and export BibTeX.",
   "long_description": "Node.js MCP server for the Zotero reference manager. Local mode (default) talks to the Zotero 7+ desktop app on this computer — enable Settings → Advanced → 'Allow other applications on this computer to communicate with Zotero'. Web API mode works with a Zotero API key + library ID instead. Runs entirely on Claude Desktop's built-in Node.js — no Python, no system dependencies. The 'unverified extension' dialog during installation is normal for self-distributed extensions; just approve it.",
   "author": {
     "name": "mubaroq - Akademi Digital Bandung | RPI Institute",
     "email": "mubaroq@digitalbdg.ac.id"
   },
-  "license": "MIT",
+  "license": "CC-BY-NC-4.0",
   "keywords": ["zotero", "references", "citations", "bibtex", "research", "academic"],
   "server": {
     "type": "node",

@@ -4,3 +4,4 @@ tsconfig.json
 package-lock.json
 .mcpbignore
 *.log
+build-team-bundle.sh

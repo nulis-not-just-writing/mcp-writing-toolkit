@@ -2,14 +2,14 @@
   "manifest_version": "0.3",
   "name": "scholar-paper-search",
   "display_name": "Scholar Paper Search",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Search, download, and read academic papers from arXiv, OpenAlex, Crossref, Semantic Scholar, PubMed, Europe PMC, and DOAJ — no key required. Scopus/ScienceDirect tools appear only when an Elsevier API key is filled in below.",
   "long_description": "Node.js MCP server for academic literature work: search across 7 open scholarly APIs, verify references by DOI (anti-fabrication), find legal open-access PDFs, download PDFs, and read their full text. Runs entirely on Claude Desktop's built-in Node.js — no Python, no system dependencies, works on a clean machine. The 'unverified extension' dialog during installation is normal for self-distributed extensions; just approve it.",
   "author": {
     "name": "mubaroq - Akademi Digital Bandung | RPI Institute",
     "email": "mubaroq@digitalbdg.ac.id"
   },
-  "license": "MIT",
+  "license": "CC-BY-NC-4.0",
   "keywords": [
     "academic",
     "papers",

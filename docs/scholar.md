@@ -1,6 +1,6 @@
 # scholar — pencarian literatur & verifikasi sitasi
 
-`scholar-paper-search` **0.5.0** · 21 tool · [sumber](../scholar-node/)
+`scholar-paper-search` **0.6.0** · 21 tool · [sumber](../scholar-node/)
 
 Mencari di tujuh API ilmiah terbuka, memverifikasi sitasi lewat DOI, menemukan PDF open
 access yang legal, mengunduhnya, dan membaca teksnya. Delapan tool Scopus/ScienceDirect

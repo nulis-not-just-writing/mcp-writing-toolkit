@@ -76,21 +76,29 @@ langsung dari komputer Anda; `zotero` mode lokal hanya berbicara dengan aplikasi
 di `localhost`.
 
 **Saya bukan penutur bahasa Indonesia. Bisa dipakai?**
-Bisa — server membalas dalam bahasa yang Anda pakai. Yang berbahasa Indonesia adalah
-deskripsi tool di `manifest.json` (dibaca model, bukan Anda — tetapi itulah yang tampil
-di jendela ekstensi Claude Desktop) dan dokumentasi di `docs/`. Ringkasan bahasa Inggris
-ada di [README.en.md](../README.en.md).
+Bisa — server membalas dalam bahasa yang Anda pakai, dan README utamanya berbahasa
+Inggris. Yang masih berbahasa Indonesia adalah deskripsi tool di `manifest.json` (dibaca
+model, bukan Anda — tetapi itulah yang tampil di jendela ekstensi Claude Desktop) dan
+seluruh halaman `docs/` ini.
 
 **Apa hubungannya dengan repo `skills`?**
 Repo ini alatnya; [`nulis-not-just-writing/skills`](https://github.com/nulis-not-just-writing/skills)
 prosedurnya. Keduanya saling melengkapi dan tidak saling menuntut — skill di sana
 berfungsi penuh tanpa server ini, dan server ini berguna tanpa skill itu.
 
-**Kenapa lisensinya MIT, sementara repo `skills` CC BY-NC?**
-Karena ini kode. Creative Commons sendiri menyarankan agar lisensinya tidak dipakai untuk
-perangkat lunak, dan batasan "non-komersial" tidak terdefinisi jelas untuk sebuah alat —
-peneliti di perusahaan yang memverifikasi sitasi masuk kategori mana? Ketidakjelasan itu
-menghalangi pemakaian yang justru diinginkan.
+**Apa lisensinya?**
+**CC BY-NC 4.0**, sama dengan repo `skills`. Boleh dipakai, disalin, diubah, dan
+disebarkan untuk keperluan non-komersial dengan mencantumkan atribusi. Peneliti,
+mahasiswa, dosen, dan lembaga pendidikan tidak perlu meminta izin apa pun; cukup
+cantumkan sumbernya. Pemakaian komersial memerlukan izin terpisah dari pemegang hak.
+
+**Kalau kodenya CC BY-NC, bagaimana dengan pustaka MIT yang ikut ter-*bundle*?**
+Lisensi MIT tetap berlaku atas kode pustaka itu sendiri; CC BY-NC hanya berlaku atas
+karya aslinya. MIT mengizinkan hasil gabungan disebarkan dengan syarat berbeda selama
+pemberitahuan hak ciptanya dipertahankan — karena itu `NOTICE.md` ada di dalam **setiap**
+berkas `.mcpb`, bukan hanya di repo. Berkas yang diunduh orang satuan tidak membawa serta
+isi repo, jadi atribusinya harus ikut di dalam bundle. `build-mcpb.sh` menolak
+menghasilkan bundle tanpa berkas itu.
 
 ---
 

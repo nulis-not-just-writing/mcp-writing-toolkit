@@ -1,41 +1,41 @@
 # MCP Writing Toolkit
 
-*[Read this in English](README.en.md)*
+*[Baca dalam bahasa Indonesia](README.id.md)*
 
-Dua MCP server untuk pekerjaan pustaka: **mencari literatur, memverifikasi sitasi, dan
-membaca pustaka Zotero Anda** — langsung dari dalam Claude.
+Two MCP servers for literature work: **search the scholarly record, verify citations, and
+read your own Zotero library** — from inside Claude.
 
-Keduanya ditulis dalam TypeScript dan dijalankan oleh Node.js. **Tidak ada Python,
-tidak ada `pip install`, tidak ada virtualenv.** Untuk Claude Desktop, unduh satu berkas
-`.mcpb` lalu klik dua kali.
+Both are TypeScript, run by Node.js. **No Python, no `pip install`, no virtualenv.** For
+Claude Desktop, download one `.mcpb` file and double-click it.
 
-## Server
+## The servers
 
-| Server | Tool | Menjawab |
+| Server | Tools | Answers |
 |---|---|---|
-| [`scholar-node`](scholar-node/) → `scholar-paper-search` **0.5.0** | 21 | apakah paper ini benar ada, dan di mana PDF legalnya? |
-| [`zotero-node`](zotero-node/) → `zotero-mcp` **0.4.0** | 8 | apa yang sudah ada di pustaka saya sendiri? |
+| [`scholar-node`](scholar-node/) → `scholar-paper-search` **0.6.0** | 21 | does this paper actually exist, and where is a legal PDF? |
+| [`zotero-node`](zotero-node/) → `zotero-mcp` **0.5.0** | 8 | what is already in my own library? |
 
-`scholar` mencari di **tujuh API ilmiah terbuka** — arXiv, OpenAlex, Crossref, Semantic
-Scholar, PubMed, Europe PMC, DOAJ — tanpa perlu kunci apa pun. Bila Anda punya kunci
-Elsevier, delapan tool Scopus/ScienceDirect ikut menyala.
+`scholar` searches **seven open scholarly APIs** — arXiv, OpenAlex, Crossref, Semantic
+Scholar, PubMed, Europe PMC, DOAJ — with no key required. If you have Elsevier
+credentials, eight Scopus/ScienceDirect tools switch on as well.
 
-`zotero` berbicara dengan aplikasi **Zotero 7+ di komputer Anda sendiri**. Mode lokal
-adalah bawaannya: tanpa kunci API, tanpa unggah, tanpa apa pun keluar dari mesin Anda.
+`zotero` talks to the **Zotero 7+ app on your own machine**. Local mode is the default:
+no API key, no upload, nothing leaves your computer.
 
-## Pasang
+## Install
 
-**Claude Desktop** — unduh dari [`dist/`](dist/), lalu klik dua kali (atau
+**Claude Desktop** — download from [`dist/`](dist/), then double-click (or
 **Settings → Extensions**):
 
-- [`scholar-paper-search-0.5.0.mcpb`](dist/scholar-paper-search-0.5.0.mcpb)
-- [`zotero-mcp-0.4.0.mcpb`](dist/zotero-mcp-0.4.0.mcpb)
+- [`scholar-paper-search-0.6.0.mcpb`](dist/scholar-paper-search-0.6.0.mcpb)
+- [`zotero-mcp-0.5.0.mcpb`](dist/zotero-mcp-0.5.0.mcpb)
 
-Isian konfigurasinya muncul sebagai formulir di jendela ekstensi. **Semuanya opsional**
-untuk `scholar`; kunci yang ditandai rahasia disimpan di keychain sistem operasi Anda,
-bukan di berkas teks.
+Versioned builds are also attached to each [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 
-**Claude Code** — bangun dari sumber, lalu daftarkan:
+Configuration appears as a form in the extension window. Everything is **optional** for
+`scholar`; fields marked sensitive are stored in your OS keychain, not in a text file.
+
+**Claude Code** — build from source, then register:
 
 ```bash
 git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
@@ -43,93 +43,105 @@ cd mcp-writing-toolkit/scholar-node && npm install && npm run build
 claude mcp add scholar -- node "$PWD/dist/index.js"
 ```
 
-Detail lengkap, termasuk cara meneruskan kunci API, ada di
-[docs/Pemasangan.md](docs/Pemasangan.md).
+## What makes them different
 
-## Yang membedakannya
+**Citations are verified, not guessed.** `get_paper_by_doi` resolves a DOI against
+Crossref and returns what is actually registered. This is a direct countermeasure to
+fabricated references — a plausible-*looking* author–year–journal combination is the
+signature pattern, and the only way to tell is to ask the registrar.
 
-**Sitasi diverifikasi, bukan diduga.** `get_paper_by_doi` meresolusi DOI ke Crossref dan
-mengembalikan metadata yang sebenarnya terdaftar. Ini penanggulangan langsung untuk
-sitasi karangan — kombinasi penulis–tahun–jurnal yang *terlihat* masuk akal justru pola
-khasnya, dan satu-satunya cara membedakannya adalah menanyakan ke registrar.
+**Scopus queries are passed through verbatim.** `search_scopus` does not translate,
+normalise, or "fix" your query. The consequence is that the search string you report in
+the manuscript is identical to the one actually executed — a reproducibility requirement
+that collapses the moment some layer silently rewrites the query.
 
-**Query Scopus diteruskan apa adanya.** `search_scopus` tidak menerjemahkan, menormalkan,
-atau "memperbaiki" query Anda. Akibatnya *search string* yang Anda laporkan di manuskrip
-identik dengan yang benar-benar dieksekusi — syarat keterulangan yang gugur begitu ada
-lapisan yang diam-diam menulis ulang query.
+**API keys never leak through error messages.** Every Elsevier error passes through
+`scrub()`, which replaces the key and any `apiKey=` in a URL with `«redacted»` before it
+reaches the caller. Elsevier 401s routinely echo the full URL, key included.
 
-**Kunci API tidak pernah bocor lewat pesan galat.** Setiap pesan kesalahan Elsevier
-melewati `scrub()` yang mengganti kunci dan `apiKey=` di URL dengan `«redacted»` sebelum
-sampai ke pemanggil. Galat 401 dari Elsevier biasanya memuat URL lengkap beserta kuncinya.
+**Features that cannot run do not appear.** Without a Scopus key, the eight Elsevier
+tools are never registered at all — rather than appearing and failing when called. What
+is listed is what actually works.
 
-**Fitur yang tak bisa dijalankan tidak muncul.** Tanpa kunci Scopus, kedelapan tool
-Elsevier tidak didaftarkan sama sekali — bukan muncul lalu gagal saat dipanggil. Yang
-tampil di daftar tool adalah yang benar-benar bisa dipakai.
+**Nothing leaves your machine.** No telemetry, no relay server. `scholar` calls public
+APIs directly; `zotero` in local mode only talks to the Zotero app on `localhost`.
 
-**Tidak ada yang meninggalkan komputer Anda.** Tidak ada telemetri, tidak ada server
-perantara. `scholar` memanggil API publik langsung; `zotero` mode lokal hanya berbicara
-dengan aplikasi Zotero di `localhost`.
+## Configuration
 
-## Konfigurasi
+Both servers read configuration from **environment variables**. In Claude Desktop,
+`manifest.json` populates these from the extension form — you never touch them. This list
+is for manual use (Claude Code, or running a server directly):
 
-Kedua server membaca konfigurasinya dari **variabel lingkungan**. Di Claude Desktop,
-`manifest.json` yang mengisikannya dari formulir ekstensi — Anda tidak perlu menyentuh
-variabel ini. Daftar berikut untuk pemakaian manual (Claude Code, atau menjalankan
-server langsung):
-
-| Variabel | Server | Wajib | Untuk apa |
+| Variable | Server | Required | Purpose |
 |---|---|---|---|
-| `CONTACT_EMAIL` | scholar | tidak | *polite pool* Crossref/OpenAlex + mengaktifkan pencarian PDF via Unpaywall |
-| `S2_API_KEY` | scholar | tidak | melonggarkan kuota Semantic Scholar |
-| `DOWNLOAD_DIR` | scholar | tidak | folder unduhan; bila kosong → `~/Downloads`, lalu folder sementara sistem |
-| `SCOPUS_API_KEY` | scholar | tidak | menyalakan 8 tool Scopus |
-| `SCIENCEDIRECT_API_KEY` | scholar | tidak | teks lengkap ScienceDirect |
-| `ELSEVIER_INSTTOKEN` | scholar | tidak | token institusi, bila akses dari luar jaringan kampus ditolak 401/403 |
-| `ZOTERO_LOCAL` | zotero | tidak | `true` (bawaan) — bicara dengan aplikasi Zotero di komputer ini |
-| `ZOTERO_API_KEY` · `ZOTERO_LIBRARY_ID` · `ZOTERO_LIBRARY_TYPE` | zotero | hanya mode Web API | alternatif tanpa aplikasi Zotero lokal |
+| `CONTACT_EMAIL` | scholar | no | Crossref/OpenAlex polite pool + enables Unpaywall PDF lookup |
+| `S2_API_KEY` | scholar | no | higher Semantic Scholar rate limit |
+| `DOWNLOAD_DIR` | scholar | no | download folder; falls back to `~/Downloads`, then the system temp dir |
+| `SCOPUS_API_KEY` | scholar | no | switches on the 8 Scopus tools |
+| `SCIENCEDIRECT_API_KEY` | scholar | no | ScienceDirect full text |
+| `ELSEVIER_INSTTOKEN` | scholar | no | institutional token, if off-campus access is refused with 401/403 |
+| `ZOTERO_LOCAL` | zotero | no | `true` (default) — talk to the Zotero app on this machine |
+| `ZOTERO_API_KEY` · `ZOTERO_LIBRARY_ID` · `ZOTERO_LIBRARY_TYPE` | zotero | Web API mode only | alternative to the local Zotero app |
 
-**Tidak ada berkas `.env`.** Kedua server tidak pernah membacanya — konfigurasi hanya
-mengalir lewat variabel lingkungan proses.
+**There is no `.env` file.** Neither server ever reads one — configuration flows only
+through process environment variables.
 
-## Prasyarat
+## Requirements
 
-| Kebutuhan | Untuk apa | Catatan |
+| Requirement | For | Note |
 |---|---|---|
-| Claude Desktop | memasang `.mcpb` | Node.js-nya sudah disertakan — tidak perlu memasang apa pun |
-| Node.js 20+ | membangun dari sumber / memakai di Claude Code | `.nvmrc` menunjuk 24 |
-| Zotero 7+ | server `zotero` mode lokal | Settings → Advanced → centang *"Allow other applications on this computer to communicate with Zotero"* |
-| Kunci Elsevier | 8 tool Scopus/ScienceDirect | daftar di [dev.elsevier.com](https://dev.elsevier.com) dengan akun institusi |
+| Claude Desktop | installing `.mcpb` | ships its own Node.js — nothing else to install |
+| Node.js 20+ | building from source / Claude Code | `.nvmrc` pins 24 |
+| Zotero 7+ | `zotero` local mode | Settings → Advanced → tick *"Allow other applications on this computer to communicate with Zotero"* |
+| Elsevier key | the 8 Scopus/ScienceDirect tools | register at [dev.elsevier.com](https://dev.elsevier.com) with an institutional account |
 
-## Membangun ulang
+## Documentation
+
+Full guides live in [`docs/`](docs/) — installation, one page per server, and a
+troubleshooting FAQ.
+
+**`docs/` is written in Indonesian.** So are the tool descriptions inside `manifest.json`,
+which is what Claude Desktop shows in the extension window. That text is read by the model,
+not by you — Claude handles it and answers in whatever language you write in. But if you
+want to *read* the guides rather than just use the servers, you will need a translation.
+This is a real limitation, stated plainly rather than hidden.
+
+## Rebuilding
 
 ```bash
-./build-mcpb.sh          # membangun kedua server, menghasilkan dist/<nama>-<versi>.mcpb
+./build-mcpb.sh          # builds both servers, emits dist/<name>-<version>.mcpb
 ```
 
-Skripnya menolak menghasilkan bundle yang membawa `node_modules/`, `src/`, atau kunci API
-tertanam — gerbangnya gagal keras, bukan memberi peringatan lalu lanjut.
+The script refuses to emit a bundle that is missing `NOTICE.md`, carries `node_modules/`,
+`src/`, or `.env`, or has an embedded API key in `mcp_config.env` — and it **deletes** the
+failed bundle rather than merely declining to announce it.
 
-> Nama berkas memuat versi supaya sebuah bundle tidak pernah "basi": versi baru
-> menghasilkan berkas baru, bukan menimpa yang lama.
+## Relationship to the `skills` repo
 
-## Hubungannya dengan repo `skills`
+This repo provides the **tools**; [`nulis-not-just-writing/skills`](https://github.com/nulis-not-just-writing/skills)
+provides the **procedures** — five Claude skills for writing, polishing, submitting, and
+revising Q1 journal articles, plus one for running a systematic review.
 
-Repo ini menyediakan **alatnya**; [`nulis-not-just-writing/skills`](https://github.com/nulis-not-just-writing/skills)
-menyediakan **prosedurnya** — lima skill Claude untuk menulis, memoles, menyubmit, dan
-merevisi artikel jurnal Q1, plus satu untuk menjalankan tinjauan sistematis.
+They **complement each other; neither requires the other**. The skills work fully without
+these servers (citation verification falls back to DOI resolution over the web, then to
+explicit flagging). These servers are useful without the skills. Installed together,
+citation verification and Scopus search become direct rather than mediated.
 
-Keduanya **saling melengkapi, bukan saling menuntut**. Skill-skillnya berfungsi penuh
-tanpa server ini (verifikasi sitasi turun ke resolusi DOI lewat web, lalu ke penandaan
-manual). Server ini berguna tanpa skill itu. Dipasang bersama, verifikasi sitasi dan
-pencarian Scopus jadi langsung tanpa perantara.
+## Licence
 
-## Lisensi
+**[CC BY-NC 4.0](LICENSE)** — Creative Commons Attribution-NonCommercial 4.0 International.
 
-**[MIT](LICENSE)** — bebas dipakai, disalin, diubah, dan disebarkan, termasuk secara
-komersial, selama pemberitahuan hak ciptanya dipertahankan.
+Free to use, copy, adapt, and share **for non-commercial purposes** with attribution.
+Commercial use — including paid training and paid products — requires separate permission
+from the rights holder.
 
-Lisensinya sengaja berbeda dari repo `skills` (CC BY-NC 4.0). Ini kode, dan Creative
-Commons sendiri menyarankan agar lisensinya tidak dipakai untuk perangkat lunak.
+Researchers, students, lecturers, and educational institutions using these for research
+and teaching need no permission at all; just credit the source.
 
-Seluruh dependensi yang ikut ter-*bundle* juga MIT — rinciannya di [`NOTICE.md`](NOTICE.md),
-beserta catatan tentang layanan yang diakses dan syarat pemakaiannya masing-masing.
+### Third-party attribution
+
+Each server bundles MIT-licensed libraries into its `dist/index.js`. Their MIT licence
+continues to govern their own code, and the MIT notice must travel with every copy — which
+is why a `NOTICE.md` sits inside **each** `.mcpb` as well as in each server folder. The
+build refuses to produce a bundle without one. See [`NOTICE.md`](NOTICE.md) at the root for
+the full picture, including the external services accessed and their respective terms.

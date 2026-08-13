@@ -54,6 +54,14 @@ for s in "${SERVERS[@]}"; do
     esac
   done
 
+  # Atribusi MIT dependensi yang ter-bundle ke dalam dist/index.js wajib ikut
+  # DI DALAM bundle — NOTICE.md di akar repo tidak menyertai berkas .mcpb yang
+  # diunduh orang satuan.
+  case "$listing" in
+    *"NOTICE.md"*) ;;
+    *) echo "  ✗ $out tidak memuat NOTICE.md — atribusi MIT wajib ikut"; rusak=1 ;;
+  esac
+
   sampah=$(printf '%s\n' "$listing" | grep -cE '\.DS_Store|__MACOSX|\.log$' || true)
   if [ "$sampah" -gt 0 ]; then
     echo "  ✗ $out memuat $sampah berkas sampah (.DS_Store/__MACOSX/*.log)"
