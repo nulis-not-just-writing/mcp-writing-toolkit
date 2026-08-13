@@ -117,6 +117,11 @@ server ([scholar](docs/scholar.md), [zotero](docs/zotero.md),
 Indonesian versions of the same pages are in [`docs/id/`](docs/id/), kept in step with the
 English ones.
 
+The same content is mirrored to the
+[Wiki](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/wiki), both languages.
+**`docs/` is the source** — it is versioned alongside the servers it describes; the wiki is
+regenerated with `./sync-wiki.sh` and should never be edited directly.
+
 **One thing is still Indonesian: the tool descriptions inside `manifest.json`**, which is
 what Claude Desktop shows in the extension window. That text is read by the model, not by
 you — Claude handles it and answers in whatever language you write in — but the extension

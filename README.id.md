@@ -122,6 +122,11 @@ mana yang Anda butuhkan.
 
 Versi Inggrisnya ada di [`docs/`](docs/). Keduanya dijaga sejajar isinya.
 
+Isi yang sama dicerminkan ke
+[Wiki](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/wiki), dua bahasa.
+**`docs/` adalah sumbernya** — ia ikut versi bersama server yang dijelaskannya; wiki
+dibangkitkan ulang dengan `./sync-wiki.sh` dan jangan pernah disunting langsung.
+
 ## Membangun ulang
 
 ```bash
