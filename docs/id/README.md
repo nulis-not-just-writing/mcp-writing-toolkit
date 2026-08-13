@@ -6,6 +6,10 @@ Tiga MCP server untuk pekerjaan pustaka di dalam Claude: mencari literatur, memv
 sitasi, membaca pustaka Zotero Anda sendiri, dan menjalankan pemeriksaan deterministik
 tinjauan cakupan.
 
+> **Ingin langsung mulai?** Unduh server-nya lalu klik dua kali —
+> **[Pemasangan](Pemasangan.md)** memuat tautan unduh langsung dan empat langkah bernomor.
+> Tanpa git, tanpa terminal, tanpa perlu memasang apa pun lagi.
+
 ## Saya butuh yang mana?
 
 Mulai dari keadaan Anda, bukan dari nama server.

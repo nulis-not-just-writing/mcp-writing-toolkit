@@ -4,10 +4,17 @@
 
 ## Claude Desktop — the easy path
 
-1. Download the `.mcpb` you want from [`dist/`](../dist/):
-   - `scholar-nulis-0.8.0.mcpb`
-   - `zotero-nulis-0.7.0.mcpb`
-   - `scr-toolkit-nulis-2.0.0.mcpb`
+**Not sure which Claude you have?** If you use Claude in a browser or a desktop application, this
+is your section. If you type `claude` into a terminal, skip to
+[Claude Code](#claude-code--build-from-source).
+
+1. **Download** the server you want. Each link saves the file straight to your computer:
+
+   | Server | What it does | Download |
+   |---|---|---|
+   | `scholar-nulis` | search literature, verify citations | [scholar-nulis-0.8.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scholar-nulis-0.8.0.mcpb) |
+   | `zotero-nulis` | read your own Zotero library | [zotero-nulis-0.7.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/zotero-nulis-0.7.0.mcpb) |
+   | `scr-toolkit-nulis` | deterministic scoping-review checks | [scr-toolkit-nulis-2.0.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scr-toolkit-nulis-2.0.0.mcpb) |
 2. **Double-click** the file. Claude Desktop opens an install window.
    (Alternative: **Settings → Extensions**, then drag the file in.)
 3. Fill in the configuration fields if you need them — all optional for `scholar-nulis`, and

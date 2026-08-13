@@ -6,6 +6,10 @@ Three MCP servers for literature work inside Claude: search the scholarly record
 citations, read your own Zotero library, and run the deterministic checks a scoping review
 needs.
 
+> **Just want to get started?** Download a server and double-click it —
+> **[Installation](Installation.md)** has the direct download links and four numbered steps.
+> No git, no terminal, nothing else to install.
+
 ## Which one do I need?
 
 Start from your situation, not from the server names.

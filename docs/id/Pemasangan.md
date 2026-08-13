@@ -4,10 +4,17 @@
 
 ## Claude Desktop — cara termudah
 
-1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../../dist/):
-   - `scholar-nulis-0.8.0.mcpb`
-   - `zotero-nulis-0.7.0.mcpb`
-   - `scr-toolkit-nulis-2.0.0.mcpb`
+**Belum yakin punya Claude yang mana?** Kalau Anda memakai Claude lewat peramban atau aplikasi
+desktop, bagian inilah yang Anda butuhkan. Kalau Anda mengetik `claude` di terminal, langsung ke
+[Claude Code](#claude-code--bangun-dari-sumber).
+
+1. **Unduh** server yang Anda mau. Tiap tautan langsung menyimpan berkasnya ke komputer Anda:
+
+   | Server | Untuk apa | Unduh |
+   |---|---|---|
+   | `scholar-nulis` | cari literatur, verifikasi sitasi | [scholar-nulis-0.8.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scholar-nulis-0.8.0.mcpb) |
+   | `zotero-nulis` | membaca pustaka Zotero Anda sendiri | [zotero-nulis-0.7.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/zotero-nulis-0.7.0.mcpb) |
+   | `scr-toolkit-nulis` | pemeriksaan deterministik tinjauan cakupan | [scr-toolkit-nulis-2.0.0.mcpb](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/raw/main/dist/scr-toolkit-nulis-2.0.0.mcpb) |
 2. **Klik dua kali** berkasnya. Claude Desktop membuka jendela pemasangan.
    (Alternatif: **Settings → Extensions**, lalu seret berkasnya ke sana.)
 3. Isi kolom konfigurasi bila perlu — semuanya opsional untuk `scholar-nulis`.
