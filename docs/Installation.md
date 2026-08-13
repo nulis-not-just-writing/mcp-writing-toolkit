@@ -5,19 +5,30 @@
 ## Claude Desktop — the easy path
 
 1. Download the `.mcpb` you want from [`dist/`](../dist/):
-   - `scholar-paper-search-0.6.0.mcpb`
-   - `zotero-mcp-0.5.0.mcpb`
-   - `scr-toolkit-1.5.0.mcpb`
+   - `scholar-nulis-0.7.0.mcpb`
+   - `zotero-nulis-0.6.0.mcpb`
+   - `scr-toolkit-nulis-1.6.0.mcpb`
 2. **Double-click** the file. Claude Desktop opens an install window.
    (Alternative: **Settings → Extensions**, then drag the file in.)
-3. Fill in the configuration fields if you need them — all optional for `scholar`, and
-   `scr-toolkit` has none at all.
+3. Fill in the configuration fields if you need them — all optional for `scholar-nulis`, and
+   `scr-toolkit-nulis` has none at all.
 4. Click **Install**, then quit Claude Desktop **completely** and reopen it.
 
 Closing the window is not enough; servers are only re-read when the application actually
 restarts. On macOS, make sure the icon is gone from the Dock (⌘Q).
 
 Nothing needs to be installed first. Claude Desktop ships its own Node.js.
+
+### Upgrading from the old names
+
+These servers were previously called `scholar-paper-search`, `zotero-mcp`, and
+`scr-toolkit`. Claude Desktop identifies an extension by the `name` in its manifest, so a
+renamed server is a **different extension** as far as it is concerned — installing the new
+one does not replace the old one, and you will end up with both, exposing duplicate tools.
+
+**Remove the old entries first** in **Settings → Extensions**, then install these. The
+suffix exists precisely to stop this kind of ambiguity: `scholar` is a common enough name
+that a second, unrelated MCP server may well already be using it.
 
 ## Claude Code — build from source
 
@@ -26,15 +37,15 @@ git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
 cd mcp-writing-toolkit
 
 # scholar
-cd scholar-node && npm install && npm run build && cd ..
-claude mcp add scholar -- node "$PWD/scholar-node/dist/index.js"
+cd scholar-nulis && npm install && npm run build && cd ..
+claude mcp add scholar -- node "$PWD/scholar-nulis/dist/index.js"
 
 # zotero
-cd zotero-node && npm install && npm run build && cd ..
-claude mcp add zotero -- node "$PWD/zotero-node/dist/index.js"
+cd zotero-nulis && npm install && npm run build && cd ..
+claude mcp add zotero -- node "$PWD/zotero-nulis/dist/index.js"
 
-# scr-toolkit — no dependencies, so no npm install and no build
-claude mcp add scr-toolkit -- node "$PWD/scr-toolkit/server/index.js"
+# scr-toolkit-nulis — no dependencies, so no npm install and no build
+claude mcp add scr-toolkit -- node "$PWD/scr-toolkit-nulis/server/index.js"
 ```
 
 To pass configuration, use `-e` before `--`:
@@ -43,14 +54,14 @@ To pass configuration, use `-e` before `--`:
 claude mcp add scholar \
   -e CONTACT_EMAIL=you@university.edu \
   -e SCOPUS_API_KEY=xxxxx \
-  -- node "$PWD/scholar-node/dist/index.js"
+  -- node "$PWD/scholar-nulis/dist/index.js"
 ```
 
 Check the result with `/mcp` inside a Claude Code session.
 
 ## Configuration
 
-`scr-toolkit` **has no configuration fields at all** — install and use. The other two read
+`scr-toolkit-nulis` **has no configuration fields at all** — install and use. The other two read
 theirs only from **environment variables**; in Claude Desktop, `manifest.json` populates
 them from the extension form, so you never touch them.
 
@@ -93,7 +104,7 @@ Fields marked sensitive in the extension window are stored by Claude Desktop in 
 **operating system keychain**, not as plain text.
 
 If you build the variant bundle with an embedded key for a team
-(`scholar-node/build-team-bundle.sh`), remember that the resulting file **carries that key
+(`scholar-nulis/build-team-bundle.sh`), remember that the resulting file **carries that key
 inside its manifest**. That bundle must never be uploaded anywhere public; this repo's
 `.gitignore` already refuses it through the `*-api.mcpb` pattern, and `build-mcpb.sh`
 refuses to publish any bundle whose manifest carries a literal key.
@@ -102,7 +113,7 @@ refuses to publish any bundle whose manifest carries a literal key.
 
 ```bash
 ./build-mcpb.sh                 # all three
-./build-mcpb.sh zotero-node     # just one
+./build-mcpb.sh zotero-nulis    # just one
 ```
 
 Output goes to `dist/<name>-<version>.mcpb`. The script stops and **deletes** any bundle
@@ -121,7 +132,7 @@ The gates:
 - No `node_modules/`, `src/`, `.env`, or junk files.
 - No literal credential values in `mcp_config.env`.
 
-Servers without a `package.json` (like `scr-toolkit`) are packed as-is with no build step;
+Servers without a `package.json` (like `scr-toolkit-nulis`) are packed as-is with no build step;
 the gate then confirms the `entry_point` named in the manifest actually exists.
 
 ---

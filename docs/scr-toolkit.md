@@ -1,8 +1,8 @@
-# scr-toolkit — the deterministic half of a scoping review
+# scr-toolkit-nulis — the deterministic half of a scoping review
 
 *[Baca dalam bahasa Indonesia](id/scr-toolkit.md)*
 
-`scr-toolkit` **1.5.0** · 9 tools · [source](../scr-toolkit/)
+`scr-toolkit-nulis` **1.6.0** · 9 tools · [source](../scr-toolkit-nulis/)
 
 Nine tools that do the **deterministic** part of a scoping review: checking, counting,
 matching, retrieving. **Not one of them decides eligibility** — judgement stays with the
@@ -68,7 +68,7 @@ your sample exactly.
 
 This sounds paranoid until it happens. A downloader returns HTTP 200 and a file that starts
 with `%PDF` — and contains a completely different article. Filename checks cannot see it,
-because files from `scholar` or Zotero are not named `SCR[ID]_` in the first place.
+because files from `scholar-nulis` or Zotero are not named `SCR[ID]_` in the first place.
 
 > *"Check the integrity of every PDF in this folder, then match them to my records by
 > content."*
@@ -178,7 +178,7 @@ Reading PDFs is the largest cost driver in the whole workflow. Measured on a rea
 This is why the modules instruct stopping and reporting **every 5–10 PDFs** rather than
 running to exhaustion. Accumulated context makes cost grow quadratically, not linearly.
 
-Fuller detail is in [this server's README](../scr-toolkit/README.md) (Indonesian).
+Fuller detail is in [this server's README](../scr-toolkit-nulis/README.md) (Indonesian).
 
 ---
 

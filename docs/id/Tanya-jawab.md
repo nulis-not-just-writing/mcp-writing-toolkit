@@ -20,7 +20,7 @@ sudah tidak berlaku.
 **Di mana saya isi berkas `.env`?**
 Tidak ada. Tidak satu pun server di sini membaca `.env`. Di Claude Desktop, isian ada di
 formulir jendela ekstensi; di Claude Code, pakai `-e NAMA=nilai` pada `claude mcp add`.
-`scr-toolkit` bahkan tidak punya isian sama sekali.
+`scr-toolkit-nulis` bahkan tidak punya isian sama sekali.
 
 ## scholar
 
@@ -109,9 +109,9 @@ dipertahankan, atau tulis ke berkas baru.
 ## Umum
 
 **Apakah ada data saya yang dikirim ke suatu tempat?**
-Tidak ada telemetri dan tidak ada server perantara. `scholar` memanggil API publik
-langsung dari komputer Anda; `zotero` mode lokal hanya berbicara dengan aplikasi Zotero
-di `localhost`; `scr-toolkit` hanya menyentuh berkas yang Anda tunjuk, plus Unpaywall dan
+Tidak ada telemetri dan tidak ada server perantara. `scholar-nulis` memanggil API publik
+langsung dari komputer Anda; `zotero-nulis` mode lokal hanya berbicara dengan aplikasi Zotero
+di `localhost`; `scr-toolkit-nulis` hanya menyentuh berkas yang Anda tunjuk, plus Unpaywall dan
 laman penerbit saat Anda memintanya mengunduh.
 
 **Saya bukan penutur bahasa Indonesia. Bisa dipakai?**
@@ -119,7 +119,7 @@ Bisa — server membalas dalam bahasa yang Anda pakai. README utama dan seluruh 
 tersedia dalam bahasa Inggris di [`docs/`](../README.md); halaman Indonesia ada di
 `docs/id/`. Yang masih berbahasa Indonesia hanyalah deskripsi tool di `manifest.json`
 (dibaca model, bukan Anda — tetapi itulah yang tampil di jendela ekstensi Claude Desktop)
-dan README `scr-toolkit` sendiri.
+dan README `scr-toolkit-nulis` sendiri.
 
 **Apa hubungannya dengan repo `skills`?**
 Repo ini alatnya; [`nulis-not-just-writing/skills`](https://github.com/nulis-not-just-writing/skills)
@@ -140,7 +140,7 @@ berkas `.mcpb`, bukan hanya di repo. Berkas yang diunduh orang satuan tidak memb
 isi repo, jadi atribusinya harus ikut di dalam bundle. `build-mcpb.sh` menolak
 menghasilkan bundle tanpa berkas itu.
 
-Khusus `scr-toolkit` tidak ada pustaka pihak ketiga sama sekali — nol dependensi npm —
+Khusus `scr-toolkit-nulis` tidak ada pustaka pihak ketiga sama sekali — nol dependensi npm —
 sehingga tidak ada hak cipta lain yang perlu direproduksi di sana.
 
 ---

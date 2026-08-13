@@ -3,10 +3,11 @@
 # Kunci API pribadi — jangan pernah di-commit
 .env
 
-# Dependensi & hasil build tiap server (dibangun ulang dari src)
+# Dependensi & hasil build tiap server (dibangun ulang dari src).
+# Pola per-folder pernah basi diam-diam saat server diganti nama — jadi dipakai
+# pola umum: dist/ mana pun KECUALI dist/ di akar repo, yang memang di-commit.
 node_modules/
-scholar-node/dist/
-zotero-node/dist/
+*/dist/
 
 # Bundle .mcpb DI-commit, tetapi hanya yang ada di dist/ dan bernomor versi.
 # Bundle hasil percobaan di tempat lain tetap diabaikan.
@@ -15,7 +16,7 @@ zotero-node/dist/
 
 # ⚠ Aturan terakhir menang di Git — jadi baris ini mengalahkan pengecualian
 #   di atas. Bundle "-api" membawa kunci Elsevier TERTANAM di manifest-nya;
-#   ia dibangun on-demand untuk tim lewat scholar-node/build-team-bundle.sh
+#   ia dibangun on-demand untuk tim lewat scholar-nulis/build-team-bundle.sh
 #   dan TIDAK BOLEH masuk repo publik, termasuk bila diletakkan di dist/.
 *-api.mcpb
 .build-api/

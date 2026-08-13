@@ -4,11 +4,11 @@ Kode ketiga server di repo ini **ditulis sendiri**, bukan fork atau turunan proy
 dan dilisensikan **CC BY-NC 4.0** (lihat [`LICENSE`](LICENSE) dan [`COPYRIGHT`](COPYRIGHT)).
 
 Yang berasal dari pihak ketiga adalah pustaka npm yang ikut ter-*bundle* ke dalam
-`dist/index.js` oleh esbuild pada `scholar-node` dan `zotero-node`. **Pustaka itu tetap
+`dist/index.js` oleh esbuild pada `scholar-nulis` dan `zotero-nulis`. **Pustaka itu tetap
 berlisensi MIT** — CC BY-NC 4.0 di atas berlaku atas karya aslinya saja, tidak atas kode
 pustaka yang disertakan.
 
-**`scr-toolkit` tidak mem-*bundle* apa pun.** Ia tidak punya `package.json`, tidak punya
+**`scr-toolkit-nulis` tidak mem-*bundle* apa pun.** Ia tidak punya `package.json`, tidak punya
 dependensi npm, dan hanya memakai modul bawaan Node — jadi tidak ada hak cipta pihak
 ketiga yang perlu direproduksi untuknya. Itu batasan yang disengaja: Node bawaan Claude
 Desktop tidak punya npm dan tidak dapat memasang paket.
@@ -35,16 +35,16 @@ Berkas ini mencatat keseluruhannya untuk pembaca repo. Tetapi orang yang mengund
 berkas `.mcpb` dari `dist/` **tidak menerima isi repo ini** — mereka hanya menerima
 bundle itu. Maka salinan atribusi juga ada di dalam **setiap** bundle:
 
-- `scholar-node/NOTICE.md` → ikut ke `scholar-paper-search-*.mcpb`
-- `zotero-node/NOTICE.md` → ikut ke `zotero-mcp-*.mcpb`
-- `scr-toolkit/NOTICE.md` → ikut ke `scr-toolkit-*.mcpb`
+- `scholar-nulis/NOTICE.md` → ikut ke `scholar-nulis-*.mcpb`
+- `zotero-nulis/NOTICE.md` → ikut ke `zotero-nulis-*.mcpb`
+- `scr-toolkit-nulis/NOTICE.md` → ikut ke `scr-toolkit-nulis-*.mcpb`
 
 `build-mcpb.sh` **menolak menghasilkan bundle yang kehilangan `NOTICE.md`**, dan menghapus
 bundle yang gagal gerbang itu. Keduanya wajib ikut bila Anda menyebarkan ulang.
 
 ## Alat luar yang dipanggil, bukan disertakan
 
-`scr-toolkit` memanggil **`pdftotext`** (bagian dari [poppler](https://poppler.freedesktop.org/))
+`scr-toolkit-nulis` memanggil **`pdftotext`** (bagian dari [poppler](https://poppler.freedesktop.org/))
 sebagai proses terpisah bila terpasang di sistem; tidak ada kodenya yang disalin ke sini
 dan ia bukan dependensi paket ini. Poppler berlisensi GPL-2.0-only OR GPL-3.0-only —
 menjalankan sebuah program sebagai subproses bukan *linking* terhadapnya, jadi syaratnya
@@ -70,7 +70,7 @@ dan menjadi tanggung jawab pemakai:
 | Semantic Scholar | opsional | tanpa kunci pun jalan, dengan kuota lebih ketat |
 | Scopus & ScienceDirect (Elsevier) | wajib | tunduk pada perjanjian langganan institusi Anda — lihat [dev.elsevier.com](https://dev.elsevier.com) |
 | Zotero | tidak perlu di mode lokal | aplikasi Zotero di komputer Anda sendiri |
-| Unpaywall + `citation_pdf_url` penerbit | tidak perlu | dipakai `scr-toolkit` untuk akuisisi full-text |
+| Unpaywall + `citation_pdf_url` penerbit | tidak perlu | dipakai `scr-toolkit-nulis` untuk akuisisi full-text |
 
 **Teks penuh berhak cipta yang diambil lewat `sciencedirect_fulltext` tunduk pada
 langganan institusi Anda.** Server ini hanya menyalurkan; ia tidak memberi Anda hak

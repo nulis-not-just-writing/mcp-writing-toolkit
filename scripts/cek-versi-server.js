@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Menyalakan server di dalam bundle hasil pack, lalu membandingkan versi yang
-// DIUMUMKANNYA lewat handshake MCP dengan versi di manifest.json.
+// Menyalakan server di dalam bundle hasil pack, lalu membandingkan nama dan versi
+// yang DIUMUMKANNYA lewat handshake MCP dengan yang tertulis di manifest.json.
 //
 //   node scripts/cek-versi-server.js <dir-bundle-terekstrak>
 //
@@ -12,19 +12,27 @@
 //
 // Pernah terjadi: scr-toolkit 1.5.0 mengumumkan dirinya 1.4.0 karena versinya
 // dikeraskan di server/index.js, terpisah dari manifest.json.
+//
+// Nama diperiksa dengan alasan yang sama. Saat server diganti nama, nama yang
+// dikeraskan di sumber gampang tertinggal — dan akibatnya lebih buruk daripada
+// versi yang salah: dua ekstensi berbeda bisa mengumumkan diri dengan nama sama.
 
 const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
 
-const dir = process.argv[2];
+// Dijadikan absolut lebih dulu. Anaknya dijalankan dengan cwd = folder bundle,
+// jadi jalur relatif akan teresolusi dua kali ("b" + "b/dist/index.js") dan
+// prosesnya mati diam-diam sampai kehabisan waktu.
+const dir = process.argv[2] ? path.resolve(process.argv[2]) : null;
 if (!dir) {
   console.error("pemakaian: node scripts/cek-versi-server.js <dir-bundle-terekstrak>");
   process.exit(2);
 }
 
 const manifest = JSON.parse(fs.readFileSync(path.join(dir, "manifest.json"), "utf8"));
-const diharapkan = manifest.version;
+const diharapkanVersi = manifest.version;
+const diharapkanNama = manifest.name;
 const masuk = manifest?.server?.entry_point;
 
 if (!masuk) {
@@ -63,12 +71,22 @@ anak.stdout.on("data", (b) => {
     clearTimeout(jam);
     anak.kill("SIGKILL");
 
-    const diumumkan = o?.result?.serverInfo?.version;
-    if (diumumkan !== diharapkan) {
-      console.error(
-        `     versi tidak sinkron: manifest.json=${diharapkan} ` +
-        `tetapi server mengumumkan ${diumumkan ?? "(tidak ada)"}`
+    const si = o?.result?.serverInfo ?? {};
+    const salah = [];
+    if (si.name !== diharapkanNama) {
+      salah.push(
+        `nama tidak sinkron: manifest.json=${diharapkanNama} ` +
+        `tetapi server mengumumkan ${si.name ?? "(tidak ada)"}`
       );
+    }
+    if (si.version !== diharapkanVersi) {
+      salah.push(
+        `versi tidak sinkron: manifest.json=${diharapkanVersi} ` +
+        `tetapi server mengumumkan ${si.version ?? "(tidak ada)"}`
+      );
+    }
+    if (salah.length) {
+      console.error("     " + salah.join("\n     "));
       process.exit(1);
     }
     process.exit(0);

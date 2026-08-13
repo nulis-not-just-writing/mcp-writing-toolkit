@@ -35,17 +35,17 @@ All three stand alone. Installing one does not require any of the others.
 ## What to know up front
 
 **No Python.** All three run on the Node.js that ships inside Claude Desktop — there is
-nothing to install first. `scholar` and `zotero` are TypeScript bundled into a single
-JavaScript file; `scr-toolkit` is plain JavaScript with no dependencies at all.
+nothing to install first. `scholar-nulis` and `zotero-nulis` are TypeScript bundled into a single
+JavaScript file; `scr-toolkit-nulis` is plain JavaScript with no dependencies at all.
 
-**Every `scholar` setting is optional.** With no key at all, 16 tools work fully through
+**Every `scholar-nulis` setting is optional.** With no key at all, 16 tools work fully through
 arXiv, OpenAlex, Crossref, Semantic Scholar, PubMed, Europe PMC, and DOAJ. A key only adds
 — taking it to 21 — and is never a prerequisite.
 
 **Zotero defaults to local mode.** It talks to the Zotero app on your own computer over
 `localhost`. No API key, no upload, nothing leaves your machine.
 
-**`scr-toolkit` needs no configuration whatsoever.** No key, no fields. It also decides
+**`scr-toolkit-nulis` needs no configuration whatsoever.** No key, no fields. It also decides
 nothing — its nine tools check, count, match, and retrieve; eligibility decisions stay with
 the researcher.
 

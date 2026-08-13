@@ -1,4 +1,4 @@
-# NOTICE — scr-toolkit
+# NOTICE — scr-toolkit-nulis
 
 Copyright (c) 2026 Mubaroq ADB | RPI
 
@@ -16,7 +16,7 @@ course modules, and still maintained as such — its tool descriptions cite modu
 
 ## No third-party code is bundled
 
-Unlike the other two servers in this repo, `scr-toolkit` has **no npm dependencies at
+Unlike the other two servers in this repo, `scr-toolkit-nulis` has **no npm dependencies at
 all** — no `package.json`, no `node_modules/`, no bundler. ZIP, `.xlsx`, and PDF handling
 are implemented directly on Node's built-in modules (`node:zlib`, `node:fs`, `node:path`,
 `node:child_process`, and global `fetch`).

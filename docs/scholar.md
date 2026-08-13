@@ -1,8 +1,8 @@
-# scholar — literature search and citation verification
+# scholar-nulis — literature search and citation verification
 
 *[Baca dalam bahasa Indonesia](id/scholar.md)*
 
-`scholar-paper-search` **0.6.0** · 16 tools, or 21 with an Elsevier key · [source](../scholar-node/)
+`scholar-nulis` **0.7.0** · 16 tools, or 21 with an Elsevier key · [source](../scholar-nulis/)
 
 Searches seven open scholarly APIs, verifies citations by DOI, finds legal open-access
 PDFs, downloads them, and reads their text. Five Scopus/ScienceDirect tools switch on if

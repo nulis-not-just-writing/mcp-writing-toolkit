@@ -8,25 +8,25 @@ tinjauan cakupan** — langsung dari dalam Claude.
 
 Ketiganya dijalankan Node.js. **Tidak ada Python, tidak ada `pip install`, tidak ada
 virtualenv.** Untuk Claude Desktop, unduh satu berkas `.mcpb` lalu klik dua kali.
-`scholar` dan `zotero` ditulis TypeScript lalu di-*bundle* esbuild; `scr-toolkit`
+`scholar-nulis` dan `zotero-nulis` ditulis TypeScript lalu di-*bundle* esbuild; `scr-toolkit-nulis`
 JavaScript biasa tanpa dependensi sama sekali.
 
 ## Server
 
 | Server | Tool | Menjawab |
 |---|---|---|
-| [`scholar-node`](scholar-node/) → `scholar-paper-search` **0.6.0** | 21 | apakah paper ini benar ada, dan di mana PDF legalnya? |
-| [`zotero-node`](zotero-node/) → `zotero-mcp` **0.5.0** | 8 | apa yang sudah ada di pustaka saya sendiri? |
-| [`scr-toolkit`](scr-toolkit/) **1.5.0** | 9 | benarkah PDF ini artikel yang diakuinya, dan apakah dua pass screening sepakat? |
+| [`scholar-nulis`](scholar-nulis/) **0.7.0** | 21 | apakah paper ini benar ada, dan di mana PDF legalnya? |
+| [`zotero-nulis`](zotero-nulis/) **0.6.0** | 8 | apa yang sudah ada di pustaka saya sendiri? |
+| [`scr-toolkit-nulis`](scr-toolkit-nulis/) **1.6.0** | 9 | benarkah PDF ini artikel yang diakuinya, dan apakah dua pass screening sepakat? |
 
-`scholar` mencari di **tujuh API ilmiah terbuka** — arXiv, OpenAlex, Crossref, Semantic
+`scholar-nulis` mencari di **tujuh API ilmiah terbuka** — arXiv, OpenAlex, Crossref, Semantic
 Scholar, PubMed, Europe PMC, DOAJ — tanpa perlu kunci apa pun. Bila Anda punya kunci
 Elsevier, lima tool Scopus/ScienceDirect ikut menyala — 16 tanpa kunci, 21 dengan kunci.
 
-`zotero` berbicara dengan aplikasi **Zotero 7+ di komputer Anda sendiri**. Mode lokal
+`zotero-nulis` berbicara dengan aplikasi **Zotero 7+ di komputer Anda sendiri**. Mode lokal
 adalah bawaannya: tanpa kunci API, tanpa unggah, tanpa apa pun keluar dari mesin Anda.
 
-`scr-toolkit` mengerjakan separuh **deterministik** tinjauan cakupan — memeriksa,
+`scr-toolkit-nulis` mengerjakan separuh **deterministik** tinjauan cakupan — memeriksa,
 menghitung, mencocokkan, mengunduh. Tidak satu pun alatnya memutuskan eligibility;
 penilaian tetap milik peneliti. Ia **pelengkap modul kursus Alur SLR AI** dan tetap begitu:
 tiap alat menyebut titik modul yang dilayaninya. Tidak butuh kunci apa pun, dan **nol
@@ -37,21 +37,21 @@ dependensi npm**.
 **Claude Desktop** — unduh dari [`dist/`](dist/), lalu klik dua kali (atau
 **Settings → Extensions**):
 
-- [`scholar-paper-search-0.6.0.mcpb`](dist/scholar-paper-search-0.6.0.mcpb)
-- [`zotero-mcp-0.5.0.mcpb`](dist/zotero-mcp-0.5.0.mcpb)
-- [`scr-toolkit-1.5.0.mcpb`](dist/scr-toolkit-1.5.0.mcpb)
+- [`scholar-nulis-0.7.0.mcpb`](dist/scholar-nulis-0.7.0.mcpb)
+- [`zotero-nulis-0.6.0.mcpb`](dist/zotero-nulis-0.6.0.mcpb)
+- [`scr-toolkit-nulis-1.6.0.mcpb`](dist/scr-toolkit-nulis-1.6.0.mcpb)
 
 Bundle bernomor versi juga dilampirkan di setiap [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 
 Isian konfigurasinya muncul sebagai formulir di jendela ekstensi. **Semuanya opsional**
-untuk `scholar`; kunci yang ditandai rahasia disimpan di keychain sistem operasi Anda,
+untuk `scholar-nulis`; kunci yang ditandai rahasia disimpan di keychain sistem operasi Anda,
 bukan di berkas teks.
 
 **Claude Code** — bangun dari sumber, lalu daftarkan:
 
 ```bash
 git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
-cd mcp-writing-toolkit/scholar-node && npm install && npm run build
+cd mcp-writing-toolkit/scholar-nulis && npm install && npm run build
 claude mcp add scholar -- node "$PWD/dist/index.js"
 ```
 
@@ -79,12 +79,12 @@ tidak didaftarkan sama sekali — bukan muncul lalu gagal saat dipanggil. `tools
 mengembalikan 16; dengan kunci, 21. Yang tampil adalah yang benar-benar bisa dipakai.
 
 **Tidak ada yang meninggalkan komputer Anda.** Tidak ada telemetri, tidak ada server
-perantara. `scholar` memanggil API publik langsung; `zotero` mode lokal hanya berbicara
+perantara. `scholar-nulis` memanggil API publik langsung; `zotero-nulis` mode lokal hanya berbicara
 dengan aplikasi Zotero di `localhost`.
 
 ## Konfigurasi
 
-`scr-toolkit` **tidak butuh konfigurasi apa pun** — tanpa kunci, tanpa isian. Dua
+`scr-toolkit-nulis` **tidak butuh konfigurasi apa pun** — tanpa kunci, tanpa isian. Dua
 sisanya membaca konfigurasinya dari **variabel lingkungan**. Di Claude Desktop,
 `manifest.json` yang mengisikannya dari formulir ekstensi sehingga Anda tidak perlu
 menyentuhnya; daftar berikut untuk pemakaian manual (Claude Code, atau menjalankan server
@@ -110,9 +110,9 @@ hanya mengalir lewat variabel lingkungan proses.
 |---|---|---|
 | Claude Desktop | memasang `.mcpb` | Node.js-nya sudah disertakan — tidak perlu memasang apa pun |
 | Node.js 20+ | membangun dari sumber / memakai di Claude Code | `.nvmrc` menunjuk 24 |
-| Zotero 7+ | server `zotero` mode lokal | Settings → Advanced → centang *"Allow other applications on this computer to communicate with Zotero"* |
+| Zotero 7+ | server `zotero-nulis` mode lokal | Settings → Advanced → centang *"Allow other applications on this computer to communicate with Zotero"* |
 | Kunci Elsevier | 5 tool Scopus/ScienceDirect | daftar di [dev.elsevier.com](https://dev.elsevier.com) dengan akun institusi |
-| `pdftotext` (poppler) | pemeriksaan teks PDF yang lebih tajam di `scr-toolkit` | opsional — tanpanya pemeriksa hanya boleh *membuktikan* kecocokan, tidak pernah menyangkal |
+| `pdftotext` (poppler) | pemeriksaan teks PDF yang lebih tajam di `scr-toolkit-nulis` | opsional — tanpanya pemeriksa hanya boleh *membuktikan* kecocokan, tidak pernah menyangkal |
 
 ## Dokumentasi
 

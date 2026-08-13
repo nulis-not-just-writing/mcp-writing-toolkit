@@ -5,18 +5,29 @@
 ## Claude Desktop — cara termudah
 
 1. Unduh berkas `.mcpb` yang Anda mau dari [`dist/`](../../dist/):
-   - `scholar-paper-search-0.6.0.mcpb`
-   - `zotero-mcp-0.5.0.mcpb`
-   - `scr-toolkit-1.5.0.mcpb`
+   - `scholar-nulis-0.7.0.mcpb`
+   - `zotero-nulis-0.6.0.mcpb`
+   - `scr-toolkit-nulis-1.6.0.mcpb`
 2. **Klik dua kali** berkasnya. Claude Desktop membuka jendela pemasangan.
    (Alternatif: **Settings → Extensions**, lalu seret berkasnya ke sana.)
-3. Isi kolom konfigurasi bila perlu — semuanya opsional untuk `scholar`.
+3. Isi kolom konfigurasi bila perlu — semuanya opsional untuk `scholar-nulis`.
 4. Klik **Install**, lalu tutup Claude Desktop **sepenuhnya** dan buka lagi.
 
 Menutup jendela saja tidak cukup; server hanya dibaca ulang saat aplikasi benar-benar
 dijalankan ulang.
 
 Tidak ada yang perlu dipasang lebih dulu. Claude Desktop menyertakan Node.js-nya sendiri.
+
+### Naik dari nama lama
+
+Server ini sebelumnya bernama `scholar-paper-search`, `zotero-mcp`, dan `scr-toolkit`.
+Claude Desktop mengenali ekstensi dari `name` di manifest-nya, jadi server yang berganti
+nama adalah **ekstensi yang berbeda** baginya — memasang yang baru tidak menggantikan yang
+lama, dan Anda akan berakhir dengan keduanya sekaligus, memunculkan tool kembar.
+
+**Hapus dulu entri lamanya** di **Settings → Extensions**, baru pasang yang ini. Akhiran
+`-nulis` ada justru untuk mencegah keambiguan semacam ini: `scholar` cukup umum sebagai
+nama, sehingga MCP server lain yang tak berkaitan bisa saja sudah memakainya.
 
 ## Claude Code — bangun dari sumber
 
@@ -25,15 +36,15 @@ git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
 cd mcp-writing-toolkit
 
 # scholar
-cd scholar-node && npm install && npm run build && cd ..
-claude mcp add scholar -- node "$PWD/scholar-node/dist/index.js"
+cd scholar-nulis && npm install && npm run build && cd ..
+claude mcp add scholar -- node "$PWD/scholar-nulis/dist/index.js"
 
 # zotero
-cd zotero-node && npm install && npm run build && cd ..
-claude mcp add zotero -- node "$PWD/zotero-node/dist/index.js"
+cd zotero-nulis && npm install && npm run build && cd ..
+claude mcp add zotero -- node "$PWD/zotero-nulis/dist/index.js"
 
-# scr-toolkit — tanpa dependensi, jadi tanpa npm install dan tanpa build
-claude mcp add scr-toolkit -- node "$PWD/scr-toolkit/server/index.js"
+# scr-toolkit-nulis — tanpa dependensi, jadi tanpa npm install dan tanpa build
+claude mcp add scr-toolkit -- node "$PWD/scr-toolkit-nulis/server/index.js"
 ```
 
 Untuk meneruskan konfigurasi, pakai `-e` sebelum `--`:
@@ -42,14 +53,14 @@ Untuk meneruskan konfigurasi, pakai `-e` sebelum `--`:
 claude mcp add scholar \
   -e CONTACT_EMAIL=nama@kampus.ac.id \
   -e SCOPUS_API_KEY=xxxxx \
-  -- node "$PWD/scholar-node/dist/index.js"
+  -- node "$PWD/scholar-nulis/dist/index.js"
 ```
 
 Periksa hasilnya dengan `/mcp` di dalam sesi Claude Code.
 
 ## Konfigurasi
 
-`scr-toolkit` **tidak punya isian konfigurasi sama sekali** — pasang lalu pakai. Dua
+`scr-toolkit-nulis` **tidak punya isian konfigurasi sama sekali** — pasang lalu pakai. Dua
 server lainnya hanya membaca **variabel lingkungan**; di Claude Desktop, `manifest.json`
 yang mengisikannya dari formulir ekstensi sehingga Anda tidak perlu menyentuhnya.
 
@@ -92,7 +103,7 @@ Kolom yang ditandai rahasia di jendela ekstensi disimpan Claude Desktop di **key
 sistem operasi**, bukan sebagai teks biasa.
 
 Kalau Anda membangun bundle varian dengan kunci tertanam untuk tim
-(`scholar-node/build-team-bundle.sh`), ingat bahwa berkas hasilnya **memuat kunci itu di
+(`scholar-nulis/build-team-bundle.sh`), ingat bahwa berkas hasilnya **memuat kunci itu di
 dalam manifest-nya**. Bundle tersebut tidak boleh diunggah ke tempat publik; `.gitignore`
 repo ini sudah menolaknya lewat pola `*-api.mcpb`, dan `build-mcpb.sh` menolak
 menerbitkan bundle apa pun yang manifest-nya membawa kunci harfiah.
@@ -101,7 +112,7 @@ menerbitkan bundle apa pun yang manifest-nya membawa kunci harfiah.
 
 ```bash
 ./build-mcpb.sh                 # ketiganya
-./build-mcpb.sh zotero-node     # satu saja
+./build-mcpb.sh zotero-nulis    # satu saja
 ```
 
 Hasilnya `dist/<nama>-<versi>.mcpb`. Skripnya berhenti dan **menghapus** bundle yang
@@ -121,7 +132,7 @@ Gerbangnya:
 - Bundle tidak boleh memuat `node_modules/`, `src/`, `.env`, atau berkas sampah.
 - Tidak boleh ada nilai kredensial harfiah di `mcp_config.env`.
 
-Server tanpa `package.json` (seperti `scr-toolkit`) dipak apa adanya tanpa langkah build;
+Server tanpa `package.json` (seperti `scr-toolkit-nulis`) dipak apa adanya tanpa langkah build;
 gerbangnya memastikan `entry_point` yang ditunjuk manifest benar-benar ada.
 
 ---

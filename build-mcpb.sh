@@ -2,7 +2,7 @@
 # Bangun bundle .mcpb bernomor versi untuk setiap server, lalu periksa hasilnya.
 #
 #   ./build-mcpb.sh                 # ketiga server
-#   ./build-mcpb.sh zotero-node     # satu server saja
+#   ./build-mcpb.sh zotero-nulis    # satu server saja
 #
 # Keluaran: dist/<nama-manifest>-<versi>.mcpb
 #
@@ -13,7 +13,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 SERVERS=("${@:-}")
-if [ -z "${SERVERS[0]:-}" ]; then SERVERS=(scholar-node zotero-node scr-toolkit); fi
+if [ -z "${SERVERS[0]:-}" ]; then SERVERS=(scholar-nulis zotero-nulis scr-toolkit-nulis); fi
 
 mkdir -p dist
 gagal=0
@@ -31,8 +31,8 @@ for s in "${SERVERS[@]}"; do
   # Dua bentuk server didukung:
   #   - ada package.json  -> TypeScript, di-bundle esbuild ke dist/index.js
   #   - tanpa package.json -> Node murni tanpa dependensi, dipak apa adanya
-  # scr-toolkit sengaja tidak punya dependensi npm: Node bawaan Claude Desktop
-  # tidak punya npm dan tidak bisa memasang paket.
+  # scr-toolkit-nulis sengaja tidak punya dependensi npm: Node bawaan Claude
+  # Desktop tidak punya npm dan tidak bisa memasang paket.
   if [ -f "$s/package.json" ]; then
     versi_pkg=$(node -p "require('./$s/package.json').version")
 
@@ -94,11 +94,11 @@ for s in "${SERVERS[@]}"; do
     rusak=1
   fi
 
-  # ── Gerbang 3: versi yang diumumkan server = versi manifest ────────────
-  # Versi bisa dikeraskan di dalam kode, terpisah dari manifest. Yang dibaca
+  # ── Gerbang 3: nama & versi yang diumumkan server = manifest ───────────
+  # Keduanya bisa dikeraskan di dalam kode, terpisah dari manifest. Yang dibaca
   # Claude Desktop adalah yang diucapkan server saat handshake.
   if ! node ./scripts/cek-versi-server.js "$tmp"; then
-    echo "  ✗ $out mengumumkan versi yang berbeda dari manifest-nya"
+    echo "  ✗ $out mengumumkan nama/versi yang berbeda dari manifest-nya"
     rusak=1
   fi
   rm -rf "$tmp"

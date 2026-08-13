@@ -1,4 +1,4 @@
-# ScR Toolkit v1.5.0 — ekstensi MCP untuk pekerjaan deterministik scoping review
+# ScR Toolkit Nulis v1.6.0 — ekstensi MCP untuk pekerjaan deterministik scoping review
 
 Sembilan alat yang mengerjakan bagian **deterministik** alur ScR: memeriksa, menghitung, mencocokkan, mengunduh. Tidak satu pun memutuskan eligibility — penilaian tetap milik peserta dan Claude.
 
@@ -26,7 +26,7 @@ Karena itu seluruh alat di sini ditulis **tanpa satu pun dependensi npm** — No
 
 ## Pemasangan
 
-1. Unduh [`scr-toolkit-1.5.0.mcpb`](../dist/scr-toolkit-1.5.0.mcpb) dari folder
+1. Unduh [`scr-toolkit-nulis-1.6.0.mcpb`](../dist/scr-toolkit-nulis-1.6.0.mcpb) dari folder
    [`dist/`](../dist/), atau dari halaman
    [Releases](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases)
 2. Buka Claude Desktop → **Settings → Extensions**

@@ -6,7 +6,7 @@
 #
 #   ELSEVIER_KEY=xxxxx ./build-team-bundle.sh
 #
-# Keluaran default: ../scholar-paper-search-node-api.mcpb (diabaikan git).
+# Keluaran default: ../scholar-nulis-api.mcpb (diabaikan git).
 set -euo pipefail
 
 # Kunci dicari berurutan: variabel lingkungan → keychain macOS.
@@ -32,7 +32,7 @@ PESAN
 fi
 
 cd "$(dirname "$0")"
-OUT="${1:-../scholar-paper-search-node-api.mcpb}"
+OUT="${1:-../scholar-nulis-api.mcpb}"
 BUILD=".build-api"
 
 export npm_config_cache="${npm_config_cache:-${TMPDIR:-/tmp}/npmcache}"
@@ -52,8 +52,8 @@ ELSEVIER_KEY="$ELSEVIER_KEY" python3 - "$BUILD" <<'PY'
 import json, io, os, sys
 b = sys.argv[1]
 m = json.load(io.open("manifest.json", encoding="utf-8"))
-m["name"] = "scholar-paper-search-api"
-m["display_name"] = "Scholar Paper Search (kunci tim tertanam)"
+m["name"] = "scholar-nulis-api"
+m["display_name"] = "Scholar Nulis (kunci tim tertanam)"
 m["description"] = (m["description"].split(" Scopus/ScienceDirect tools")[0] +
                     " BUILD TIM RISET: kunci Elsevier tertanam di dalam berkas ini — "
                     "dapat dibaca siapa pun yang membuka arsipnya. Jangan diunggah atau dibagikan di luar tim.")

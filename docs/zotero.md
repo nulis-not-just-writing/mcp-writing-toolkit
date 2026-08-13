@@ -1,8 +1,8 @@
-# zotero — your own library
+# zotero-nulis — your own library
 
 *[Baca dalam bahasa Indonesia](id/zotero.md)*
 
-`zotero-mcp` **0.5.0** · 8 tools · [source](../zotero-node/)
+`zotero-nulis` **0.6.0** · 8 tools · [source](../zotero-nulis/)
 
 Gives Claude read access to your Zotero library: search items, read metadata and full text,
 browse collections, and export BibTeX.

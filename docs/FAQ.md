@@ -18,7 +18,7 @@ No. All three servers are pure Node.js. If you find instructions telling you to 
 
 **Where do I put the `.env` file?**
 There isn't one. No server here ever reads `.env`. In Claude Desktop the fields are in the
-extension window; in Claude Code, use `-e NAME=value` with `claude mcp add`. `scr-toolkit`
+extension window; in Claude Code, use `-e NAME=value` with `claude mcp add`. `scr-toolkit-nulis`
 has no fields at all.
 
 ## scholar
@@ -107,15 +107,15 @@ or write to a new file.
 ## General
 
 **Is any of my data sent anywhere?**
-No telemetry and no relay server. `scholar` calls public APIs directly from your computer;
-`zotero` in local mode only talks to the Zotero app on `localhost`; `scr-toolkit` only
+No telemetry and no relay server. `scholar-nulis` calls public APIs directly from your computer;
+`zotero-nulis` in local mode only talks to the Zotero app on `localhost`; `scr-toolkit-nulis` only
 touches the files you point it at, plus Unpaywall and publisher pages when you ask it to
 download.
 
 **Is anything still only in Indonesian?**
 Two things. The tool descriptions inside `manifest.json` — that text is read by the model,
 not by you, but it is also what Claude Desktop prints in the extension window, so that
-screen reads as Indonesian. And `scr-toolkit`'s own README, which records its measured
+screen reads as Indonesian. And `scr-toolkit-nulis`'s own README, which records its measured
 limits; the [scr-toolkit page](scr-toolkit.md) covers the same ground in English. Everything
 else on this site has an English page, and the Indonesian originals live in
 [`docs/id/`](id/README.md).
@@ -139,7 +139,7 @@ long as its copyright notice is retained — which is why `NOTICE.md` sits insid
 so the attribution has to be inside the bundle. `build-mcpb.sh` refuses to produce a bundle
 without one.
 
-`scr-toolkit` bundles no third-party code at all — zero npm dependencies — so there is no
+`scr-toolkit-nulis` bundles no third-party code at all — zero npm dependencies — so there is no
 other copyright to reproduce for it.
 
 ---

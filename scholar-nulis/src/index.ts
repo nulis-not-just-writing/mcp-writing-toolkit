@@ -70,7 +70,7 @@ function downloadDir(): string {
 
   const kandidat: string[] = [];
   if (!placeholder) kandidat.push(raw.startsWith("~") ? path.join(os.homedir(), raw.slice(1)) : path.resolve(raw));
-  kandidat.push(path.join(os.homedir(), "Downloads"), path.join(os.tmpdir(), "scholar-paper-search"));
+  kandidat.push(path.join(os.homedir(), "Downloads"), path.join(os.tmpdir(), "scholar-nulis"));
 
   const galat: string[] = [];
   for (const d of kandidat) {
@@ -284,8 +284,8 @@ async function searchDoaj(query: string, max: number): Promise<Paper[]> {
 // ---------- server ----------
 
 // Harus sama dengan "version" di manifest.json — build-mcpb.sh menolak bila berbeda.
-const SERVER_VERSION = "0.6.0";
-const server = new McpServer({ name: "scholar-paper-search", version: SERVER_VERSION });
+const SERVER_VERSION = "0.7.0";
+const server = new McpServer({ name: "scholar-nulis", version: SERVER_VERSION });
 
 // Bypass tipe untuk server.tool: kombinasi SDK 1.29 + zod 3.25 memicu TS2589
 // (instansiasi tipe terlalu dalam) di setiap call site. Validasi runtime zod tetap utuh.
@@ -900,7 +900,7 @@ tool(
 
 async function main() {
   await server.connect(new StdioServerTransport());
-  console.error("scholar-paper-search (node) ready");
+  console.error("scholar-nulis (node) ready");
 }
 main().catch((e) => {
   console.error("fatal:", e);

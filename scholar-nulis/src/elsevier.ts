@@ -42,7 +42,7 @@ export const hasScopusKey = () => Boolean(SCOPUS_KEY);
 export const hasSdKey = () => Boolean(SD_KEY || SCOPUS_KEY);
 
 const KEY_HINT =
-  "Kunci Elsevier belum terpasang. Isi lewat Settings → Extensions → scholar-paper-search " +
+  "Kunci Elsevier belum terpasang. Isi lewat Settings → Extensions → scholar-nulis " +
   "(kolom Scopus API key / ScienceDirect API key). Daftar di dev.elsevier.com.";
 
 function headers(key: string): Record<string, string> {

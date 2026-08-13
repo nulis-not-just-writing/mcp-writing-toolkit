@@ -6,7 +6,7 @@ const CONTACT = (() => {
   const v = (process.env.CONTACT_EMAIL ?? "").trim();
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? v : "";
 })();
-const UA = `scholar-paper-search-node/0.2 (${CONTACT ? `mailto:${CONTACT}` : "https://github.com/mubaroq/MCP-ScR"})`;
+const UA = `scholar-nulis/0.7 (${CONTACT ? `mailto:${CONTACT}` : "https://github.com/nulis-not-just-writing/mcp-writing-toolkit"})`;
 
 // Jeda minimum antar request per host (ms) — hormati polite pool tiap API.
 const MIN_GAP: Record<string, number> = {

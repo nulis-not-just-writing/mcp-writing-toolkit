@@ -1,0 +1,22 @@
+{
+  "name": "scholar-nulis",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Node.js MCP server: search, download, and read academic papers from open scholarly APIs. Runs on Claude Desktop's built-in Node.js (no Python, no system dependencies).",
+  "license": "CC-BY-NC-4.0",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --log-level=warning",
+    "pack": "npm run build && npx --yes @anthropic-ai/mcpb pack . ../dist/scholar-nulis-0.7.0.mcpb"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0",
+    "fast-xml-parser": "^4.5.0",
+    "unpdf": "^0.12.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}

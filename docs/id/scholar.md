@@ -1,8 +1,8 @@
-# scholar — pencarian literatur & verifikasi sitasi
+# scholar-nulis — pencarian literatur & verifikasi sitasi
 
 *[Read this in English](../scholar.md)*
 
-`scholar-paper-search` **0.6.0** · 16 tool, atau 21 dengan kunci Elsevier · [sumber](../../scholar-node/)
+`scholar-nulis` **0.7.0** · 16 tool, atau 21 dengan kunci Elsevier · [sumber](../../scholar-nulis/)
 
 Mencari di tujuh API ilmiah terbuka, memverifikasi sitasi lewat DOI, menemukan PDF open
 access yang legal, mengunduhnya, dan membaca teksnya. Lima tool Scopus/ScienceDirect

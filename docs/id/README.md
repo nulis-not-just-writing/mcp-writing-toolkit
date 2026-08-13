@@ -35,10 +35,10 @@ Ketiganya berdiri sendiri. Memasang satu tidak menuntut yang lain.
 ## Yang perlu diketahui sejak awal
 
 **Tidak ada Python.** Ketiganya berjalan di atas Node.js bawaan Claude Desktop — tidak ada
-yang perlu dipasang lebih dulu. `scholar` dan `zotero` adalah TypeScript yang di-*bundle*
-jadi satu berkas JavaScript; `scr-toolkit` JavaScript biasa tanpa dependensi sama sekali.
+yang perlu dipasang lebih dulu. `scholar-nulis` dan `zotero-nulis` adalah TypeScript yang di-*bundle*
+jadi satu berkas JavaScript; `scr-toolkit-nulis` JavaScript biasa tanpa dependensi sama sekali.
 
-**Semua konfigurasi `scholar` opsional.** Tanpa satu kunci pun, 16 tool tetap berfungsi
+**Semua konfigurasi `scholar-nulis` opsional.** Tanpa satu kunci pun, 16 tool tetap berfungsi
 penuh lewat arXiv, OpenAlex, Crossref, Semantic Scholar, PubMed, Europe PMC, dan DOAJ.
 Kunci hanya menambah — jadi 21 — tidak pernah menjadi syarat.
 
@@ -46,7 +46,7 @@ Kunci hanya menambah — jadi 21 — tidak pernah menjadi syarat.
 lewat `localhost`. Tidak ada kunci API, tidak ada unggahan, tidak ada yang keluar dari
 mesin Anda.
 
-**`scr-toolkit` tidak butuh konfigurasi apa pun.** Tidak ada kunci, tidak ada isian. Ia
+**`scr-toolkit-nulis` tidak butuh konfigurasi apa pun.** Tidak ada kunci, tidak ada isian. Ia
 juga tidak memutuskan apa pun — sembilan alatnya memeriksa, menghitung, mencocokkan, dan
 mengunduh; keputusan eligibility tetap milik peneliti.
 

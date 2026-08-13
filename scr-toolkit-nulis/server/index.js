@@ -20,7 +20,7 @@ const analytics = require('./lib/analytics');
 const retrieve = require('./lib/retrieve');
 
 // Harus sama dengan "version" di manifest.json — build-mcpb.sh menolak bila berbeda.
-const SERVER = { name: 'scr-toolkit', version: '1.5.0' };
+const SERVER = { name: 'scr-toolkit-nulis', version: '1.6.0' };
 
 /* ------------------------------------------------------------------ helpers */
 

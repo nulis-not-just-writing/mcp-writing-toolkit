@@ -1,4 +1,4 @@
-# NOTICE — zotero-mcp
+# NOTICE — scholar-nulis
 
 Copyright (c) 2026 Mubaroq ADB | RPI
 
@@ -20,6 +20,8 @@ govern their own code; the CC BY-NC 4.0 term above applies to the original work 
 |---|---|
 | [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk) | Copyright (c) 2024 Anthropic, PBC |
 | [`zod`](https://github.com/colinhacks/zod) | Copyright (c) 2025 Colin McDonnell |
+| [`fast-xml-parser`](https://github.com/NaturalIntelligence/fast-xml-parser) | Copyright (c) 2017 Amit Kumar Gupta |
+| [`unpdf`](https://github.com/unjs/unpdf) | Copyright (c) 2023-PRESENT Johann Schopplich |
 
 The MIT licence requires that its copyright notice and permission notice travel with every
 copy of the software. That is the purpose of this file, and it must remain inside this
@@ -44,8 +46,9 @@ bundle when redistributed.
 > OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 > OTHER DEALINGS IN THE SOFTWARE.
 
-## Your library stays yours
+## Services accessed, not copied
 
-This server is **read-only** — every call it makes is a `GET`. In local mode it talks only
-to the Zotero application on `localhost`. No library data is copied, transmitted, or
-retained anywhere outside your own computer.
+This server **calls** external APIs. No data, index, or code from those services is copied
+into this bundle. Their terms of use belong to their respective providers and remain the
+user's responsibility — in particular, Scopus and ScienceDirect access is governed by your
+institution's Elsevier subscription agreement.

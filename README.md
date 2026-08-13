@@ -7,26 +7,26 @@ read your own Zotero library, and run the deterministic checks a scoping review 
 from inside Claude.
 
 All three run on Node.js. **No Python, no `pip install`, no virtualenv.** For Claude
-Desktop, download one `.mcpb` file and double-click it. `scholar` and `zotero` are
-TypeScript bundled by esbuild; `scr-toolkit` is plain JavaScript with no dependencies at
+Desktop, download one `.mcpb` file and double-click it. `scholar-nulis` and `zotero-nulis` are
+TypeScript bundled by esbuild; `scr-toolkit-nulis` is plain JavaScript with no dependencies at
 all.
 
 ## The servers
 
 | Server | Tools | Answers |
 |---|---|---|
-| [`scholar-node`](scholar-node/) → `scholar-paper-search` **0.6.0** | 21 | does this paper actually exist, and where is a legal PDF? |
-| [`zotero-node`](zotero-node/) → `zotero-mcp` **0.5.0** | 8 | what is already in my own library? |
-| [`scr-toolkit`](scr-toolkit/) **1.5.0** | 9 | is this PDF really the article it claims to be, and do the two screening passes agree? |
+| [`scholar-nulis`](scholar-nulis/) **0.7.0** | 21 | does this paper actually exist, and where is a legal PDF? |
+| [`zotero-nulis`](zotero-nulis/) **0.6.0** | 8 | what is already in my own library? |
+| [`scr-toolkit-nulis`](scr-toolkit-nulis/) **1.6.0** | 9 | is this PDF really the article it claims to be, and do the two screening passes agree? |
 
-`scholar` searches **seven open scholarly APIs** — arXiv, OpenAlex, Crossref, Semantic
+`scholar-nulis` searches **seven open scholarly APIs** — arXiv, OpenAlex, Crossref, Semantic
 Scholar, PubMed, Europe PMC, DOAJ — with no key required. If you have Elsevier
 credentials, five more Scopus/ScienceDirect tools switch on — 16 without a key, 21 with.
 
-`zotero` talks to the **Zotero 7+ app on your own machine**. Local mode is the default:
+`zotero-nulis` talks to the **Zotero 7+ app on your own machine**. Local mode is the default:
 no API key, no upload, nothing leaves your computer.
 
-`scr-toolkit` does the **deterministic** half of a scoping review — checking, counting,
+`scr-toolkit-nulis` does the **deterministic** half of a scoping review — checking, counting,
 matching, retrieving. Not one of its tools decides eligibility; judgement stays with the
 researcher. It is the companion tool to the **Alur SLR AI** scoping review course modules
 and remains so: each tool names the module step it serves. It needs no key, and has **zero
@@ -37,20 +37,20 @@ npm dependencies**.
 **Claude Desktop** — download from [`dist/`](dist/), then double-click (or
 **Settings → Extensions**):
 
-- [`scholar-paper-search-0.6.0.mcpb`](dist/scholar-paper-search-0.6.0.mcpb)
-- [`zotero-mcp-0.5.0.mcpb`](dist/zotero-mcp-0.5.0.mcpb)
-- [`scr-toolkit-1.5.0.mcpb`](dist/scr-toolkit-1.5.0.mcpb)
+- [`scholar-nulis-0.7.0.mcpb`](dist/scholar-nulis-0.7.0.mcpb)
+- [`zotero-nulis-0.6.0.mcpb`](dist/zotero-nulis-0.6.0.mcpb)
+- [`scr-toolkit-nulis-1.6.0.mcpb`](dist/scr-toolkit-nulis-1.6.0.mcpb)
 
 Versioned builds are also attached to each [release](https://github.com/nulis-not-just-writing/mcp-writing-toolkit/releases).
 
 Configuration appears as a form in the extension window. Everything is **optional** for
-`scholar`; fields marked sensitive are stored in your OS keychain, not in a text file.
+`scholar-nulis`; fields marked sensitive are stored in your OS keychain, not in a text file.
 
 **Claude Code** — build from source, then register:
 
 ```bash
 git clone https://github.com/nulis-not-just-writing/mcp-writing-toolkit.git
-cd mcp-writing-toolkit/scholar-node && npm install && npm run build
+cd mcp-writing-toolkit/scholar-nulis && npm install && npm run build
 claude mcp add scholar -- node "$PWD/dist/index.js"
 ```
 
@@ -74,12 +74,12 @@ reaches the caller. Elsevier 401s routinely echo the full URL, key included.
 are never registered at all — rather than appearing and failing when called. `tools/list`
 returns 16; with a key, 21. What is listed is what actually works.
 
-**Nothing leaves your machine.** No telemetry, no relay server. `scholar` calls public
-APIs directly; `zotero` in local mode only talks to the Zotero app on `localhost`.
+**Nothing leaves your machine.** No telemetry, no relay server. `scholar-nulis` calls public
+APIs directly; `zotero-nulis` in local mode only talks to the Zotero app on `localhost`.
 
 ## Configuration
 
-`scr-toolkit` needs **no configuration at all** — no keys, no fields. The other two read
+`scr-toolkit-nulis` needs **no configuration at all** — no keys, no fields. The other two read
 theirs from **environment variables**. In Claude Desktop, `manifest.json` populates these
 from the extension form, so you never touch them; this list is for manual use (Claude Code,
 or running a server directly):
@@ -104,9 +104,9 @@ through process environment variables.
 |---|---|---|
 | Claude Desktop | installing `.mcpb` | ships its own Node.js — nothing else to install |
 | Node.js 20+ | building from source / Claude Code | `.nvmrc` pins 24 |
-| Zotero 7+ | `zotero` local mode | Settings → Advanced → tick *"Allow other applications on this computer to communicate with Zotero"* |
+| Zotero 7+ | `zotero-nulis` local mode | Settings → Advanced → tick *"Allow other applications on this computer to communicate with Zotero"* |
 | Elsevier key | the 5 Scopus/ScienceDirect tools | register at [dev.elsevier.com](https://dev.elsevier.com) with an institutional account |
-| `pdftotext` (poppler) | sharper PDF text checks in `scr-toolkit` | optional — without it the checker may only *prove* a match, never deny one |
+| `pdftotext` (poppler) | sharper PDF text checks in `scr-toolkit-nulis` | optional — without it the checker may only *prove* a match, never deny one |
 
 ## Documentation
 
@@ -125,7 +125,7 @@ regenerated with `./sync-wiki.sh` and should never be edited directly.
 **One thing is still Indonesian: the tool descriptions inside `manifest.json`**, which is
 what Claude Desktop shows in the extension window. That text is read by the model, not by
 you — Claude handles it and answers in whatever language you write in — but the extension
-screen itself will read as Indonesian. Same for `scr-toolkit`'s own README, which documents
+screen itself will read as Indonesian. Same for `scr-toolkit-nulis`'s own README, which documents
 its measured limits in Indonesian; the [scr-toolkit page](docs/scr-toolkit.md) covers the
 same ground in English.
 

@@ -86,7 +86,7 @@ function windowText(text: string, startChar: number, maxChars: number) {
 }
 
 // Versi harus sama dengan "version" di manifest.json — build-mcpb.sh menolak bila berbeda.
-const server = new McpServer({ name: "zotero-mcp", version: "0.5.0" });
+const server = new McpServer({ name: "zotero-nulis", version: "0.6.0" });
 
 // Bypass tipe untuk server.tool: kombinasi SDK 1.29 + zod 3.25 memicu TS2589 di call site.
 // Validasi runtime zod tetap utuh.
@@ -250,7 +250,7 @@ tool(
 
 async function main() {
   await server.connect(new StdioServerTransport());
-  console.error(`zotero-mcp (node) ready — mode: ${USE_LOCAL ? "local" : `web (${LIBRARY_TYPE}/${LIBRARY_ID})`}`);
+  console.error(`zotero-nulis (node) ready — mode: ${USE_LOCAL ? "local" : `web (${LIBRARY_TYPE}/${LIBRARY_ID})`}`);
 }
 main().catch((e) => {
   console.error("fatal:", e);

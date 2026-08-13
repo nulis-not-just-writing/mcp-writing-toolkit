@@ -1,8 +1,8 @@
-# zotero — pustaka Anda sendiri
+# zotero-nulis — pustaka Anda sendiri
 
 *[Read this in English](../zotero.md)*
 
-`zotero-mcp` **0.5.0** · 8 tool · [sumber](../../zotero-node/)
+`zotero-nulis` **0.6.0** · 8 tool · [sumber](../../zotero-nulis/)
 
 Memberi Claude akses baca ke pustaka Zotero Anda: mencari item, membaca metadata dan teks
 penuhnya, menelusuri koleksi, dan mengekspor BibTeX.

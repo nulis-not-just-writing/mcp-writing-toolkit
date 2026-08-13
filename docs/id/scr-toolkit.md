@@ -1,8 +1,8 @@
-# scr-toolkit — pekerjaan deterministik tinjauan cakupan
+# scr-toolkit-nulis — pekerjaan deterministik tinjauan cakupan
 
 *[Read this in English](../scr-toolkit.md)*
 
-`scr-toolkit` **1.5.0** · 9 tool · [sumber](../../scr-toolkit/)
+`scr-toolkit-nulis` **1.6.0** · 9 tool · [sumber](../../scr-toolkit-nulis/)
 
 Sembilan alat yang mengerjakan bagian **deterministik** alur *scoping review*: memeriksa,
 menghitung, mencocokkan, mengunduh. **Tidak satu pun memutuskan eligibility** — penilaian
@@ -70,7 +70,7 @@ siapa pun dapat mereproduksi sampel Anda persis.
 
 Ini terdengar paranoid sampai benar-benar terjadi. Pengunduh mengembalikan HTTP 200 dan
 berkas yang diawali `%PDF` — dan isinya artikel yang sepenuhnya berbeda. Pemeriksaan berbasis
-nama tidak bisa melihatnya, karena berkas dari `scholar` atau Zotero memang tidak bernama
+nama tidak bisa melihatnya, karena berkas dari `scholar-nulis` atau Zotero memang tidak bernama
 `SCR[ID]_` sejak awal.
 
 > *"Periksa integritas semua PDF di folder ini, lalu cocokkan ke record saya lewat isinya."*
@@ -182,7 +182,7 @@ Membaca PDF adalah penyumbang biaya terbesar di seluruh alur. Terukur pada korpu
 Karena itu modulnya memerintahkan berhenti dan melapor **tiap 5–10 PDF**, bukan jalan
 sampai habis. Konteks yang menumpuk membuat biayanya naik kuadratik, bukan linear.
 
-Detail selengkapnya ada di [README server ini](../../scr-toolkit/README.md).
+Detail selengkapnya ada di [README server ini](../../scr-toolkit-nulis/README.md).
 
 ---
 
